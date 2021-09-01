@@ -15,6 +15,23 @@ conda activate sub01
 
 conda install pytorch torchvision torchaudio cudatoolkit=10.1 -c pytorch
 
-pip install tensorflow-gpu`
+pip install tensorflow-gpu
 ```
 
+
+
+---
+### 2. 이미지 분류기 구현
+
+> 동일 디렉토리의 req1.py에 관련 내용을 옮겨두었습니다.
+
+
+
+
+
+
+---
+
+### 3. Image Captioning 실행 및 결과 확인
+
+> 현재 Req.3-1까지는 진행된 상태이나 Req3-2, 3-3을 진행하던 중 많은 오류로 인해 진행이 막혀있습니다.

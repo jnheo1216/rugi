@@ -28,3 +28,15 @@ Request2
 Request3
 
 - build file 빌드 - visual studio c++ build tool 설치 후  build
+
+<br>
+
+#### 서브프로젝트1 3일차
+
+Request1
+
+- classifier 모델 트레이닝, 테스트
+
+Request3
+
+- caption_model 이해
