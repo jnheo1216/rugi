@@ -49,7 +49,7 @@ pip install tensorflow-gpu
 21-09-01
 # req01
 ## 1. 데이터셋 준비 및 전처리
-```
+```python
 # [0,1] 범위의 데이터셋을 [-1, -1] 범위의 값으로 normalize하도록 transform 정의
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -73,7 +73,7 @@ classes = ('plane', 'car', 'bird', 'cat',
 ```
 
 ## 데이터 시각화
-```
+```python
 # Req. 1-1	데이터셋 준비 및 전처리
 # 이미지를 시각화하는 함수
 def visualize(img):
@@ -97,8 +97,8 @@ print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 ```
 
 ## 2. 분류기 모델 설계
-```
- import torch.nn as nn
+```python
+import torch.nn as nn
 import torch.nn.functional as F
 
 # Req. 1-2	분류기 모델 설계
@@ -128,7 +128,7 @@ classifier = Classifier()
 ```
 
 ## 3. Loss function 정의
-```
+```python
 import torch.optim as optim
 
 # Req. 1-3	Loss function 및 optimizer정의
@@ -140,7 +140,7 @@ optimizer = optim.SGD(classifier.parameters(), lr=0.001, momentum=0.9)
 ```
 
 ## 4. 모델 학습시키기
-```
+```python
 # Req. 1-4	모델 학습
 # model을 device에 올린다 (GPU or CPU) 
 # 구현 완료 상태
