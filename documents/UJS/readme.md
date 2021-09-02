@@ -351,7 +351,7 @@
 > **필요**
 >
 > 행렬곱 조건을 만족하는 다양한 크기의 행렬을 연속으로 만들고
-> 행렬 곱을 연속으로 계산할 수 있게 해주며
+> ##행렬 곱을 연속으로 계산할 수 있게 해주며
 > 결과 값을 만들 수 있기 때문에 머신러닝과 이미지 프로세싱에 자주 사용
 >
 > Broadcast : 크기가 다른 두 행렬간에도 사칙연산을 할 수 있게 해줌
@@ -379,3 +379,49 @@
 > PyTorch 텐서(Tensor)는 개념적으로 NumPy 배열과 동일합니다: 텐서(Tensor)는 n-차원 배열이며, PyTorch는 이러한 텐서들의 연산을 위한 다양한 기능들을 제공합니다. 
 >
 > PyTorch 텐서는 GPU를 사용하여 수치 연산을 가속할 수 있습니다. PyTorch 텐서를 GPU에서 실행하기 위해서는 단지 적절한 장치를 지정해주기만 하면 됩니다
+
+----
+
+## (09/02)
+
+### Req. 3-2 Caption_Model 클래스 이해 
+
+```python
+class Caption_Model:
+    def __init__(self):
+        self.base_dir = os.path.dirname(os.path.dirname(__file__))
+        self.feature_extractor = FeatureExtractor()
+        self.load_model()
+        
+    def load_model(self):
+        infos = captioning.utils.misc.pickle_load(open("infos_trans12-best.pkl", "rb"))
+        infos["opt"].vocab = infos["vocab"]
+
+        self.model = captioning.models.setup(infos["opt"])
+        self.model.cuda()
+        self.model.load_state_dict(torch.load("model-best.pth"))
+        
+    def inference(self,img_feature):
+        img_feature = self.feature_extractor(img_feature)
+        # Return the 5 captions from beam serach with beam size 5
+        return self.model.decode_sequence(self.model(img_feature.mean(0)[None], img_feature[None], mode='sample', opt={'beam_size':5, 'sample_method':'beam_search', 'sample_n':5})[0])
+```
+
+
+
+### Req. 3-3 지 및 캡션 결과 출력
+
+```python
+	# 이미지와 이미지에 대한 설명을 출력해야한다.
+# 이미지 load : cv2.imread / 이미지 출력 : cv2.imshow
+# 이미지 캡션 생성 : Caption_Model.inference
+
+if __name__ == "__main__":
+    cm = Caption_Model()
+    feature = cv2.imread("images.jpg")
+    image_caption = cm.inference("images.jpg")
+    print(image_caption)
+    cv2.imshow(feature)
+    cv2.waitKey()
+```
+
