@@ -40,3 +40,17 @@ Request1
 Request3
 
 - caption_model 이해
+
+<br>
+
+#### 서브프로젝트1 4일차
+
+Request3
+
+- caption_model 클래스 인스턴스 생성
+- 이미지 캡션 및 결과 출력
+
+![캡처](readme.assets/캡처.PNG)
+
+![캡처2](readme.assets/캡처2.PNG)
+
