@@ -193,3 +193,41 @@ for epoch in range(epochs):  # epochs 횟수만큼 반복
 
 print('Finished Training')
 ```
+## 5. 테스트하기
+```python
+# Req. 1-5	모델 테스트
+# 만약 저장한 모델을 load해야 한다면, 모델의 인스턴스를 생성하고, 모델의 weight이 저장되어 있는 .ckpt 파일을 모델에 load
+new_classifier = Classifier()
+new_classifier.load_state_dict(torch.load('cifar_net.pth'))
+new_classifier.to(device)
+
+# 1) 모델을 evaluation 모드로 전환
+
+correct = 0
+total = 0
+# 2) with torch.no_grad로 gradient 계산을 제외
+with torch.no_grad():
+    # 3) for문으로 testset에 저장되어 있는 testloader에서 배치 사이즈 만큼씩 샘플링하여 data load
+    for data in testloader:
+        
+         # 4) load한 data에서 input 값과 label로 분리하여 저장
+        images, labels = data
+       
+        # 5) 각각의 값을 device에 올린다 (GPU or CPU)
+        images, labels = images.to(device), labels.to(device)
+
+        # 6) model에 input값을 입력하여 forward propagation
+        outputs = new_classifier(images)
+
+        # 7) 예측한 값들 중 가장 높은 확률의 class 선택
+        _, predicted = torch.max(outputs.data, 1)
+
+        # 8) label과 예측한 class 비교하여 정답 확인
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
+
+# 9) 정답률 출력
+print(
+    "Accuracy of the network on the 10000 test images: %d %%" % (100 * correct / total)
+)
+```
