@@ -54,3 +54,20 @@ Request3
 
 ![캡처2](readme.assets/캡처2.PNG)
 
+<br>
+
+errors
+
+```python
+# speak_image\IC\vqa_origin\maskrcnn_benchmark\utils\imports.py line 4
+if torch._six.PY3: -> if torch._six.PY37: 로 변경해줘야함
+```
+
+
+
+```
+conda install pytorch torchvision torchaudio cudatoolkit=11 -c pytorch
+
+cudatoolkit 버전을 11버전으로 설치
+```
+
