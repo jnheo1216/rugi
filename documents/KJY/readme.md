@@ -160,3 +160,8 @@ python image_captioning.py
 
 
 
+---
+
+### 번다운 차트 결과
+
+![번다운차트](readme.assets/번다운차트.png)
