@@ -47,7 +47,8 @@ pip install tensorflow-gpu
 ```
 ---
 21-09-01
-# req01
+
+# Req01
 ## 1. 데이터셋 준비 및 전처리
 ```python
 # [0,1] 범위의 데이터셋을 [-1, -1] 범위의 값으로 normalize하도록 transform 정의
@@ -231,3 +232,134 @@ print(
     "Accuracy of the network on the 10000 test images: %d %%" % (100 * correct / total)
 )
 ```
+
+
+
+# Req02
+
+## requirements.txt 작성
+
+```
+# 아래 라이브러리들을 차례로 기입
+
+pyyaml==5.3.1
+yacs==0.1.8
+opencv-contrib-python==4.4.0.46
+requests==2.25.0
+```
+
+/speak_image/IC 디렉토리 내에서 아래 명령어 실행하여 라이브러리 설치
+
+```shell
+pip install -r requirements.txt
+```
+
+
+
+# Req03
+
+## 1 Image Captioning에 필요한 build file 생성
+
+/speak_image/IC/vqa_origin 디렉토리 내에서 아래 명령어 실행
+
+```shell
+python setup.py build develop
+```
+
+해당 문장 출력 확인
+
+```
+Processing dependencies for maskrcnn-benchmark==0.1
+Finished processing dependencies for maskrcnn-benchmark==0.1
+```
+
+
+
+/speak_image/IC/vqa_origin/maskrcnn_benchmark/ 에서 .pyd 파일 확인
+
+
+
+## 2 클래스 이해
+
+```python
+.
+.
+.
+# 주소 설정
+def _build_detection_model(self):
+
+      # detectron_model.yaml의 주소
+      cfg.merge_from_file('model_data/detectron_model.yaml')
+      cfg.freeze()
+
+      model = build_detection_model(cfg)
+      # detectron_model.pth의 주소
+      checkpoint = torch.load('detectron_model.pth', 
+                              map_location=torch.device("cpu"))
+
+      load_state_dict(model, checkpoint.pop("model"))
+
+      model.to("cuda")
+      model.eval()
+      return model
+.
+.
+.
+# 주소 설정2
+#Req. 3-2 클래스 이해 
+class Caption_Model:
+    def __init__(self):
+        self.base_dir = os.path.dirname(os.path.dirname(__file__))
+        self.feature_extractor = FeatureExtractor()
+        self.load_model()
+        
+    def load_model(self):
+        # infos_trans12-best.pkl의 주소
+        infos = captioning.utils.misc.pickle_load(open('infos_trans12-best.pkl', 'rb'))
+        infos['opt'].vocab = infos['vocab']
+    
+        self.model = captioning.models.setup(infos['opt'])
+        self.model.cuda()
+        self.model.load_state_dict(torch.load('model-best.pth'))
+        
+    def inference(self,img_feature):
+        img_feature = self.feature_extractor(img_feature)
+        # Return the 5 captions from beam serach with beam size 5
+        return self.model.decode_sequence(self.model(img_feature.mean(0)[None], img_feature[None], mode='sample', opt={'beam_size':5, 'sample_method':'beam_search', 'sample_n':5})[0])
+```
+
+
+
+## 3. 이미지 및 캡셜 결과 출력
+
+```python
+#Req. 3-3 지 및 캡션 결과 출력
+# 이미지와 이미지에 대한 설명을 출력해야한다.
+# 이미지 load : cv2.imread / 이미지 출력 : cv2.imshow
+# 이미지 캡션 생성 : Caption_Model.inference
+if __name__ == '__main__':
+    cm = Caption_Model()
+    feat = cv2.imread("image.jpg")
+    result = cm.inference("image.jpg")
+    print(result)
+    cv2.imshow("타이틀임", feat)
+    cv2.waitKey()
+
+```
+
+/speak_image/IC 디렉토리 내에서 아래 명령어 실행
+
+```shell
+python image_captioning.py
+```
+
+
+
+**캡션 결과**
+
+![캡처](C:\Users\multicampus\Desktop\캡처.PNG)
+
+
+
+
+
