@@ -71,3 +71,29 @@ conda install pytorch torchvision torchaudio cudatoolkit=11 -c pytorch
 cudatoolkit 버전을 11버전으로 설치
 ```
 
+<br>
+
+### 서브프로젝트2 1일차
+
+jira 티켓 등록
+
+서비스플로우
+
+특화프로젝트 요구사항 명세서 진행
+
+image classifier tensorflow 로 해보기 [링크](classifier_example_skeleton_by_tf.ipynb)
+
+<br>
+
+### 서브프로젝트2 2일차
+
+특화프로젝트 요구사항 명세서
+
+tts 모델 Tacotron 이해
+
+이미지 캡셔닝 tensorflow로 동작 해보기 [링크](image_captioning_tutorial.ipynb)
+
+
+
+
+
