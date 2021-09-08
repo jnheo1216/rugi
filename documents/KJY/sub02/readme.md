@@ -52,6 +52,12 @@ Pre-trained Model(WaveGlow) : https://drive.google.com/file/d/1lVP5gQoB-fi6aydKu
 
 ##### Req.1-1 음성 데이터 전처리 과정 살펴보기 (melspec_example.ipynb)
 
+> melspectrogram_ex.ipynb 파일을 첨부하였습니다.
+
+원래 있던 sample 파일이 정상적으로 작동하지 않아 아래 경로에서 wav 파일을 다운로드 받아 사용했습니다.
+
+https://file-examples.com/index.php/sample-audio-files/sample-wav-download/
+
 ##### Req.1-2 Tacotron 모델 및 파라미터 구성 (model.py, config.yaml)
 
 ##### Req.1-3 데이터 셋 및 Pre-trained 모델 다운로드

@@ -56,6 +56,13 @@
 
 - Mel Frequency Cepstral Coefficient
 
-- 아직 잘 모르겠다..
-
 - https://m.blog.naver.com/mylogic/220988857132
+
+
+---
+
+### (09/08)
+
+- 기획
+- API 명세 작성
+- TTS  Tacotran 이해
