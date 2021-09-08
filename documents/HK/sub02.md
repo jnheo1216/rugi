@@ -308,3 +308,21 @@ plt.show()
 
 ![image-20210907213648496](C:\Users\multicampus\Desktop\projects\third\S05P21B106\documents\HK\sub02.assets\image-20210907213648496.png)
 
+---
+
+2021-09-08
+
+### 화면 목록 정리
+
+[Notion]: https://recondite-sweatshirt-73b.notion.site/List-of-Screen-3975e9aa343f4c44a0a01454708029c6
+
+
+
+### Wire Frame 작업
+
+![image-20210908210727979](C:\Users\multicampus\Desktop\projects\third\S05P21B106\documents\HK\sub02.assets\image-20210908210727979-1631103095447.png)
+
+
+
+
+
