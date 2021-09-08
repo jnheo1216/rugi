@@ -93,7 +93,13 @@ tts 모델 Tacotron 이해
 
 이미지 캡셔닝 tensorflow로 동작 해보기 [링크](image_captioning_tutorial.ipynb)
 
+<br>
 
+### 서브프로젝트2 3일차
+
+와이어 프레임 구성
+
+tts 모델 Tacotron 이해
 
 
 
