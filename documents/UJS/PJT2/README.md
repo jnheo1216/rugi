@@ -66,3 +66,67 @@
 - 기획
 - API 명세 작성
 - TTS  Tacotran 이해
+
+---
+
+### (09/09)
+
+- ERD 설계
+
+- Tacotron, Wavlglow 이해 https://pytorch.org/hub/nvidia_deeplearningexamples_waveglow/
+
+> Pre-trained Tacotron2, Waveglow 모델을 torch.hub에서 load
+> Tacotron2 입력테스트의 텐서가 주어지면 mel-spectrogram 생성
+> Waveglow는 mel-spectrogram에서 사운드를 생성
+>
+> 
+>
+>
+> LJ Speech 데이터 세트에서 사전 훈련된 WaveGlow 모델 로드
+>
+>
+> ```python
+> import torch
+> waveglow = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_waveglow', model_math='fp32')
+> waveglow = waveglow.remove_weightnorm(waveglow)
+> waveglow = waveglow.to('cuda')
+> waveglow.eval()
+> ```
+>
+> Tacotron2 모델 로드
+>
+> ```python
+> tacotron2 = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_tacotron2', model_math='fp32')
+> tacotron2 = tacotron2.to('cuda')
+> tacotron2.eval()
+> ```
+>
+> utils 메소드로 입력 형식 지정
+>
+> ```python
+> text = "hello world, I missed you so much"
+> 
+> utils = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_tts_utils')
+> sequences, lengths = utils.prepare_input_sequence([text])
+> ```
+>
+> 모델 실행
+>
+> ```python
+> with torch.no_grad():
+>     mel, _, _ = tacotron2.infer(sequences, lengths)
+>     audio = waveglow.infer(mel)
+> audio_numpy = audio[0].data.cpu().numpy()
+> rate = 22050
+> 
+> from scipy.io.wavfile import write
+> write("audio.wav", rate, audio_numpy)
+> ```
+>
+> 출력
+>
+> ```python
+> from IPython.display import Audio
+> Audio(audio_numpy, rate=rate)
+> ```
+

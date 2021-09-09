@@ -109,5 +109,13 @@ tts 모델 Tacotron 이해
 
 tts by torchhub [링크](tts_tutorial.ipynb)
 
+<br>
+
+### 서브프로젝트2 5일차
+
+skeleton project training 부분 (req2) 작성
+
+​	[tacotron2](https://github.com/NVIDIA/tacotron2) <- 해당 링크 참고
+
 
 
