@@ -101,5 +101,13 @@ tts 모델 Tacotron 이해
 
 tts 모델 Tacotron 이해
 
+<br>
+
+### 서브프로젝트2 4일차
+
+와이어 프레임 구성
+
+tts by torchhub [링크](tts_tutorial.ipynb)
+
 
 
