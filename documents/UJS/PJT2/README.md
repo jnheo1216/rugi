@@ -130,3 +130,60 @@
 > Audio(audio_numpy, rate=rate)
 > ```
 
+---
+
+(09/10)
+
+### train.py > optimizer, scheduler
+
+```python
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate,
+                                 weight_decay=hparams.weight_decay)
+```
+
+
+
+### validate()
+
+```python
+def validate(model, criterion, valset, iteration, batch_size, n_gpus,
+             collate_fn, logger, distributed_run, rank):
+    model.eval()
+    with torch.no_grad():
+        val_sampler = DistributedSampler(valset) if distributed_run else None
+        val_loader = DataLoader(valset, sampler=val_sampler, num_workers=1,
+                                shuffle=False, batch_size=batch_size,
+                                pin_memory=False, collate_fn=collate_fn)
+
+        val_loss = 0.0
+        for i, batch in enumerate(val_loader):
+            x, y = model.parse_batch(batch)
+            y_pred = model(x)
+            loss = criterion(y_pred, y)
+            if distributed_run:
+                reduced_val_loss = reduce_tensor(loss.data, n_gpus).item()
+            else:
+                reduced_val_loss = loss.item()
+            val_loss += reduced_val_loss
+        val_loss = val_loss / (i + 1)
+
+    model.train()
+    if rank == 0:
+        print("Validation loss {}: {:9f}  ".format(iteration, val_loss))
+        logger.log_validation(val_loss, model, y, y_pred, iteration)
+```
+
+
+
+### save_checkpoint()
+
+```python
+def save_checkpoint(model, optimizer, learning_rate, iteration, filepath):
+    print("Saving model and optimizer state at iteration {} to {}".format(
+        iteration, filepath))
+    torch.save({'iteration': iteration,
+                'state_dict': model.state_dict(),
+                'optimizer': optimizer.state_dict(),
+                'learning_rate': learning_rate}, filepath)
+```
+
