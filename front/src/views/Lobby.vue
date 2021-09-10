@@ -1,6 +1,6 @@
 <template>
   <div>
-      로비
+    로비
   </div>
 </template>
 
