@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  front:
+    container_name: front
+    build:
+      context: ./front
+    ports:
+      - 3000:80
+    networks:
+      - aimer
+    restart: unless-stopped
+  #   depends_on:
+  #     - spring
+  # spring:
+  #   container_name: spring
+  #   build:
+  #     context: ./spring_backend
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - aimer
+  #   restart: unless-stopped
+  django:
+    container_name: django
+    build:
+      context: ./django_backend
+    ports:
+      - 8081:8081
+    networks:
+      - aimer
+    restart: unless-stopped
+    # depends_on:
+    #   - spring
+  redis:
+    container_name: redis
+    image: redis:latest
+    networks:
+      - aimer
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/data
+    command: redis-server --appendonly yes
+  mysql:
+    container_name: mysql
+    image: wns312/mysql-utf8
+    networks:
+      - aimer
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=ssafydb
+      - MYSQL_ROOT_PASSWORD=ssafy
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+networks:
+  aimer:

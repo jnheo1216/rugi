@@ -543,4 +543,14 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+
+
+### Redis ###
+# Ignore redis binary dump (dump.rdb) files
+
+*.rdb
 # End of https://www.toptal.com/developers/gitignore/api/django,gradle,macos,windows,vue,python,pycharm,visualstudiocode,java,venv,intellij,jupyternotebooks
+# Created by https://www.toptal.com/developers/gitignore/api/redis
+# Edit at https://www.toptal.com/developers/gitignore?templates=redis
+# End of https://www.toptal.com/developers/gitignore/api/redis
+*.aof
