@@ -117,5 +117,19 @@ skeleton project training 부분 (req2) 작성
 
 ​	[tacotron2](https://github.com/NVIDIA/tacotron2) <- 해당 링크 참고
 
+<br>
+
+### 서브프로젝트2 6일차
+
+멘토링 QnA
+
+평가에 코사인 유사도에 대해 찾아보기
+
+tensorboard를 보면서 loss를 보는 것  매우 중요
+
+찾아서 참고해보면 좋은 것들 : fairseq, ESPnet, Auto VC, HuBERT
+
+사전학습 모델을 쓴다면 그걸 어쨰서 골랐나? loss는? activation함수는? 이런 질문들에 완전히 대답할 수 있도록 준비
+
 
 
