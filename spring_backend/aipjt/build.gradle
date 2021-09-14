@@ -19,9 +19,13 @@ repositories {
 }
 
 dependencies {
+	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
