@@ -21,6 +21,12 @@ repositories {
 dependencies {
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// mysql
+	implementation 'mysql:mysql-connector-java'
+	// Jpa Hibernate
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Dev Tools
+	developmentOnly('org.springframework.boot:spring-boot-devtools')
 	// web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// websocket
