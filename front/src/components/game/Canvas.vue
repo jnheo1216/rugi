@@ -163,7 +163,7 @@ export default {
 </script>
 
 <style>
-@import "reset.css";
+@import "../../reset.css";
 body {
   background-color: #f6f9fc;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
