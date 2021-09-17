@@ -6,14 +6,14 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Getter @Setter
-public class Member {
+public class User {
     String id;
     int score = 0;
     boolean isActive = true;
     String avatar;
     String nickname;
 
-    public Member(String avatar, String nickname) {
+    public User(String avatar, String nickname) {
         this.id = UUID.randomUUID().toString();
         this.avatar = avatar;
         this.nickname = nickname;

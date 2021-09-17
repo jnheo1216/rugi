@@ -1,10 +1,9 @@
 package com.b106.aipjt;
 
-import com.b106.aipjt.domain.redishash.Member;
 import com.b106.aipjt.domain.redishash.Room;
+import com.b106.aipjt.domain.redishash.User;
 import com.b106.aipjt.domain.repository.RoomRedisRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ class AipjtApplicationTests {
     @Autowired
     private RoomRedisRepository roomRedisRepository;
 
+
     @AfterEach
     public void deleteAllRoom() throws Exception {
         roomRedisRepository.deleteAll();
@@ -32,7 +32,7 @@ class AipjtApplicationTests {
 
 	@Test
     void roomCreate() {
-        Member member = new Member("/avatar/1", "준영");
+        User member = new User("/avatar/1", "준영");
         Room room = new Room(null, member);
         roomRedisRepository.save(room);
         System.out.println(member.getId()); // 정상적으로 id가 생성됨. 롤백은 어떻게 하는건지 모르겠음. template 써야되는 것으로 알고있음
@@ -51,13 +51,13 @@ class AipjtApplicationTests {
 
     @Test
     void addMemberToRoom() {
-        Member member1 = new Member("/avatar/1", "준영1");
+        User member1 = new User("/avatar/1", "준영1");
         Room room = new Room(null, member1);
         roomRedisRepository.save(room);
         Optional<Room> byId = roomRedisRepository.findById(room.getId());
         if (byId.isPresent()) {
             Room findRoom = byId.get();
-            Member member2 = new Member("/avatar/2", "준영2");
+            User member2 = new User("/avatar/2", "준영2");
             findRoom.getMemberList().add(member2);
             roomRedisRepository.save(findRoom);
 
