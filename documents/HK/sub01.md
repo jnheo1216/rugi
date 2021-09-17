@@ -360,6 +360,3 @@ python image_captioning.py
 ![캡처](C:\Users\multicampus\Desktop\캡처.PNG)
 
 
-
-
-

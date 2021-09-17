@@ -71,3 +71,65 @@ conda install pytorch torchvision torchaudio cudatoolkit=11 -c pytorch
 cudatoolkit 버전을 11버전으로 설치
 ```
 
+<br>
+
+### 서브프로젝트2 1일차
+
+jira 티켓 등록
+
+서비스플로우
+
+특화프로젝트 요구사항 명세서 진행
+
+image classifier tensorflow 로 해보기 [링크](classifier_example_skeleton_by_tf.ipynb)
+
+<br>
+
+### 서브프로젝트2 2일차
+
+특화프로젝트 요구사항 명세서
+
+tts 모델 Tacotron 이해
+
+이미지 캡셔닝 tensorflow로 동작 해보기 [링크](image_captioning_tutorial.ipynb)
+
+<br>
+
+### 서브프로젝트2 3일차
+
+와이어 프레임 구성
+
+tts 모델 Tacotron 이해
+
+<br>
+
+### 서브프로젝트2 4일차
+
+와이어 프레임 구성
+
+tts by torchhub [링크](tts_tutorial.ipynb)
+
+<br>
+
+### 서브프로젝트2 5일차
+
+skeleton project training 부분 (req2) 작성
+
+​	[tacotron2](https://github.com/NVIDIA/tacotron2) <- 해당 링크 참고
+
+<br>
+
+### 서브프로젝트2 6일차
+
+멘토링 QnA
+
+평가에 코사인 유사도에 대해 찾아보기
+
+tensorboard를 보면서 loss를 보는 것  매우 중요
+
+찾아서 참고해보면 좋은 것들 : fairseq, ESPnet, Auto VC, HuBERT
+
+사전학습 모델을 쓴다면 그걸 어쨰서 골랐나? loss는? activation함수는? 이런 질문들에 완전히 대답할 수 있도록 준비
+
+
+

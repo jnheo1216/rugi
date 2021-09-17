@@ -1,0 +1,13 @@
+package com.b106.aipjt.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequiredArgsConstructor
+@RequestMapping(value = "/chat")
+public class ChatRoomController {
+
+
+}
