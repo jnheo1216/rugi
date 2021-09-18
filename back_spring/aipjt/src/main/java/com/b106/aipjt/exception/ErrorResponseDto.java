@@ -1,18 +1,16 @@
 package com.b106.aipjt.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class ErrorResponseDto {
-    private String code;
-    private String description;
-    private String detail;
+    private String errorCode;
+    private String errorMessage;
+    private Object data;
 
-
-    public ErrorResponseDto(String code, String description) {
-        this.code = code;
-        this.description = description;
+    public ErrorResponseDto(String errorCode, String errorMessage) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
     }
 }
