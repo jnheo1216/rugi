@@ -1,7 +1,7 @@
 <template>
-  <div>
-    userlist
-    <div v-for="user in users" :key="user.userNumber">
+  <div class="userListBody">
+    <header>userlist</header>
+    <div class="userList" v-for="user in users" :key="user.userNumber">
       <div>{{ user.userNickName }}</div>
       <div>{{ user.userNumber }}</div>
       <div>{{ user.isSuperUser }}</div>
@@ -34,5 +34,16 @@ export default {
 </script>
 
 <style>
-
+.userListBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 50px;
+  padding: 50px 10px;
+}
+.userList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 </style>

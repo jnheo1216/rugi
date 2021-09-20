@@ -1,30 +1,65 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
-  <router-view />
+  <body>
+    <router-view />
+  </body>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import "/reset.css";
+body {
+  background-color: #f6f9fc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  padding: 50px 0px;
+}
+
+.controls {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls .controls_btns {
+  margin-bottom: 30px;
+}
+
+.controls_btns button {
+  all: unset;
+  cursor: pointer;
+  background-color: white;
+  padding: 5px 0px;
+  width: 80px;
   text-align: center;
-  color: #2c3e50;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  color: solid rgba(0, 0, 0, 0.8);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-#nav {
-  padding: 30px;
+.controls_btns button:active {
+  transform: scale(0.98);
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.controls .controls_colors {
+  display: flex;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.controls_colors .controls_color {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.controls .controls_range {
+  margin-bottom: 30px;
 }
 </style>

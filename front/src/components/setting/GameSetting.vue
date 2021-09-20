@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>game set</div>
+  <div class="gameSettingBody">
+    <header>game set</header>
     <div>라운드  :  <button @click="rounds_idx -= 1">좌</button> {{ rounds[rounds_idx%3] }} <button @click="rounds_idx += 1">우</button></div>
     <div>인원  :  <button @click="counts_idx -= 1">좌</button> {{ counts[counts_idx%5] }} <button @click="counts_idx += 1">우</button></div>
     <div>타이머  :  <button @click="timer_idx -= 1">좌</button> {{ timer[timer_idx%3] }} <button @click="timer_idx += 1">우</button></div>
@@ -28,5 +28,11 @@ export default {
 </script>
 
 <style>
-
+.gameSettingBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 50px;
+  padding: 50px 0px;
+}
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <body>
+  <div class="mainButtonBody">
     <button id="craeteSession" @click="clickCreate">방만들기</button>
     <button id="enterSession">입장하기</button>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -10,10 +10,6 @@
 
 export default {
   name: 'MainButton',
-
-  props: {
-    nickname: String,
-  },
 
   methods: {
     clickCreate: function () {
@@ -30,14 +26,9 @@ export default {
 </script>
 
 <style>
-@import '../../reset.css';
-body {
-  background-color: #f6f9fc;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+.mainButtonBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
-  padding: 50px 0px;
 }
 </style>
