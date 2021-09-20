@@ -2,19 +2,24 @@ package com.b106.aipjt.domain.redishash;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.UUID;
 
 @Getter @Setter
+@RedisHash("user")
+@ToString(of = {"id", "avatar", "nickname"})
 public class User {
+    @Id
     String id;
     int score = 0;
-    boolean isActive = true;
     String avatar;
     String nickname;
 
-    public User(String avatar, String nickname) {
-        this.id = UUID.randomUUID().toString();
+    public User(String id, String avatar, String nickname) {
+        this.id = id;
         this.avatar = avatar;
         this.nickname = nickname;
     }

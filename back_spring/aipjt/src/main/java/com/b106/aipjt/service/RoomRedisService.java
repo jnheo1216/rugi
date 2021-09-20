@@ -15,12 +15,12 @@ public class RoomRedisService {
     private final RoomRedisRepository roomRedisRepository;
     private final RoundRedisRepository roundRedisRepository;
 
-    public Optional<Room> createRoom(String avatar, String nickname) {
-        User user = new User(avatar, nickname);
-        Room room = new Room(null, user);
-        roomRedisRepository.save(room);
-        Optional<Room> id = Optional.ofNullable(room);
-        return id;
-    }
+//    public Optional<Room> createRoom(String avatar, String nickname) {
+//        User user = new User(avatar, nickname);
+//        Room room = new Room(null, user);
+//        roomRedisRepository.save(room);
+//        Optional<Room> id = Optional.ofNullable(room);
+//        return id;
+//    }
 
 }
