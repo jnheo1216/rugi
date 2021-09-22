@@ -23,7 +23,7 @@ import java.util.List;
 public class RoomController {
     private final RoomRedisService roomRedisService;
 
-    // 방 생성
+    // 방 생성 : 방 생성 전체정보를 굳이 보내 줄 필요가 있을까에 대한 의문이 생김. 어차피 방 입장할 때 조회하게 되므로
     @PostMapping("")
     public ResponseDto<RoomResponseDto> createRoom(@RequestHeader(value="User-Id") String userId,
                                                    @Valid @RequestBody RoomCreateRequestDto roomCreateDto){
@@ -33,7 +33,8 @@ public class RoomController {
         return new ResponseDto(HttpStatus.CREATED.value(), "방 생성 성공", build);
     }
 
-    // 방 조회
+    // 방 조회 : 유저의 방 입장에서의 ResponseDto 생성 로직이 겹치기 때문에, 함수로 따로 뺄 필요 있음.
+    // 문제는 어디에 함수를 빼는가인데.. RoomResponseDto에 static 메소드 생성을 고려해 볼 것
     @GetMapping("")
     public ResponseDto<RoomResponseDto> getRoom(@RequestHeader(value="User-Id") String userId,
                                                 @RequestParam String roomId){
@@ -60,7 +61,9 @@ public class RoomController {
     }
 
 
-    // 유저의 방 입장
+
+
+    // 유저의 방 입장 : 방 조회의 ResponseDto 생성 로직이 겹치기 때문에, 함수로 따로 뺄 필요 있음.
     @PostMapping("/user")
     public ResponseDto<RoomResponseDto> joinRoom(@RequestHeader(value="User-Id") String userId,
                                                  @RequestParam String roomId) {
