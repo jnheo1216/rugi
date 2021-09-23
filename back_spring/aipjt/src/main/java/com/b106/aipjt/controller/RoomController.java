@@ -41,7 +41,7 @@ public class RoomController {
         // 0. Room 조회
         Room room = roomRedisService.findOne(roomId);
 
-        // 1.  User 리스트를 RoomUserResponseDto 변환
+        // 1.  User 리스트를 RoomUserResponseDto 변환ysql
         List<RoomUserResponseDto> roomUsers = new ArrayList<>();
         room.getUserList().forEach(u -> {
             roomUsers.add(new RoomUserResponseDto(0, u.getAvatar(), u.getNickname(), room.getSuperUser().getId().equals(u.getId())));

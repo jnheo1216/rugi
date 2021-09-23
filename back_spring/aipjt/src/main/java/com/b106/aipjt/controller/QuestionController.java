@@ -12,20 +12,20 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1")
+@RequestMapping("/api/question")
 public class QuestionController {
     private final QuestionRepository questionRepository;
 
-    @GetMapping("question")
+    @GetMapping("")
     public List<Question> findAllQuestion() {
         return questionRepository.findAll();
     }
 
-    @PostMapping("question")
+    @PostMapping("")
     public Question register() {
         final Question question = Question.builder()
-            .img_url("test_url")
-            .img_caption("test_caption")
+            .imgUrl("test_url")
+            .imgCaption("test_caption")
             .build();
         return questionRepository.save(question);
     }
