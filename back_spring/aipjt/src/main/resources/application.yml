@@ -12,6 +12,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  # security:
+  #   user: ssafy
+  #   password: ssafy
 
 logging.level:
   org.hibernate.SQL: debug
