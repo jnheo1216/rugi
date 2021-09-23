@@ -13,20 +13,25 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
+const API_URL = 'localhost'
 export default {
   name: 'MainButton',
 
   methods: {
     clickCreate: function () {
-    //   axios({
-    //     method: 'post',
-    //     url: 'api/hi',
-    //   }).then((res) => {
-    //     console.log(res)
-    //   })
-      this.$router.push({ name : 'Lobby' , params: { room_id : 1}})
+      axios({
+        method: 'post',
+        url: `${API_URL}:8080/api/room/`,
+        data: {
+          "avatar": "/avatar/1",
+          "nickname": "건건"
+        }
+      }).then((res) => {
+        console.log(res)
+      })
+      // this.$router.push({ name : 'Lobby' , params: { room_id : 1}})
     }
   }
 }

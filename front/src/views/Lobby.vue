@@ -19,9 +19,6 @@ import GameSetting from '@/components/setting/GameSetting.vue'
 import UserList from '@/components/user/UserList.vue'
 
 export default {
-  // mounted: {
-  //   // 입장하는순간 소켓 걸어줘야돼
-  // },
   components: {
     GameSetting,
     LobbyButton,

@@ -3,7 +3,7 @@
     <header>
       <img alt="Vue logo" src="../assets/ccc.png" height="200" width="200">
     </header>
-    <h1>서 비 스  명</h1>
+    <h1>서 비 스 명</h1>
     <div class="mainService">
       <Avatar />
       <Main-button />
