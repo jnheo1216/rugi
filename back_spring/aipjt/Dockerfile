@@ -12,6 +12,6 @@ RUN chmod +x gradlew
 RUN ["./gradlew", "clean", "build", "--stacktrace", "--exclude-task", "test"]
 
 FROM openjdk:11-jre-slim
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/aipjt-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT java -jar app.jar
