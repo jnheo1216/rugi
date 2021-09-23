@@ -1,7 +1,14 @@
 <template>
   <div class="mainButtonBody">
-    <button id="craeteSession" @click="clickCreate">방만들기</button>
-    <button id="enterSession">입장하기</button>
+    <Button
+      id="createSession"
+      @click="clickCreate"
+      class="p-button-raised p-button-text p-button-secondary"
+      icon="pi pi-apple"
+      label="방만들기"
+    >
+    </Button>
+    <Button id="enterSession">입장하기</Button>
   </div>
 </template>
 
