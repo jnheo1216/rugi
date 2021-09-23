@@ -14,6 +14,7 @@
 <script>
 import Avatar from '../components/setting/Avatar.vue'
 import MainButton from '../components/buttons/MainButton.vue'
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -21,6 +22,20 @@ export default {
     Avatar,
     MainButton
   },
+  // mounted: function () 와 동일하게 동작
+  mounted() {
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/api/user',
+      data: {
+        "avatar": "/avatar/1",
+        "nickname": "nickname"
+      }
+    }).then((res) => {
+      console.log('유저생성',res.data.data)
+      this.$store.dispatch('setUserData', res.data.data)
+    })
+  }
 }
 </script>
 <style>
