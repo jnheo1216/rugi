@@ -34,9 +34,11 @@ export default {
       }
     }).then((res) => {
       console.log('됐다 이 말 이야')
+      console.log('yes', axios.defaults.baseURL)
       axios.defaults.headers.common['User-id'] = res.data.data.id
       this.$store.dispatch('setUserData', res.data.data)
     }).catch((err) => {
+      console.log('no', axios.defaults.baseURL)
       console.log(err.response)
     })
   }
