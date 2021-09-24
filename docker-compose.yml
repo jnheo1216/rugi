@@ -2,7 +2,9 @@ version: "3.9"
 services:
   front:
     container_name: front
+    #build시 적용되는 구성 옵션
     build:
+      #Dockerfile이 포함된 디렉토리의 경로 또는 git 리포지토리의 URL
       context: ./front
     ports:
       - 3000:80
