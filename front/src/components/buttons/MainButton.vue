@@ -22,7 +22,7 @@ export default {
     clickCreate: function () {
       axios({
         method: 'post',
-        url: 'http://localhost:8080/api/room',
+        url: '/room',
         data: {
           'avatar': `${this.$store.state.avatar}`,
           'nickname': `${this.$store.state.nickname}`
@@ -30,7 +30,7 @@ export default {
       }).then((res) => {
         console.log(res)
       }).catch((err) => {
-        console.log(err)
+        console.log(err.response)
       })
 
     }
