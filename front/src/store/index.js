@@ -2,17 +2,15 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    id: undefined,
-    avatar: undefined,
-    nickname: undefined
+    id: '',
+    avatar: 'avatar/1',
+    nickname: 'nickname'
   },
   mutations: {
     SET_USERDATA: function (state, data) {
-      console.log('here', data)
       state.id = data.id
-      console.log('hi', state.id)
-      // status.avatar = data.avatar
-      // status.nickname = data.nickname
+      state.avatar = data.avatar
+      state.nickname = data.nickname
     }
   },
   actions: {

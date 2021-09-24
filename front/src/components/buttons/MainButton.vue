@@ -15,7 +15,6 @@
 <script>
 import axios from 'axios'
 
-// const API_URL = 'localhost'
 export default {
   name: 'MainButton',
 
@@ -24,12 +23,14 @@ export default {
       axios({
         method: 'post',
         url: 'http://localhost:8080/api/room',
-        headers: {
-          "avatar": "/avatar/1",
-          "nickname": "asdfasdfasddf"
+        data: {
+          'avatar': `${this.$store.state.avatar}`,
+          'nickname': `${this.$store.state.nickname}`
         }
       }).then((res) => {
         console.log(res)
+      }).catch((err) => {
+        console.log(err)
       })
 
     }
