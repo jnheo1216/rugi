@@ -10,7 +10,7 @@ def evaluate(image, max_length, attention_features_shape, decoder, encoder, toke
     attention_plot = np.zeros((max_length, attention_features_shape))
     image_features_extract_model = get_img_feature_extract_model()
 
-    hidden = decoder.reset_state(batch_size=1)
+    hidden = tf.zeros((1, 512))
 
     temp_input = tf.expand_dims(load_image(image)[0], 0)
     img_tensor_val = image_features_extract_model(temp_input)
