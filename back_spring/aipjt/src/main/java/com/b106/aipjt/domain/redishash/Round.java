@@ -13,7 +13,7 @@ public class Round {
     @Id
     private String id;
     @TimeToLive
-    private Long timeout;
+    private int timeout;
     private String question; // 질문
-
+    private Long answerURL; // 정답에 대한 URL을 가지고 있는 엔티티의 id를 저장한다
 }

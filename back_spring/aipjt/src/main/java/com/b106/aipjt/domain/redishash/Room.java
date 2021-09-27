@@ -41,4 +41,9 @@ public class Room {
         this.id = id;
         this.superUser = superUser;
     }
+
+    public Room gameStart() {
+        this.setStart(true); // 게임이 시작했으므로
+        return this;
+    }
 }

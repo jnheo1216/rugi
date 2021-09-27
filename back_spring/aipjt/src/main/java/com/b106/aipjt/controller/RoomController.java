@@ -30,7 +30,8 @@ public class RoomController {
         return new ResponseDto(HttpStatus.CREATED.value(), "방 생성 성공", build);
     }
 
-    // 유저의 방 입장
+    // 유저의 방 입장 : 여기서 id만 보내는게 아니라 아바타랑 닉네임도 보내야 함
+    // RoomEnterRequestDto를 수정할 것. 실제로 백에 보내는 요청은 굳이 Param으로 보낼 필요 없으니 Body로 빼도 될듯
     @PostMapping("/user")
     public ResponseDto<RoomResponseDto> joinRoom(@RequestHeader(value="User-Id") String userId,
                                                  @RequestParam String roomId) {
