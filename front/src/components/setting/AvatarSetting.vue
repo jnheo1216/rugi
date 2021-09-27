@@ -1,9 +1,11 @@
 <template>
   <div class="avatarBody">
     <div>
-      <div class="hi">아바타설정</div>
+      <div class="hi">
+        아바타설정
+      </div>
+      <Avatar class="avatar" image="@/assets/logo.png" size="xlarge" shape="circle" />
       <div class="p-float-label why">
-        <Avatar icon="pi pi-search" />
         <InputText
           id="username1"
           type="text"
@@ -17,9 +19,10 @@
 </template>
 
 <script>
-import Avatar from 'primevue/avatar'
+// import MainButton from '@/components/MainButton'
 export default {
-  components: { Avatar },
+  components: {
+  },
   name: 'AvatarSetting',
   data: function() {
     return {
@@ -38,11 +41,11 @@ export default {
   padding: 50px 0px;
 }
 .hi {
-  padding: 50px 0px;
+  padding: 25px 0px;
 }
 .why {
-  display: block;
-  flex-direction: column;
-  align-items: center;
+  margin-top: 25px;
+
 }
+
 </style>

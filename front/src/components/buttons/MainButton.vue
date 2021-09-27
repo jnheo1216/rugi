@@ -3,12 +3,16 @@
     <Button
       id="createSession"
       @click="clickCreate"
-      class="p-button-raised p-button-text p-button-secondary"
-      icon="pi pi-apple"
+      class="p-button-raised p-button-text p-button-secondary p-button-lg"
       label="방만들기"
     >
     </Button>
-    <Button id="enterSession">입장하기</Button>
+    <Button
+      id="enterSession"
+      class="p-button-raised p-button-text p-button-secondary p-button-lg"
+    >
+      입장하기
+    </Button>
   </div>
 </template>
 
@@ -43,5 +47,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.p-button-raised {
+  margin-top: 25px !important;
+  margin-left: 25px !important;
 }
 </style>
