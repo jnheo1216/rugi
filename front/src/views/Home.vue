@@ -23,7 +23,7 @@ export default {
     MainButton
   },
   // mounted: function () 와 동일하게 동작
-  mounted() {
+  mounted: function() {
     axios({
       method: 'post',
       url: '/user',
@@ -33,11 +33,9 @@ export default {
         "nickname": "nickname"
       }
     }).then((res) => {
-      console.log('yes', axios.defaults.baseURL)
       axios.defaults.headers.common['User-id'] = res.data.data.id
       this.$store.dispatch('setUserData', res.data.data)
     }).catch((err) => {
-      console.log('no', axios.defaults.baseURL)
       console.log(err.response)
     })
   }

@@ -16,6 +16,7 @@
           id="username1"
           type="text"
           v-model="nickname"
+          @input="setNickName"
         >
         </InputText>
         <label for="username">Nickname</label>
@@ -51,6 +52,9 @@ export default {
     },
     getRanNum: function () {
       return Math.floor(Math.random()*this.avatarCount)
+    },
+    setNickName: function () {
+      this.$store.dispatch('setNickName', this.nickname)
     }
   },
 }
@@ -68,8 +72,8 @@ export default {
   padding: 25px 0px;
 }
 .why {
+  /* avatar랑 nickname 띄어놓기 위함 */
   margin-top: 25px;
-
 }
 
 </style>

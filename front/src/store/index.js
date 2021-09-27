@@ -12,11 +12,17 @@ export default createStore({
       state.id = data.id
       state.avatar = data.avatar
       state.nickname = data.nickname
+    },
+    SET_NICKNAME: function (state, data) {
+      state.nickname = data
     }
   },
   actions: {
     setUserData: function(context, data) {
       context.commit('SET_USERDATA', data)
+    },
+    setNickName: function(context, data) {
+      context.commit('SET_NICKNAME', data)
     }
   },
   modules: {

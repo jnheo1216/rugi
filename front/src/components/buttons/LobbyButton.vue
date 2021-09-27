@@ -30,6 +30,9 @@ export default {
     },
     startGame: function () {
     },
+  },
+  mounted: function() {
+    console.log('nickname', this.$store.state.nickname)
   }
 }
 </script>
