@@ -43,41 +43,41 @@ public class RoomRedisService {
 
     // 방 입장 : 중복 입장이 안되도록 처리가 필요함 -> 나중에 다시 확인할 것. filter를 사용하는게 맞을지..?
     public Room joinRoom(String userId, String roomId) {
+        // 객체 조회
         Optional<User> userResult = userRedisRepository.findById(userId);
-        if (userResult.isEmpty()) {
-            throw new RuntimeException("유저가 존재하지 않습니다");
-        }
-        User user = userResult.get();
         Optional<Room> roomResult = roomRedisRepository.findById(roomId);
-        if (roomResult.isEmpty()) {
-            throw new RuntimeException("방이 존재하지 않습니다");
-        }
+        // 검증 로직
+        if (userResult.isEmpty()) throw new RuntimeException("유저가 존재하지 않습니다");
+        if (roomResult.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
+        //Optional 꺼내기
+        User user = userResult.get();
         Room room = roomResult.get();
-        // 이건 좀..그렇지않나?
-        List<User> collect = room.getUserList()
-            .stream()
-            .filter(u -> u.getId() == userId)
-            .collect(Collectors.toList());
-        collect.add(user);
-        room.setUserList(collect);
-        roomRedisRepository.save(room);
+        // 입장 처리하기
+        if (!room.getUserList().contains(user)) {
+            room.getUserList().add(user);
+            roomRedisRepository.save(room);
+        }
+
         return room;
     }
 
     // 방 퇴장
     public Room leaveRoom(String userId, String roomId) {
+        // 조회 & 검증 & Optional 빼내기
         Optional<Room> roomResult = roomRedisRepository.findById(roomId);
-        if (roomResult.isEmpty()) {
-            throw new RuntimeException("방이 존재하지 않습니다");
-        }
+        if (roomResult.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
         Room room = roomResult.get();
-        // 이건 좀..그렇지않나?
+        // 퇴장을 위한 필터링
         List<User> collect = room.getUserList()
             .stream()
             .filter(u -> u.getId() == userId)
             .collect(Collectors.toList());
         room.setUserList(collect);
-        roomRedisRepository.save(room);
+        if (collect.size() == 0) {
+            roomRedisRepository.delete(room);
+        }else{
+            roomRedisRepository.save(room);
+        }
         return room;
     }
 }

@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter @Setter
@@ -23,4 +24,13 @@ public class User {
         this.avatar = avatar;
         this.nickname = nickname;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return user.getId().equals(this.getId());
+    }
+
 }
