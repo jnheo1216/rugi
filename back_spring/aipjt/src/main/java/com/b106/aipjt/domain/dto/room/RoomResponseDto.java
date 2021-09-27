@@ -17,7 +17,7 @@ public class RoomResponseDto {
     @Builder.Default
     private boolean isStart = false;
     @Builder.Default
-    private int round = 0;
+    private int currentRound = 0;
     @Builder.Default
     private int maxRound = 3;
     @Builder.Default

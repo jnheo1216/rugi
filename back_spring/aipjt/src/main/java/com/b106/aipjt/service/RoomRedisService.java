@@ -1,6 +1,7 @@
 package com.b106.aipjt.service;
 
 import com.b106.aipjt.domain.redishash.Room;
+import com.b106.aipjt.domain.redishash.Round;
 import com.b106.aipjt.domain.redishash.User;
 import com.b106.aipjt.domain.repository.RoomRedisRepository;
 import com.b106.aipjt.domain.repository.RoundRedisRepository;
@@ -16,32 +17,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoomRedisService {
     private final UserRedisRepository userRedisRepository;
+    private final RoundRedisRepository roundRedisRepository;
     private final RoomRedisRepository roomRedisRepository;
 
     // 방 생성
-    public Room createRoom(String userId, String avatar, String nickname) {
+    public Room createRoom(String userId) {
         Optional<User> result = userRedisRepository.findById(userId);
-        if (result.isEmpty()) {
-            throw new RuntimeException("유저가 존재하지 않습니다.");
-        }
-        User user = result.get();
-        user.setAvatar(avatar);
-        user.setNickname(nickname);
-        userRedisRepository.save(user);
-        Room room = new Room(null, user);
+        if (result.isEmpty()) throw new RuntimeException("유저가 존재하지 않습니다.");
+        Room room = roomRedisRepository.save(new Room(null, result.get()));
         return roomRedisRepository.save(room);
     }
 
-    // 방 조회
-    public Room findOne(String roomId) {
-        Optional<Room> result = roomRedisRepository.findById(roomId);
-        if (result.isEmpty()) {
-            throw new RuntimeException("방이 존재하지 않습니다.");
-        }
-        return result.get();
-    }
 
-    // 방 입장 : 중복 입장이 안되도록 처리가 필요함 -> 나중에 다시 확인할 것. filter를 사용하는게 맞을지..?
+    // 방 입장
     public Room joinRoom(String userId, String roomId) {
         // 객체 조회
         Optional<User> userResult = userRedisRepository.findById(userId);
@@ -57,7 +45,6 @@ public class RoomRedisService {
             room.getUserList().add(user);
             roomRedisRepository.save(room);
         }
-
         return room;
     }
 
