@@ -27,10 +27,10 @@ export default {
           'avatar': `${this.$store.state.avatar}`,
           'nickname': `${this.$store.state.nickname}`
         }
-      }).then((res) => {
-        console.log(res)
+      }).then(() => {
+        this.$router.push({ name: "Lobby", params: {room_id: this.$store.state.id} })
       }).catch((err) => {
-        console.log(err.response)
+        console.log(err)
       })
 
     }

@@ -1,5 +1,5 @@
 <template>
-  <div>게임시작asdf</div>
+  <div>게임시작</div>
 </template>
 
 <script>
