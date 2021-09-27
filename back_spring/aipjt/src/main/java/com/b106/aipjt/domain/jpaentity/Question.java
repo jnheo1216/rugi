@@ -2,10 +2,7 @@ package com.b106.aipjt.domain.jpaentity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Getter
@@ -18,11 +15,14 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imgUrl;
+    @Column(columnDefinition = "TEXT")
+    private String imgName;
+    private String imgFullPath;
     private String imgCaption;
 
-    public Question(String imgUrl, String imgCaption) {
-        this.imgUrl = imgUrl;
+    public Question(String imgUrl, String imgFullPath, String imgCaption) {
+        this.imgName = imgUrl;
+        this.imgFullPath = imgFullPath;
         this.imgCaption = imgCaption;
     }
 

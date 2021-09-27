@@ -1,32 +1,39 @@
 package com.b106.aipjt.controller;
 
-import com.b106.aipjt.domain.jpaentity.Question;
-import com.b106.aipjt.domain.repository.QuestionRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.b106.aipjt.domain.dto.question.QuestionDto;
+import com.b106.aipjt.service.QuestionService;
+import com.b106.aipjt.service.S3UploadService;
+import lombok.AllArgsConstructor;
 
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/question")
+@RequestMapping("api/question")
+@AllArgsConstructor
 public class QuestionController {
-    private final QuestionRepository questionRepository;
+    private S3UploadService s3UploadService;
+    private QuestionService questionService;
 
     @GetMapping("")
-    public List<Question> findAllQuestion() {
-        return questionRepository.findAll();
+    public String findAllQuestion(Model model){
+        List<QuestionDto> questionDtoList = questionService.getList();
+
+        model.addAttribute("questionList", questionDtoList);
+        //      프론트 연결시 리턴값 추후 수정 필요
+        return questionDtoList.toString();
     }
 
     @PostMapping("")
-    public Question register() {
-        final Question question = Question.builder()
-            .imgUrl("test_url")
-            .imgCaption("test_caption")
-            .build();
-        return questionRepository.save(question);
+    public String register(QuestionDto questionDto, MultipartFile file) throws IOException {
+        String imgUrl = s3UploadService.upload(file); // key : file
+        questionDto.setImgName(imgUrl);
+        questionService.saveImage(questionDto);
+
+        return "upload success";
     }
 }
