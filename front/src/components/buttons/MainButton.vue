@@ -28,7 +28,7 @@ export default {
           'nickname': `${this.$store.state.nickname}`
         }
       }).then(() => {
-        this.$router.push({ name: "Lobby", params: {room_id: this.$store.state.id} })
+        this.$router.push({ name: "Lobby", query: {room: this.$store.state.id} })
       }).catch((err) => {
         console.log(err)
       })
