@@ -1,7 +1,17 @@
 <template>
   <div>
-    <button @click="startGame()">게임시작</button>
-    <button @click="generateLink()">초대링크</button>
+    <Button
+      class="p-button-raised p-button-text p-button-secondary"
+      @click="startGame()"
+    >
+      게임시작
+    </Button>
+    <Button
+      class="p-button-raised p-button-text p-button-secondary"
+      @click="generateLink()"
+    >
+      초대링크
+    </Button>
     <div>{{ inviteLink }}</div>
   </div>
 </template>
@@ -25,5 +35,7 @@ export default {
 </script>
 
 <style>
-
+  .p-button-raised {
+    margin-right: 5px;
+  }
 </style>

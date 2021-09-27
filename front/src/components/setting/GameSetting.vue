@@ -1,10 +1,71 @@
 <template>
   <div class="gameSettingBody">
-    <header>game set</header>
-    <div>라운드  :  <button @click="rounds_idx -= 1">좌</button> {{ rounds[rounds_idx%3] }} <button @click="rounds_idx += 1">우</button></div>
-    <div>인원  :  <button @click="counts_idx -= 1">좌</button> {{ counts[counts_idx%5] }} <button @click="counts_idx += 1">우</button></div>
-    <div>타이머  :  <button @click="timer_idx -= 1">좌</button> {{ timer[timer_idx%3] }} <button @click="timer_idx += 1">우</button></div>
-    <div>커스텀 사용  :  <button @click="is_custom_idx -= 1">좌</button> {{ is_custom[is_custom_idx%2] }} <button @click="is_custom_idx += 1">우</button></div>
+    <header>game setting</header>
+    <div class="set">
+      라운드
+      <Button
+        icon="pi pi-arrow-left"
+        style="fontSize: 0.1rem"
+        class="p-button-rounded p-button-text"
+        @click="rounds_idx -= 1"
+      >
+      </Button>
+      {{ rounds[rounds_idx%3] }}
+      <Button
+        icon="pi pi-arrow-right"
+        class="p-button-rounded p-button-text"
+        @click="rounds_idx += 1"
+      >
+      </Button>
+    </div>
+    <div class="set">
+      인원
+      <Button
+        icon="pi pi-arrow-left"
+        class="p-button-rounded p-button-text"
+        @click="counts_idx -= 1"
+      >
+      </Button>
+      {{ counts[counts_idx%5] }}
+      <Button
+        icon="pi pi-arrow-right"
+        class="p-button-rounded p-button-text"
+        @click="counts_idx += 1"
+      >
+      </Button>
+    </div>
+    <div class="set">
+      타이머
+      <Button
+        icon="pi pi-arrow-left"
+        class="p-button-rounded p-button-text"
+        @click="timer_idx -= 1"
+      >
+      </Button>
+      {{ timer[timer_idx%3] }}
+      <Button
+        icon="pi pi-arrow-right"
+        class="p-button-rounded p-button-text"
+        @click="timer_idx += 1"
+      >
+      </Button>
+    </div>
+    <div class="set">
+      커스텀 사용
+      <Button
+        icon="pi pi-arrow-left"
+        class="p-button-rounded p-button-text"
+        @click="is_custom_idx -= 1"
+      >
+      </Button>
+      {{ is_custom[is_custom_idx%2] }}
+      <Button
+        icon="pi pi-arrow-right"
+        class="p-button-rounded p-button-text"
+        @click="is_custom_idx += 1"
+      >
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -34,5 +95,8 @@ export default {
   align-items: flex-start;
   padding-top: 50px;
   padding: 50px 0px;
+}
+.set {
+  font-size: 30px;
 }
 </style>
