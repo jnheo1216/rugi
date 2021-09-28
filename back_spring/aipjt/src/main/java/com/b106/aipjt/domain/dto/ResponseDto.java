@@ -2,7 +2,7 @@ package com.b106.aipjt.domain.dto;
 
 import lombok.*;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor @AllArgsConstructor
 public class ResponseDto<T> {
     private int statusCode; // 상태코드

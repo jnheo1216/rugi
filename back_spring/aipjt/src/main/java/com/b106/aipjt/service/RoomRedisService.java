@@ -27,7 +27,18 @@ public class RoomRedisService {
         Room room = roomRedisRepository.save(new Room(null, result.get()));
         return roomRedisRepository.save(room);
     }
+    // 방 수정
+    public Room configRoom(String userId, String roomId, int maxRound, int roundTime) {
+        Optional<Room> roomById = roomRedisRepository.findById(roomId);
+        if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다.");
+        Room room = roomById.get();
+        if (!room.getSuperUser().getId().equals(userId)) throw new RuntimeException("방장만 방을 변경할 수 있습니다.");
+        if (room.isStart()) throw new RuntimeException("게임중에는 방 설정을 변경할 수 없습니다.");
 
+        room.setMaxRound(maxRound);
+        room.setRoundTime(roundTime);
+        return roomRedisRepository.save(room);
+    }
 
     // 방 입장
     public Room joinRoom(String userId, String roomId) {
@@ -48,23 +59,31 @@ public class RoomRedisService {
         return room;
     }
 
-    // 방 퇴장
+    // 방 퇴장 : 방장 변경 로직 추가
     public Room leaveRoom(String userId, String roomId) {
         // 조회 & 검증 & Optional 빼내기
         Optional<Room> roomResult = roomRedisRepository.findById(roomId);
         if (roomResult.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
         Room room = roomResult.get();
+
         // 퇴장을 위한 필터링
         List<User> collect = room.getUserList()
             .stream()
             .filter(u -> !u.getId().equals(userId))
             .collect(Collectors.toList());
         room.setUserList(collect);
+
         if (collect.size() == 0) {
             roomRedisRepository.delete(room);
         }else{
+            // 본인이 방장인지 확인한다
+            if (room.getSuperUser().getId().equals(userId)) {
+                room.setSuperUser(room.getUserList().get(0));
+            }
             roomRedisRepository.save(room);
         }
         return room;
     }
+
+
 }

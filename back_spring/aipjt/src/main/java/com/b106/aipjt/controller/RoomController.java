@@ -3,6 +3,7 @@ package com.b106.aipjt.controller;
 
 import com.b106.aipjt.domain.dto.ResponseDto;
 import com.b106.aipjt.domain.dto.room.RoomResponseDto;
+import com.b106.aipjt.domain.dto.room.RoomSettingRequestDto;
 import com.b106.aipjt.domain.dto.room.RoomUserResponseDto;
 import com.b106.aipjt.domain.redishash.Room;
 import com.b106.aipjt.service.RoomRedisService;
@@ -32,6 +33,23 @@ public class RoomController {
         return new ResponseDto<>(HttpStatus.CREATED.value(), "방 생성 성공", build);
     }
 
+    // 방 수정 : 방정보에 대한 변경 사항을 받아야 한다
+    @PatchMapping("")
+    public ResponseDto<RoomResponseDto> patchRoom(@RequestHeader(value="User-Id") String userId,
+                                                  @RequestParam String roomId,
+                                                  @RequestBody RoomSettingRequestDto roomSettingRequestDto){
+        Room room = roomRedisService.configRoom(userId, roomId, roomSettingRequestDto.getMaxRound(), roomSettingRequestDto.getRoundTime());
+
+        List<RoomUserResponseDto> roomUsers = RoomUserResponseDto.of(room);
+
+        RoomResponseDto build = RoomResponseDto.toRoom(room, roomUsers);
+        System.out.println(build.getUserList());
+        return new ResponseDto<>(HttpStatus.CREATED.value(), "방 수정 성공", build);
+    }
+
+
+
+
     // 유저의 방 입장 : 여기서 id만 보내는게 아니라 아바타랑 닉네임도 보내야 함
     // RoomEnterRequestDto를 수정할 것. 실제로 백에 보내는 요청은 굳이 Param으로 보낼 필요 없으니 Body로 빼도 될듯
     @PostMapping("/user")
@@ -40,10 +58,7 @@ public class RoomController {
         Room room = roomRedisService.joinRoom(userId, roomId);
 
         // 1.  User 리스트를 RoomUserResponseDto 변환
-        List<RoomUserResponseDto> roomUsers = new ArrayList<>();
-        room.getUserList().forEach(u -> {
-            roomUsers.add(new RoomUserResponseDto(0, u.getAvatar(), u.getNickname(), room.getSuperUser().getId().equals(u.getId())));
-        });
+        List<RoomUserResponseDto> roomUsers = RoomUserResponseDto.of(room);
 
         // 2. Room 객체를 RoomResponseDto 변환
         RoomResponseDto build = RoomResponseDto.toRoom(room, roomUsers);

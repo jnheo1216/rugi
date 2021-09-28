@@ -1,11 +1,14 @@
 package com.b106.aipjt.domain.dto.room;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Data
+
+@Getter @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoomEnterRequestDto {
     @NotEmpty(message = "아바타를 골라야 합니다")
     private String avatar;
