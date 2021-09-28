@@ -8,26 +8,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class QuestionService {
     private QuestionRepository questionRepository;
     private S3UploadService s3UploadService;
-
+    // DB에 저장
     public void saveImage(QuestionDto questionDto) {
         questionRepository.save(questionDto.toEntity());
     }
 
     public List<QuestionDto> getList() {
-        List<Question> galleryEntityList = questionRepository.findAll();
-        List<QuestionDto> galleryDtoList = new ArrayList<>();
-
-        for (Question question : galleryEntityList) {
-            galleryDtoList.add(convertEntityToDto(question));
+        List<Question> questionEntityList = questionRepository.findAll();
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        // dto 객체 사용을 위해 entity 객체를 dto로 변환?
+        for (Question question : questionEntityList) {
+            questionDtoList.add(convertEntityToDto(question));
         }
-
-        return galleryDtoList;
+        return questionDtoList;
     }
 
     private QuestionDto convertEntityToDto(Question question) {
@@ -36,4 +36,5 @@ public class QuestionService {
             .imgFullPath(s3UploadService.CLOUD_FRONT_DOMAIN_NAME + "/" + question.getImgName())
             .build();
     }
+
 }

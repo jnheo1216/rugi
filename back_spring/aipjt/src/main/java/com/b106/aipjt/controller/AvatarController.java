@@ -3,15 +3,12 @@ package com.b106.aipjt.controller;
 import com.b106.aipjt.domain.jpaentity.Avatar;
 import com.b106.aipjt.domain.repository.AvatarRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/avatar")
+@RequestMapping("/api/avatar")
 @RequiredArgsConstructor
 public class AvatarController {
     private final AvatarRepository avatarRepository;
@@ -22,9 +19,10 @@ public class AvatarController {
     }
 
     @PostMapping("")
-    public Avatar register() {
+    public Avatar register(String avatarUrl) {
+        System.out.println(avatarUrl);
         final Avatar avatar = Avatar.builder()
-            .avatarUrl("test_avatar")
+            .avatarUrl(avatarUrl)
             .build();
         return avatarRepository.save(avatar);
     }
