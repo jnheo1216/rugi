@@ -116,11 +116,12 @@ def load_image(image_path):
     response = requests.get(image_path)
     img = Image.open(BytesIO(response.content))
     img.load()
-
+    print(type(img))
+    cvtimg = img.convert('RGB')
     # img = tf.image.decode_jpeg(img, channels=3)
-    img = tf.image.resize(img, (299, 299))
-    img = tf.keras.applications.inception_v3.preprocess_input(img)
-    return img, image_path
+    cvtimg = tf.image.resize(cvtimg, (299, 299))
+    cvtimg = tf.keras.applications.inception_v3.preprocess_input(cvtimg)
+    return cvtimg, image_path
 
 def get_img_feature_extract_model():
     # 이미지 feature추출
