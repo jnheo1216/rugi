@@ -1,11 +1,6 @@
 <template>
-  <div>
-    <span>Game.vue</span>
-    <Lobby />
-    <GameInit />
-    <GamePlay />
-    <GameResult />
-  </div>
+  <component :is="currentView">
+  </component>
 </template>
 
 <script>
@@ -23,8 +18,11 @@ export default {
   },
   data: function() {
     return {
-
+      currentView: 'Lobby'
     }
+  },
+  methods: {
+
   }
 }
 </script>
