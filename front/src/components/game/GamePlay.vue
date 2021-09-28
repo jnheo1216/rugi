@@ -1,10 +1,18 @@
 <template>
-  <div>게임플레이</div>
+  <div>
+    <div>게임플레이</div>
+    <Canvas/>
+  </div>
 </template>
 
 <script>
+import Canvas from '@/components/game/Canvas.vue'
+
 export default {
-  name: 'GamePlay'
+  name: 'GamePlay',
+  components: {
+    Canvas
+  },
 }
 </script>
 

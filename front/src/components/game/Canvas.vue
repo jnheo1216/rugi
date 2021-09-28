@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 const INITIAL_COLOR = "#2c2c2c"
 const CANVAS_SIZE = 700
 
@@ -128,9 +129,33 @@ export default {
       event.preventDefault()
     },
     handleSaveClick: function () {
-      const image = this.canvas.toDataURL()
+      const image = this.canvas.toDataURL('image/png')
       const link = document.createElement("a")
       link.href = image
+
+      // 일단 save 버튼 누를시에 spring으로 전달하는 것
+      // console.log(this.canvas)
+      // console.log(image)
+      // console.log(link)
+      var bstr = atob(image.split(",")[1])
+      var n = bstr.length
+      var u8arr = new Uint8Array(n)
+
+      while(n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      var file = new File([u8arr], "image", {type:"mine"})
+      console.log(file)
+
+      let form = new FormData()
+      form.append('file', file)
+      console.log(form)
+      axios.post('/question', form, {
+          header: { 'Content-Type': 'multipart/form-data' }
+      })
+      .then((res) => {console.log(res)})
+      .catch((err) => {console.log(err)})
+
       link.download = "kons example"
       // fake click
       link.click()
