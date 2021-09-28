@@ -32,8 +32,6 @@ export default {
     },
   },
   mounted: function() {
-    console.log('nickname', this.$store.state.nickname)
-    console.log('아거아ㅣ겅미나ㅓ리ㅏㅁㄴ어기ㅏ',document.location)
   }
 }
 </script>

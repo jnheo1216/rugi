@@ -4,7 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 export default createStore({
   state: {
     id: '',
-    avatar: 1,
+    avatar: '',
     nickname: 'nickname',
     roomId: ''
   },
@@ -19,7 +19,10 @@ export default createStore({
     },
     SET_ROOMID: function (state, data) {
       state.roomId = data
-    }
+    },
+    SET_AVATAR: function (state, data) {
+      state.avatar = data
+    },
   },
   actions: {
     setUserData: function(context, data) {
@@ -30,6 +33,9 @@ export default createStore({
     },
     setRoomId: function(context, data) {
       context.commit('SET_ROOMID', data)
+    },
+    setAvatar: function(context, data) {
+      context.commit('SET_AVATAR', data)
     }
   },
   modules: {

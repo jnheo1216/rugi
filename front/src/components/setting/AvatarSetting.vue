@@ -8,11 +8,10 @@
       <div class="hi">
         아바타설정
       </div>
-      <Avatar 
-        class="avatar" 
-        :image="require(`@/assets/avatar/${avatar}.png`)" 
-        size="xlarge" 
-        shape="circle" 
+      <Avatar
+        class="avatar"
+        :image="require(`@/assets/avatar/${avatar}.png`)"
+        shape="circle"
       />
       <!-- 여기 우측 화살표 -->
 
@@ -56,6 +55,7 @@ export default {
     changeAvatar: function (direction) {
       // 여기로직은 건드리지 않아도 됨
       this.avatar = (direction ==='left' ? this.avatar+this.avatarCount-1 : this.avatar+1) % this.avatarCount
+      this.$store.dispatch('setAvatar', this.avatar)
     },
     randomAvatar: function () {
       let rand = this.getRanNum()
@@ -63,6 +63,7 @@ export default {
         rand = this.getRanNum()
       }
       this.avatar = rand
+      this.$store.dispatch('setAvatar', this.avatar)
     },
     getRanNum: function () {
       return Math.floor(Math.random()*this.avatarCount)
@@ -93,5 +94,8 @@ export default {
   /* avatar랑 nickname 띄어놓기 위함 */
   margin-top: 25px;
 }
-
+.avatar {
+  width: 150px !important;
+  height: 150px !important;
+}
 </style>

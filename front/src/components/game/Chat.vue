@@ -8,9 +8,9 @@
     <div
       v-for="(item, idx) in recvList"
       :key="idx"
-    > 
+    >
     <p>
-    {{ item.writer}} {{item.message}}  
+    {{ item.writer}} {{item.message}}
     </p>
 
     </div>
@@ -44,7 +44,7 @@ export default {
     send() {
       console.log("Send message:" + this.message)
       if (this.stompClient && this.stompClient.connected) {
-        const msg = { 
+        const msg = {
           roomId: this.roomId,
           writer: this.nickname,
           message: this.message
@@ -83,10 +83,10 @@ export default {
             console.log('구독으로 받은 메시지 입니다.', chat.body)
           })
           if (this.stompClient && this.stompClient.connected) {
-            const greeting = { 
+            const greeting = {
               roomId: this.roomId,
               writer: this.nickname,
-              message: this.message 
+              message: this.message
             }
             console.log(greeting)
             this.stompClient.send('/pub/chat/enter', JSON.stringify(greeting))
@@ -97,12 +97,12 @@ export default {
           console.log('소켓 연결 실패', error)
           this.connected = false
         }
-      )        
+      )
     }
   },
   created() {
       // 로비에 입장하면 소켓 연결 시도 핸드셰이킹 요청
-    console.log('****', this.nickname)
+    // console.log('****', this.nickname)
     this.connect()
   },
   updated() {
