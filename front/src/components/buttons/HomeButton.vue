@@ -32,9 +32,9 @@ export default {
           'avatar': `${this.$store.state.avatar}`,
           'nickname': `${this.$store.state.nickname}`
         }
-      }).then(() => {
-        this.$router.push({ name: "Game", query: {room: this.$store.state.id} })
-        // this.$router.push({ name: "Lobby", query: {room: this.$store.state.id} })
+      }).then((res) => {
+        this.$router.push({ name: "Game", query: {room: res.data.data.id} })
+        console.log(res)
       }).catch((err) => {
         console.log(err)
       })

@@ -33,7 +33,7 @@ export default {
           "nickname": "nickname"
         }
       }).then((res) => {
-        axios.defaults.headers.common['User-id'] = res.data.data.id
+        axios.defaults.headers.common['User-Id'] = res.data.data.id
         this.$store.dispatch('setUserData', res.data.data)
       }).catch((err) => {
         console.log(err.response)
