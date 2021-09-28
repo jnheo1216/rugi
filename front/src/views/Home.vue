@@ -6,21 +6,21 @@
     <h1>서 비 스 명</h1>
     <div class="mainService">
       <AvatarSetting />
-      <Main-button />
+      <HomeButton />
     </div>
   </div>
 </template>
 
 <script>
 import AvatarSetting from '../components/setting/AvatarSetting.vue'
-import MainButton from '../components/buttons/MainButton.vue'
+import HomeButton from '../components/buttons/HomeButton.vue'
 import axios from 'axios'
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
 export default {
   name: 'Home',
   components: {
     AvatarSetting,
-    MainButton
+    HomeButton
   },
   // mounted: function () 와 동일하게 동작
   mounted: function() {
