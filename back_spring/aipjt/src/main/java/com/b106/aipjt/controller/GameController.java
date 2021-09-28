@@ -3,7 +3,7 @@ package com.b106.aipjt.controller;
 
 import com.b106.aipjt.domain.dto.ResponseDto;
 import com.b106.aipjt.service.GameService;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +34,31 @@ public class GameController {
         log.error("========================컨트롤러 리턴===========================");
         return new ResponseDto<>(HttpStatus.OK.value(), "요청 수신 성공", "");
     }
+
+    // 스킵객체 넘겨줘서 삭제부터 해줘야함
+    @PostMapping("/skip")
+    public ResponseDto<String> gameSkip(@RequestHeader(value="User-Id") String userId,
+                                        @RequestParam String roomId,
+                                        @RequestBody SkipRequestDto skipRequestDto) throws InterruptedException {
+        log.error("========================스킵 시작===========================");
+        log.error("========================스킵 삭제 시작===========================");
+        gameService.skipRound(skipRequestDto.getSkipId());
+        log.error("========================스킵 삭제 완료===========================");
+        log.error("========================라운드 시작 호출 전===========================");
+        gameService.roundStart(userId, roomId); // 비동기 요청 여기서 요청하는게 맞아보임
+        log.error("========================라운드 시작 호출 후===========================");
+        // 문제가 없다면 여기서 끝까지 돌아간다. 비동기이므로 응답은 보내짐
+        log.error("========================컨트롤러 리턴===========================");
+        return new ResponseDto<>(HttpStatus.OK.value(), "요청 수신 성공", "");
+    }
+
+    @Getter
+    @NoArgsConstructor @AllArgsConstructor
+    @ToString
+    static class SkipRequestDto {
+        private String skipId;
+    }
+
 
     // 게임 설정이 변경될 경우 여기에서 받아서 처리해야 한다.
     // 방 설정 정보를 받아와야 한다

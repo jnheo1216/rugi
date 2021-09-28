@@ -3,10 +3,12 @@ package com.b106.aipjt.domain.redishash;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
+@ToString
 @NoArgsConstructor @AllArgsConstructor
 @Getter @RedisHash("round")
 public class Round {

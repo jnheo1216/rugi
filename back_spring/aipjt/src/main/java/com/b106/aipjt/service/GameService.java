@@ -89,9 +89,11 @@ public class GameService {
             Round round = roundRedisRepository.save(new Round(null, room.getRoundTime(), "문제", 1L));
 
             // 라운드를 저장하고 room을 저장해야 id가 null이 아니다
+            room.getRound().clear();
             room.getRound().add(round);
             room = roomRedisRepository.save(room);
-
+            log.error(room.toString());
+            log.error(round.toString());
             log.error("========================라운드 시작 메시지 전달===========================");
             // 방을 담아서 라운드 시작 메시지를 보낸다
             template.convertAndSend(ROOM_PREFIX+room.getId(), "방객체");
@@ -106,9 +108,11 @@ public class GameService {
             // 사이시간이므로 false 세팅 후 room 갱신을 위해 저장
             room.setPlay(false);
             room = roomRedisRepository.save(room);
-
+            log.error(room.toString());
+            log.error(skip.toString());
             log.error("========================사이시간 & 스킵 객체 메시지 전달===========================");
-            // 방객체와 스킵 객체id를 보내준다
+            // 방객체와 스킵 객체id를 보내준다.
+            // 사실 여기서 위에서 조회한 정답도 같이 보내줘야 한다.
             template.convertAndSend(ROOM_PREFIX+room.getId(), "방객체와 슬립객체");
             log.error("========================사이시간 & 스킵 객체 메시지 전달 끝===========================");
             log.error("========================사이시간 슬립===========================");
@@ -118,7 +122,10 @@ public class GameService {
 
             // 깨어나면 스킵 객체를 조회해서 스킵했는지 확인
             Optional<Skip> skipById = skipRedisRepository.findById(skip.getId());
-            if (skipById.isEmpty()) return; // 스킵객체가 비어있으면 새 쓰레드가 생성된 것이므로 쓰레드 종료
+            if (skipById.isEmpty()) { // 스킵객체가 비어있으면 새 쓰레드가 생성된 것이므로 쓰레드 종료
+                log.error("========================스킵됨===========================");
+                return;
+            }
 
             // 스킵 객체가 있으면 다음 라운드 진행을 위한 준비를 한다
             // 스킵객체를 삭제한다
@@ -132,7 +139,14 @@ public class GameService {
         log.error("========================전체 라운드 종료===========================");
         room.setStart(false);
         room.setCurrentRound(0);
+        room.getRound().clear();
         room = roomRedisRepository.save(room);
+        log.error(room.toString());
         // 라운드 객체 비워주는게 빠짐 -> 자동삭제 되니까 괜찮은 것 같다.
     }
+
+    public void skipRound(String skipId) {
+        skipRedisRepository.deleteById(skipId);
+    }
+
 }
