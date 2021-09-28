@@ -1,11 +1,10 @@
 <template>
   <div class="userListBody">
-    <header>userlist</header>
-    <div class="userList" v-for="user in users" :key="user.userNumber">
+    <!-- <div class="userList" v-for="user in users" :key="user.userNumber">
       <div>{{ user.userNickName }}</div>
       <div>{{ user.userNumber }}</div>
       <div>{{ user.isSuperUser }}</div>
-    </div>
+    </div> -->
   </div>
 </template>
 

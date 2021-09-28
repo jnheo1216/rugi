@@ -29,7 +29,7 @@ export default {
         url: '/user',
         data: {
           //기본 아바타, 닉네임 설정 할 수 있게 해줘야 한다.
-          "avatar": "/avatar/1",
+          "avatar": 1,
           "nickname": "nickname"
         }
       }).then((res) => {

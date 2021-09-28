@@ -1,8 +1,5 @@
 <template>
   <div class="lobbyBody">
-    <header>
-      <img alt="Vue logo" src="@/assets/ccc.png" height="200" width="200">
-    </header>
     <div class="lobbyComponents">
       <UserList />
       <div class="gameBody">

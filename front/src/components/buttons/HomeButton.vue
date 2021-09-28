@@ -33,6 +33,7 @@ export default {
           'nickname': `${this.$store.state.nickname}`
         }
       }).then((res) => {
+        this.$store.dispatch('setRoomId', res.data.data.id)
         this.$router.push({ name: "Game", query: {room: res.data.data.id} })
         console.log(res)
       }).catch((err) => {
@@ -40,17 +41,11 @@ export default {
       })
     },
     clickEnterSession: function () {
-      axios({
-        method: 'post',
-        url: '/room/user',
-        params: {
-          roomId: this.$store.state.roomId
-        }
-      }).then(() => {
-          this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
-      }).catch((err) => {
-        console.log(err.response)
-      })
+      if (this.$store.state.roomId) {
+        this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
+      } else {
+        // roomId가 없어요! Random 방 입장
+      }
     }
   },
 }
