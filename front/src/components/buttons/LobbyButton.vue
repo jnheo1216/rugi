@@ -26,13 +26,14 @@ export default {
   },
   methods :{
     generateLink: function () {
-      this.inviteLink = document.location.href
+      this.inviteLink = document.location.origin + '/' + document.location.search
     },
     startGame: function () {
     },
   },
   mounted: function() {
     console.log('nickname', this.$store.state.nickname)
+    console.log('아거아ㅣ겅미나ㅓ리ㅏㅁㄴ어기ㅏ',document.location)
   }
 }
 </script>

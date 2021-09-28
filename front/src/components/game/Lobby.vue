@@ -38,7 +38,8 @@ export default {
   methods: {
   },
   created() {
-  },  
+    // console.log('query test', this.$route.query.room)
+  },
 }
 
 </script>

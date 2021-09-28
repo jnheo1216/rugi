@@ -5,7 +5,8 @@ export default createStore({
   state: {
     id: '',
     avatar: 1,
-    nickname: 'nickname'
+    nickname: 'nickname',
+    roomId: ''
   },
   mutations: {
     SET_USERDATA: function (state, data) {
@@ -15,6 +16,9 @@ export default createStore({
     },
     SET_NICKNAME: function (state, data) {
       state.nickname = data
+    },
+    SET_ROOMID: function (state, data) {
+      state.roomId = data
     }
   },
   actions: {
@@ -23,6 +27,9 @@ export default createStore({
     },
     setNickName: function(context, data) {
       context.commit('SET_NICKNAME', data)
+    },
+    setRoomId: function(context, data) {
+      context.commit('SET_ROOMID', data)
     }
   },
   modules: {

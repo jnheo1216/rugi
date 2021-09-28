@@ -18,6 +18,7 @@ export default {
   },
   data: function() {
     return {
+      //currentView의 default값은 lobby로 해야 할 것인가?
       currentView: 'Lobby'
     }
   },

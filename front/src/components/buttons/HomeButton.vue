@@ -2,13 +2,14 @@
   <div class="mainButtonBody">
     <Button
       id="createSession"
-      @click="clickCreate"
+      @click="clickCreateSession"
       class="p-button-raised p-button-text p-button-secondary p-button-lg"
       label="방만들기"
     >
     </Button>
     <Button
       id="enterSession"
+      @click="clickEnterSession"
       class="p-button-raised p-button-text p-button-secondary p-button-lg"
     >
       입장하기
@@ -23,7 +24,7 @@ export default {
   name: 'MainButton',
 
   methods: {
-    clickCreate: function () {
+    clickCreateSession: function () {
       axios({
         method: 'post',
         url: '/room',
@@ -37,7 +38,19 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
-
+    },
+    clickEnterSession: function () {
+      axios({
+        method: 'post',
+        url: '/room/user',
+        params: {
+          roomId: this.$store.state.roomId
+        }.then(() => {
+          this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
+        }).catch((err) => {
+          console.log(err)
+        })
+      })
     }
   },
 }
