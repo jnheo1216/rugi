@@ -49,7 +49,7 @@ export default {
       }).then(() => {
           this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
       }).catch((err) => {
-        console.log(err)
+        console.log(err.response)
       })
     }
   },
