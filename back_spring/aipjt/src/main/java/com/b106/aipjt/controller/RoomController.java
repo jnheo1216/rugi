@@ -77,12 +77,8 @@ public class RoomController {
         // 유저 퇴장했음을 채팅 창에 알림
 
         // UserList 새로 작성
-        List<RoomUserResponseDto> roomUsers = new ArrayList<>();
-        room.getUserList().forEach(user -> {
-            roomUsers.add(new RoomUserResponseDto(
-                user.getScore(), user.getAvatar(), user.getNickname(), room.getSuperUser().getId().equals(user.getId())
-            ));
-        });
+        List<RoomUserResponseDto> roomUsers = RoomUserResponseDto.of(room);
+        
         RoomResponseDto build = RoomResponseDto.toRoom(room, roomUsers);
 
         // 방에 있는 다른 사람들에게 다시 방객체 정보 publish
