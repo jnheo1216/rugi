@@ -45,11 +45,11 @@ export default {
         url: '/room/user',
         params: {
           roomId: this.$store.state.roomId
-        }.then(() => {
+        }
+      }).then(() => {
           this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
-        }).catch((err) => {
-          console.log(err)
-        })
+      }).catch((err) => {
+        console.log(err)
       })
     }
   },
