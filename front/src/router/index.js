@@ -18,10 +18,14 @@ const routes = [
     component: Game
   },
   {
-    path: '/lobby',
-    name: 'Lobby',
+    path: "/lobby",
+    name: "Lobby",
     component: Lobby
   },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: { name: "Home"}
+  }
   // {
   //   path: '/:room_id/init',
   //   name: 'GameInit',
