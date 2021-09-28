@@ -21,11 +21,17 @@ public class GameController {
     @PostMapping("")
     public ResponseDto<String> gameStart(@RequestHeader(value="User-Id") String userId,
                                          @RequestParam String roomId) throws InterruptedException {
+        log.error("========================게임 시작===========================");
         // 방에 대한 설정만 변경해주는 서비스 요청
+        log.error("========================게임 시작 함수 호출 전===========================");
         boolean result = gameService.gameExecute(userId, roomId);// 동기임. 비동기아님
+        log.error("========================게임 시작 함수 호출 후===========================");
         // 실제 라운드 시작
+        log.error("========================라운드 시작 호출 전===========================");
         gameService.roundStart(userId, roomId); // 비동기 요청 여기서 요청하는게 맞아보임
+        log.error("========================라운드 시작 호출 후===========================");
         // 문제가 없다면 여기서 끝까지 돌아간다. 비동기이므로 응답은 보내짐
+        log.error("========================컨트롤러 리턴===========================");
         return new ResponseDto<>(HttpStatus.OK.value(), "요청 수신 성공", "");
     }
 
@@ -33,7 +39,7 @@ public class GameController {
     // 방 설정 정보를 받아와야 한다
     @PatchMapping("")
     public void gameSettings(@RequestHeader(value="User-Id") String userId,
-                                         @RequestParam String roomId) throws InterruptedException {
+                             @RequestParam String roomId) throws InterruptedException {
     }
 
     // 중간에 들어온 유저는 게임 라운드에 대한 정보를 스스로로 요청서 받아와야됨.
