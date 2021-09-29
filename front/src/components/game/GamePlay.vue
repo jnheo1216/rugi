@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>게임플레이</div>
-    <Canvas/>
+    <Canvas />
   </div>
 </template>
 

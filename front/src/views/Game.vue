@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div class="gameBody">
     <div>
       <component :is="currentView">
       </component>
     </div>
-
     <div>
       <Chat />
     </div>
@@ -46,7 +45,7 @@ export default {
         }
       }).then((res) => {
         this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
-        console.log(res.data)
+        console.log('리스폰스 데이터', res.data)
       }).catch((err) => {
         console.log(err.response)
       })
@@ -59,5 +58,9 @@ export default {
 </script>
 
 <style>
-
+.gameBody {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 </style>

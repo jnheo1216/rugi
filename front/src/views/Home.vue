@@ -1,9 +1,8 @@
 <template>
   <div class="homeBody">
     <header>
-      <img alt="Vue logo" src="../assets/ccc.png" height="200" width="200">
+      <img alt="logo" src="../assets/logo.png" height="300" width="450">
     </header>
-    <h1>서 비 스 명</h1>
     <div class="mainService">
       <AvatarSetting />
       <HomeButton />
@@ -69,7 +68,6 @@ export default {
   flex-direction: row;
   align-items: center;
   /* width: 100%; */
-  padding-top: 50px;
   padding: 50px 0px;
 }
 </style>

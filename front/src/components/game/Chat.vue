@@ -5,18 +5,18 @@
       type="text"
       @keyup="sendMessage"
     >
-    <ScrollPanel 
-      style="width: 100%; height: 200px" 
+    <ScrollPanel
+      style="width: 100%; height: 200px"
       class="custom"
-      >
+    >
       <div
         v-for="(item, idx) in recvList"
         :key="idx"
       >
         <p>
-        {{ item.writer}} {{item.message}}
+          {{ item.writer }} {{ item.message }}
         </p>
-      <ScrollTop />
+        <ScrollTop />
       </div>
     </ScrollPanel>
   </div>
@@ -42,12 +42,12 @@ export default {
     sendMessage (e) {
       if(e.keyCode === 13 && this.userName !== '' && this.message !== ''){
         this.send()
-        console.log('recieve list', this.recvList)
+        //console.log('recieve list', this.recvList)
         this.message = ''
       }
     },
     send() {
-      console.log("Send message:" + this.message)
+      //console.log("Send message:" + this.message)
       if (this.stompClient && this.stompClient.connected) {
         const msg = {
           roomId: this.roomId,
@@ -55,7 +55,7 @@ export default {
           message: this.message
         }
         JSON.stringify(msg)
-        console.log(msg)
+        //console.log(msg)
         this.stompClient.send('/pub/chat/message', JSON.stringify(msg))
       }
     },
@@ -63,7 +63,7 @@ export default {
       this.stompClient.subscribe('/sub/chat/room/' + this.roomId, chat => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         this.recvList.push(JSON.parse(chat.body))
-        console.log('구독으로 받은 메시지 입니다.', chat.body)
+        //console.log('구독으로 받은 메시지 입니다.', chat.body)
       })
     },
     connect() {
@@ -72,7 +72,7 @@ export default {
 
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
-      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      //console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
       this.stompClient.connect(
         {},
         frame => {
@@ -81,11 +81,11 @@ export default {
           console.log('소켓 연결 성공', frame)
           // 서버의 메시지 전송 endpoint를 구독합니다.
           // 이런형태를 pub sub 구조라고 합니다.
-          console.log('roomID:' + this.roomId)
+          //console.log('roomID:' + this.roomId)
           this.stompClient.subscribe('/sub/chat/room/' + this.roomId, chat => {
             // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
             this.recvList.push(JSON.parse(chat.body))
-            console.log('구독으로 받은 메시지 입니다.', chat.body)
+            //console.log('구독으로 받은 메시지 입니다.', chat.body)
           })
           if (this.stompClient && this.stompClient.connected) {
             const greeting = {
@@ -93,7 +93,7 @@ export default {
               writer: this.nickname,
               message: this.message
             }
-            console.log(greeting)
+            //console.log(greeting)
             this.stompClient.send('/pub/chat/enter', JSON.stringify(greeting))
           }
         },
@@ -106,7 +106,7 @@ export default {
     }
   },
   created() {
-      // 로비에 입장하면 소켓 연결 시도 핸드셰이킹 요청
+    // 로비에 입장하면 소켓 연결 시도 핸드셰이킹 요청
     // console.log('****', this.nickname)
     this.connect()
   },

@@ -151,10 +151,10 @@ export default {
       form.append('file', file)
       console.log(form)
       axios.post('/question', form, {
-          header: { 'Content-Type': 'multipart/form-data' }
+        header: { 'Content-Type': 'multipart/form-data' }
       })
-      .then((res) => {console.log(res)})
-      .catch((err) => {console.log(err)})
+        .then((res) => {console.log(res)})
+        .catch((err) => {console.log(err)})
 
       link.download = "kons example"
       // fake click

@@ -1,8 +1,8 @@
 <template>
   <div class="lobbyBody">
-    <div class="lobbyComponents">
+    <div>
       <UserList />
-      <div class="gameBody">
+      <div class="lobbyComponents">
         <GameSetting />
         <LobbyButton />
       </div>
@@ -44,16 +44,16 @@ export default {
   padding-top: 50px;
   padding: 50px 0px;
 }
-.lobbyComponents {
+/* .lobbyComponents {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-top: 50px;
   padding: 50px 0px;
-}
-.gameBody {
+} */
+.lobbyComponents {
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
   padding: 0px 50px;
 }
 </style>

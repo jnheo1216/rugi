@@ -6,7 +6,7 @@
       <button @click="changeAvatar('right')">right</button>
       <button @click="randomAvatar">random</button>
       <div class="hi">
-        아바타설정
+        Avatar Setting
       </div>
       <Avatar
         class="avatar"
@@ -23,13 +23,15 @@
           @input="setNickName"
         >
         </InputText>
-        <label v-if="nickname.length"
-        for="username">
-        <!-- 닉네임이 있는 경우 닉네임 -->
-        {{ nickname }}
+        <label
+          v-if="nickname.length"
+          for="username"
+        >
+          <!-- 닉네임이 있는 경우 닉네임 -->
+          {{ nickname }}
         </label>
         <label v-else>
-        <!-- 없으면 default 값 노출 -->
+          <!-- 없으면 default 값 노출 -->
           Nickname
         </label>
       </div>
