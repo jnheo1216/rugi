@@ -92,19 +92,20 @@ export default {
     }
   },
   methods: {
-    // 룸 정보 변경하는 클릭 이벤트 발생할때 마다 실행 
-    roomUpdate: function() { 
+    // 룸 정보 변경하는 클릭 이벤트 발생할때 마다 실행
+    roomUpdate: function() {
       console.log("방정보 업데이트")
       // v-model같은걸로 서로...와따가따가능하게
       const roomInfo = {
-        maxRound: 0,
-        roundTime: 0
+        maxRound: this.rounds[this.rounds_idx%3],
+        roundTime: this.timer[this.timer_idx%3]
       }
       const message = {
         roomId: this.roomId,
         message: roomInfo
       }
       console.log(message)
+      this.$store.dispatch('setMessage', message)
       this.stompClient.send('/pub/room/info', JSON.stringify(message))
     }
   }

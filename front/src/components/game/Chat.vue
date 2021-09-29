@@ -96,7 +96,7 @@ export default {
             const greeting = {
               roomId: this.roomId,
               writer: this.nickname,
-              message: this.message
+              message: this.$store.state.message
             }
             //console.log(greeting)
             this.stompClient.send('/pub/chat/enter', JSON.stringify(greeting))
