@@ -1,11 +1,15 @@
 # from django.shortcuts import render
 from .apps import DeepConfig
-from .deep.icconfig import evaluate
+# from .deep.icconfig import evaluate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 import urllib.request
+import requests
+from io import BytesIO
+from PIL import Image
+import tensorflow as tf
 
 
 # Create your views here.
@@ -15,19 +19,27 @@ def index(request):
     # print(image_path)
 
     ic = DeepConfig()
-    max_length = ic.max_length
-    tokenizer = ic.tokenizer
-    new_encoder = ic.new_encoder
-    new_decoder = ic.new_decoder
+    # max_length = ic.max_length
+    # tokenizer = ic.tokenizer
+    # new_encoder = ic.new_encoder
+    # new_decoder = ic.new_decoder
 
     # path = 'image_caption\deep\img2.jpg'
     # img = Image.open(image_path)
     # img.load()
 
-    result, _ = evaluate(path, max_length, 64, new_decoder, new_encoder, tokenizer)
-    print('Prediction Caption:', ' '.join(result))
+    # result, _ = evaluate(path, max_length, 64, new_decoder, new_encoder, tokenizer)
+    # print('Prediction Caption:', ' '.join(result))
 
-    caption = ' '.join(result)
+    # caption = ' '.join(result)
+
+    response = requests.get(path)
+    img = Image.open(BytesIO(response.content))
+    img.load()
+    cvtimg = img.convert('RGB')
+    # cvtimg = tf.image.resize(cvtimg, (224, 224))
+    encod_img = ic.newEncodeImage(cvtimg).reshape((1,1280))
+    caption = ic.newGenerateCaption(encod_img)
 
     data = {
         'caption': caption
@@ -41,15 +53,22 @@ def index_kr(request):
     path = request.data['image_path']
 
     ic = DeepConfig()
-    max_length = ic.max_length
-    tokenizer = ic.tokenizer
-    new_encoder = ic.new_encoder
-    new_decoder = ic.new_decoder
+    # max_length = ic.max_length
+    # tokenizer = ic.tokenizer
+    # new_encoder = ic.new_encoder
+    # new_decoder = ic.new_decoder
 
-    result, _ = evaluate(path, max_length, 64, new_decoder, new_encoder, tokenizer)
-    print('Prediction Caption:', ' '.join(result))
+    # result, _ = evaluate(path, max_length, 64, new_decoder, new_encoder, tokenizer)
+    # print('Prediction Caption:', ' '.join(result))
 
-    caption = ' '.join(result)
+    # caption = ' '.join(result)
+
+    response = requests.get(path)
+    img = Image.open(BytesIO(response.content))
+    img.load()
+    cvtimg = img.convert('RGB')
+    encod_img = ic.newEncodeImage(cvtimg)
+    caption = ic.newGenerateCaption(encod_img)
 
     client_id = "b3HISCq2mJu0enV0Wvog" # 개발자센터에서 발급받은 Client ID 값
     client_secret = "lRHpaTXbnv" # 개발자센터에서 발급받은 Client Secret 값
