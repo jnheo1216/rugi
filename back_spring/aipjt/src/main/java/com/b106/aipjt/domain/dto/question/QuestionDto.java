@@ -9,23 +9,20 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 public class QuestionDto {
-    private String imgName;
+    private String imgUrl;
     private String imgCaption;
-    private String imgFullPath;
 
     public Question toEntity(){
         Question build = Question.builder()
-            .imgName(imgName)
-            .imgFullPath(imgFullPath)
+            .imgUrl(imgUrl)
             .imgCaption(imgCaption)
             .build();
 
         return build;
     }
 
-    public QuestionDto(String imgName, String imgCaption, String imgFullPath) {
-        this.imgName = imgName;
+    public QuestionDto(String imgUrl, String imgCaption) {
+        this.imgUrl = imgUrl;
         this.imgCaption = imgCaption;
-        this.imgFullPath = imgFullPath;
     }
 }

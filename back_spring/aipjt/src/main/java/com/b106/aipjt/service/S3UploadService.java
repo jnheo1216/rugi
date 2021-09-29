@@ -24,18 +24,18 @@ import java.util.UUID;
 public class S3UploadService {
 
     private final AmazonS3Client amazonS3Client;
-    public static final String CLOUD_FRONT_DOMAIN_NAME = "https://d2dwk4pyx06xno.cloudfront.net";
 
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
+
     //    S3에 직접 접근하는 것이 아닌, CloudFront을 통해 캐싱된 이미지를 가져올 것
     public String upload(MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
 
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
             .withCannedAcl(CannedAccessControlList.PublicRead));
-        return fileName;
-        // return은 questionService에서 파일경로를 DB에 저장하기 위한 값으로 사용되는데, 사실은 fileName 변수가 S3 객체를 식별하는 key 값이고 이를 DB에 저장
+        return amazonS3Client.getUrl(bucket, fileName).toString();
+
     }
 
 }

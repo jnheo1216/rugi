@@ -16,13 +16,11 @@ public class Question {
     private Long id;
 
     @Column(columnDefinition = "TEXT")
-    private String imgName;
-    private String imgFullPath;
+    private String imgUrl;
     private String imgCaption;
 
-    public Question(String imgUrl, String imgFullPath, String imgCaption) {
-        this.imgName = imgUrl;
-        this.imgFullPath = imgFullPath;
+    public Question(String imgUrl, String imgCaption) {
+        this.imgUrl = imgUrl;
         this.imgCaption = imgCaption;
     }
 

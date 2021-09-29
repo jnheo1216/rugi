@@ -6,4 +6,5 @@ app_name = 'image_caption'
 urlpatterns = [
     path('', views.index, name='index'),
     path('kr/', views.index_kr, name='index_kr'),
+    path('hello/', views.hello, name='hello'),
 ]
