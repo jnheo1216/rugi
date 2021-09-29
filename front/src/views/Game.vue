@@ -44,10 +44,10 @@ export default {
       axios({
         method: 'post',
         url: '/room/user',
-        // data: {
-        //   'avatar': this.$store.state.avatar,
-        //   'nickname': this.$store.state.nickname,
-        // },
+        data: {
+          'avatar': this.$store.state.avatar,
+          'nickname': this.$store.state.nickname,
+        },
         params: {
           roomId: this.$store.state.roomId
         }

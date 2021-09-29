@@ -21,7 +21,6 @@
           type="text"
           v-model="nickname"
           @input="setNickName"
-          @keyup.enter="userSet"
         >
         </InputText>
         <label
@@ -78,7 +77,7 @@ export default {
       this.$store.dispatch('setNickName', this.nickname)
     },
   },
-  created: function () {
+  mounted: function () {
     // 접속시 아바타 랜덤 설정
     this.randomAvatar()
   }
