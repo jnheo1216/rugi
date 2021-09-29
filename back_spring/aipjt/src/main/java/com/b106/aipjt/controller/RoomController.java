@@ -2,6 +2,7 @@ package com.b106.aipjt.controller;
 
 
 import com.b106.aipjt.domain.dto.ResponseDto;
+import com.b106.aipjt.domain.dto.room.RoomJoinRequestDto;
 import com.b106.aipjt.domain.dto.room.RoomResponseDto;
 import com.b106.aipjt.domain.dto.room.RoomSettingRequestDto;
 import com.b106.aipjt.domain.dto.room.RoomUserResponseDto;
@@ -51,8 +52,9 @@ public class RoomController {
     // RoomEnterRequestDto를 수정할 것. 실제로 백에 보내는 요청은 굳이 Param으로 보낼 필요 없으니 Body로 빼도 될듯
     @PostMapping("/user")
     public ResponseDto<RoomResponseDto> joinRoom(@RequestHeader(value="User-Id") String userId,
+                                                 @RequestBody RoomJoinRequestDto roomJoinRequestDto,
                                                  @RequestParam String roomId) {
-        Room room = roomRedisService.joinRoom(userId, roomId);
+        Room room = roomRedisService.joinRoom(userId, roomJoinRequestDto.getAvatar(), roomJoinRequestDto.getNickname(), roomId);
 
         // 1.  User 리스트를 RoomUserResponseDto 변환
         List<RoomUserResponseDto> roomUsers = RoomUserResponseDto.of(room);

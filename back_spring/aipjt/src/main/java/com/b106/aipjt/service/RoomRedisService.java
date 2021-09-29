@@ -45,15 +45,16 @@ public class RoomRedisService {
     }
 
     // 방 입장
-    public Room joinRoom(String userId, String roomId) {
+    public Room joinRoom(String userId, String avatar, String nickname, String roomId) {
         // 객체 조회
-        Optional<User> userById = userRedisRepository.findById(userId);
+        boolean userExist = userRedisRepository.existsById(userId);
         Optional<Room> roomById = roomRedisRepository.findById(roomId);
         // 검증 로직
-        if (userById.isEmpty()) throw new RuntimeException("유저가 존재하지 않습니다");
+        if (!userExist) throw new RuntimeException("유저가 존재하지 않습니다");
         if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
+        // 유저 정보 갱신 & 저장
+        User user = userRedisRepository.save(new User(userId, avatar, nickname));
         //Optional 꺼내기
-        User user = userById.get();
         Room room = roomById.get();
         // 입장 처리하기
         if (!room.getUserList().contains(user)) {
