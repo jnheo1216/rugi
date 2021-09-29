@@ -75,6 +75,9 @@
 </template>
 
 <script>
+// import Stomp from 'webstomp-client'
+// import SockJS from 'sockjs-client'
+
 export default {
   name: 'GameSetting',
   data: function() {
