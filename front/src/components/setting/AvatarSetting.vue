@@ -42,7 +42,6 @@
 
 <script>
 // import MainButton from '@/components/MainButton'
-import axios from 'axios'
 
 export default {
   components: {
@@ -77,24 +76,7 @@ export default {
     },
     setNickName: function () {
       this.$store.dispatch('setNickName', this.nickname)
-      console.log(this.$store.state.nickname)
     },
-    userSet: function () {
-      // 일단 엔터 누르면 유저 정보 업데이트 되는걸로..
-      axios({
-        method: 'post',
-        url: '/user',
-        data: {
-          "id": this.$store.state.id,
-          "avatar": this.$store.state.avatar,
-          "nickname": this.$store.state.nickname,
-        }
-      }).then((res) => {
-        console.log(res)
-      }).catch((err) => {
-        console.log(err.response)
-      })
-    }
   },
   created: function () {
     // 접속시 아바타 랜덤 설정

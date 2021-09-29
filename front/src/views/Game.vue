@@ -40,11 +40,16 @@ export default {
       axios({
         method: 'post',
         url: '/room/user',
+        // data: {
+        //   'avatar': this.$store.state.avatar,
+        //   'nickname': this.$store.state.nickname,
+        // },
         params: {
           roomId: this.$store.state.roomId
         }
       }).then((res) => {
         this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
+        console.log(res)
         console.log('리스폰스 데이터', res.data)
       }).catch((err) => {
         console.log(err.response)
