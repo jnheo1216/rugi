@@ -21,6 +21,7 @@
           type="text"
           v-model="nickname"
           @input="setNickName"
+          @keyup.enter="userSet"
         >
         </InputText>
         <label
@@ -41,6 +42,8 @@
 
 <script>
 // import MainButton from '@/components/MainButton'
+import axios from 'axios'
+
 export default {
   components: {
   },
@@ -58,6 +61,7 @@ export default {
       // 여기로직은 건드리지 않아도 됨
       this.avatar = (direction ==='left' ? this.avatar+this.avatarCount-1 : this.avatar+1) % this.avatarCount
       this.$store.dispatch('setAvatar', this.avatar)
+      console.log(this.$store.state.avatar)
     },
     randomAvatar: function () {
       let rand = this.getRanNum()
@@ -66,12 +70,30 @@ export default {
       }
       this.avatar = rand
       this.$store.dispatch('setAvatar', this.avatar)
+      console.log(this.$store.state.avatar)
     },
     getRanNum: function () {
       return Math.floor(Math.random()*this.avatarCount)
     },
     setNickName: function () {
       this.$store.dispatch('setNickName', this.nickname)
+      console.log(this.$store.state.nickname)
+    },
+    userSet: function () {
+      // 일단 엔터 누르면 유저 정보 업데이트 되는걸로..
+      axios({
+        method: 'post',
+        url: '/user',
+        data: {
+          "id": this.$store.state.id,
+          "avatar": this.$store.state.avatar,
+          "nickname": this.$store.state.nickname,
+        }
+      }).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err.response)
+      })
     }
   },
   created: function () {

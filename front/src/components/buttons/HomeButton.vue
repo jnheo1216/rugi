@@ -46,7 +46,7 @@ export default {
       } else {
         // roomId가 없어요! Random 방 입장
       }
-    }
+    },
   },
 }
 </script>
