@@ -6,6 +6,7 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
+COPY src/main/resources/aws.yml src/main/resources/aws.yml
 COPY src/main/resources/production.yml src/main/resources/application.yml
 
 RUN chmod +x gradlew
