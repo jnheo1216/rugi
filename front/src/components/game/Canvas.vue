@@ -42,7 +42,7 @@
           Save
         </button>
         <button
-          @click="handleEraserClick"
+          @click="handleEraseClick"
           id="jsEraser"
         >
           Eraser
@@ -84,11 +84,12 @@ export default {
       mode : undefined,
       saveBtn : undefined,
 
-      //
+      // 기본  ctx컬러
       ctxcolor : "#2c2c2c",
 
       painting : false,
       filling : false,
+      erasing : false,
     }
   },
   methods: {
@@ -194,9 +195,17 @@ export default {
     handleClearClick: function () {
       this.ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
     },
-    // handleEraserClick: function () {
-    //   this.ctx.fill
-    // }
+    handleEraseClick: function () {
+      if (this.erasing === false) {
+        this.erasing = true
+        this.ctx.globalCompositeOperation="destination-out"
+        console.log(this.ctx.globalCompositeOperation)
+      } else {
+        this.erasing = false
+        this.ctx.globalCompositeOperation="source-over"
+        console.log(this.ctx.globalCompositeOperation)
+      }
+    }
   },
   watch: {
     ctxcolor() {
