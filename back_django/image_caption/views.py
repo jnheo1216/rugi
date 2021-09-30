@@ -93,11 +93,3 @@ def index_kr(request):
             'caption': 'do not work'
         }
         return Response(data, status=status.HTTP_200_OK)
-
-@api_view(['GET'])
-def hello(request):
-    data = {
-            'name': 'work',
-            'age' : '22'
-        }
-    return Response(data, status=status.HTTP_200_OK)

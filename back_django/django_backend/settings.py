@@ -45,13 +45,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "image_caption",
+    "tts",
 ]
 
 MIDDLEWARE = [
 
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    
+
     # cors middleware
     'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
