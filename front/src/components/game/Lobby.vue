@@ -4,7 +4,7 @@
       <UserList />
       <div class="lobbyComponents">
         <GameSetting />
-        <LobbyButton />
+        <LobbyButton @viewChange="$emit('viewChange', $event)" />
       </div>
     </div>
   </div>
@@ -17,6 +17,7 @@ import GameSetting from '@/components/setting/GameSetting.vue'
 import UserList from '@/components/user/UserList.vue'
 
 export default {
+  emits: ['viewChange'],
   components: {
     GameSetting,
     LobbyButton,

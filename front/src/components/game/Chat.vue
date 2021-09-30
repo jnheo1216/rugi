@@ -81,7 +81,7 @@ export default {
             // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
             let recvData = JSON.parse(chat.body)
             this.chatList.push(recvData)
-            })
+          })
           if (this.stompClient && this.stompClient.connected) {
             const greeting = {
               roomId: this.roomId,

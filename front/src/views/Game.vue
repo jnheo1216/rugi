@@ -1,7 +1,7 @@
 <template>
   <div class="gameBody">
     <div>
-      <component :is="currentView">
+      <component :is="currentView" @viewChange="viewChange">
       </component>
       <button @click="roomUpdate">socket test</button>
       <div>{{ roomInfo }}</div>
@@ -99,6 +99,9 @@ export default {
           this.connected = false
         }
       )
+    },
+    viewChange : function (viewName) {
+      this.currentView = viewName
     }
   },
   created: function() {
