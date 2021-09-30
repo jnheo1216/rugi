@@ -23,11 +23,30 @@
         />
       </div>
       <div class="controls_btns">
-        <button
+        <!-- <button
           @click="handleModeClick"
           id="jsMode"
         >
           Fill
+        </button> -->
+        <button
+          @click="handlePaintClick"
+          :class="{ picked : mode_painting }"
+        >
+          Paint
+        </button>
+        <button
+          @click="handleFillClick"
+          :class="{ picked : mode_filling }"
+        >
+          Fill
+        </button>
+        <button
+          @click="handleEraseClick"
+          :class="{ picked : mode_erasing }"
+          id="jsEraser"
+        >
+          Eraser
         </button>
         <button
           @click="handleClearClick"
@@ -35,18 +54,13 @@
         >
           Clear
         </button>
-        <button
+        <Button
           @click="handleSaveClick"
           id="jsSave"
+          icon="pi pi-save"
+          label="Save"
         >
-          Save
-        </button>
-        <button
-          @click="handleEraseClick"
-          id="jsEraser"
-        >
-          Eraser
-        </button>
+        </Button>
       </div>
       <div
         id="jsColors"
@@ -81,15 +95,15 @@ export default {
       ctx : undefined,
       colors : undefined,
       range : undefined,
-      mode : undefined,
       saveBtn : undefined,
 
       // 기본  ctx컬러
       ctxcolor : "#2c2c2c",
 
       painting : false,
-      filling : false,
-      erasing : false,
+      mode_painting : true,
+      mode_filling : false,
+      mode_erasing : false,
     }
   },
   methods: {
@@ -102,8 +116,8 @@ export default {
       this.painting = false
     },
     onMouseMove: function (event) {
-      // filling 모드인 상태에서 클릭말고 드래그 방지
-      if (this.filling === false) {
+      // mode_filling 모드인 상태에서 클릭말고 드래그 방지
+      if (this.mode_filling === false) {
         const x = event.offsetX
         const y = event.offsetY
         if (!this.painting) {
@@ -133,41 +147,39 @@ export default {
       const size = event.target.value
       this.ctx.lineWidth = size
     },
-    handleModeClick: function () {
-      // 만약 erasing이 true인 상태로 들어온다면 erasing을 꺼준다.
-      if (this.erasing) {
-        this.erasing = false
-        this.ctx.globalCompositeOperation='source-over'
-      } else {
-        if (this.filling === true) {
-          this.filling = false
-          this.mode.innerText = "Fill"
-        } else {
-          this.filling = true
-          this.mode.innerText = "Paint"
-        }
+    handlePaintClick: function () {
+      //mode_filling, mode_erasing이 true이면 둘 다 false로 바꿔줘야함
+      if (this.mode_filling === true || this.mode_erasing === true) {
+        this.mode_filling = false
+        this.mode_erasing = false
       }
+      this.ctx.globalCompositeOperation='source-over'
+      this.mode_painting = true
+      console.log(this.mode_filling)
+    },
+    handleFillClick: function () {
+      if (this.mode_painting === true || this.mode_erasing === true) {
+        this.mode_painting = false
+        this.mode_erasing = false
+      }
+      this.ctx.globalCompositeOperation='source-over'
+      this.mode_filling = true
+      console.log(this.mode_filling)
+    },
+    handleEraseClick: function () {
+      // fill은 true인 상태로 들어온다면
+      if (this.mode_painting === true || this.mode_filling === true) {
+        this.mode_painting = false
+        this.mode_filling = false
+      }
+      this.ctx.globalCompositeOperation='destination-out'
+      this.mode_erasing = true
     },
     handleClearClick: function () {
       this.ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
     },
-    handleEraseClick: function () {
-      // fill은 true인 상태로 들어온다면
-      if (this.filling) {
-        this.filling = false
-      }
-      if (this.erasing === false) {
-        this.erasing = true
-        this.ctx.globalCompositeOperation="destination-out"
-        console.log(this.ctx.globalCompositeOperation)
-      } else {
-        this.erasing = false
-        this.ctx.globalCompositeOperation="source-over"
-        console.log(this.ctx.globalCompositeOperation)
-      }
-    },
     handleCanvasClick: function () {
-      if (this.filling) {
+      if (this.mode_filling) {
         this.ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
       }
     },
@@ -229,7 +241,6 @@ export default {
     this.canvas = document.getElementById("jsCanvas")
     this.ctx = this.canvas.getContext("2d")
     this.colors = document.getElementsByClassName("jsColor")
-    this.mode = document.getElementById("jsMode")
     // color 선택 이벤트
     if (this.colors) {
       Array.from(this.colors).forEach(color => color.addEventListener("click", this.handleColorClick))
@@ -312,5 +323,21 @@ body {
 
 .controls .controls_range {
   margin-bottom: 30px;
+}
+
+.controls .picked {
+  all: unset;
+  cursor: pointer;
+  background-color: #2df7ed;
+  padding: 5px 0px;
+  width: 80px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  color: solid rgba(0, 0, 0, 0.8);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
 }
 </style>
