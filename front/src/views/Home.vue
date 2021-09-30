@@ -1,5 +1,6 @@
 <template>
   <div class="homeBody">
+    <Timer />
     <header>
       <img alt="logo" src="../assets/logo.png" height="300" width="450">
     </header>
@@ -13,13 +14,15 @@
 <script>
 import AvatarSetting from '../components/setting/AvatarSetting.vue'
 import HomeButton from '../components/buttons/HomeButton.vue'
+import Timer from '../components/game/Timer.vue'
 import axios from 'axios'
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
 export default {
   name: 'Home',
   components: {
     AvatarSetting,
-    HomeButton
+    HomeButton,
+    Timer,
   },
   methods: {
     createUser: function () {
