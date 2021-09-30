@@ -6,9 +6,10 @@ export default createStore({
     id: '',
     avatar: 1,
     nickname: 'nickname',
+    userlist: [],
     roomId: '',
     stompClient: '',
-    message: {}
+    message: {},
   },
   mutations: {
     SET_USERDATA: function (state, data) {
@@ -30,7 +31,11 @@ export default createStore({
     },
     SET_MESSAGE: function(state, data) {
       state.message = data
-    }
+    },
+    SET_USERLIST: function(state, data) {
+      state.userlist = data
+      console.log(state.userlist)
+    },
   },
   actions: {
     setUserData: function(context, data) {
@@ -50,7 +55,10 @@ export default createStore({
     },
     setMessage: function(context, data) {
       context.commit('SET_MESSAGE', data)
-    }
+    },
+    setUserList: function(context, data) {
+      context.commit('SET_USERLIST', data)
+    },
 
   },
   modules: {

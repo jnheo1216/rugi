@@ -8,6 +8,7 @@ import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Avatar from 'primevue/avatar'
+import AvatarGroup from 'primevue/avatargroup'
 import ScrollTop from 'primevue/scrolltop'
 import ScrollPanel from 'primevue/scrollpanel'
 import ColorPicker from 'primevue/colorpicker'
@@ -23,6 +24,7 @@ app.use(router).use(store).use(PrimeVue)
 app.component('Button', Button)
 app.component('InputText', InputText)
 app.component('Avatar', Avatar)
+app.component('AvatarGroup', AvatarGroup)
 app.component('ScrollTop', ScrollTop)
 app.component('ScrollPanel', ScrollPanel)
 app.component('ColorPicker', ColorPicker)

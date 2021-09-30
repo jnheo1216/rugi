@@ -1,10 +1,20 @@
 <template>
   <div class="userListBody">
-    <!-- <div class="userList" v-for="user in users" :key="user.userNumber">
-      <div>{{ user.userNickName }}</div>
-      <div>{{ user.userNumber }}</div>
-      <div>{{ user.isSuperUser }}</div>
-    </div> -->
+    <AvatarGroup class="p-mb-3">
+      <Avatar
+        v-for="user in userlist"
+        :key="user.nickname"
+        :image="require(`@/assets/avatar/${user.avatar}.png`)"
+        size="large"
+        shape="circle"
+      />
+      <Avatar :label="`${ usernum }`" shape="circle" size="large" style="background-color:#9c27b0; color: #ffffff" />
+    </AvatarGroup>
+    <div class="userList" v-for="user in userlist" :key="user.nickname">
+      <div>{{ user.nickname }}</div>
+      <div>{{ user.avatar }}</div>
+      <div>{{ user.super }}</div>
+    </div>
   </div>
 </template>
 
@@ -13,22 +23,17 @@ export default {
   name: 'UserList',
   data: function() {
     return {
-      users: [
-        {
-          userNumber: 0,
-          userNickName: 'name',
-          userAvartarSrc: '',
-          isSuperUser: true
-        },
-        {
-          userNumber: 1,
-          userNickName: 'namename',
-          userAvartarSrc: '',
-          isSuperUser: false
-        }
-      ],
+      userlist: {}
     }
   },
+  computed: {
+    usernum: function () {
+      return this.userlist.length
+    }
+  },
+  mounted: function () {
+    this.userlist = this.$store.state.userlist
+  }
 }
 </script>
 

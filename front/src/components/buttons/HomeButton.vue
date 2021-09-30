@@ -37,7 +37,6 @@ export default {
       }).then((res) => {
         this.$store.dispatch('setRoomId', res.data.data.id)
         this.$router.push({ name: "Game", query: {room: res.data.data.id} })
-        console.log(res)
       }).catch((err) => {
         console.log(err)
       })
