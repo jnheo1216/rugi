@@ -15,3 +15,15 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIATD5L7CMI2SALOZHB
+      secretKey: 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
+    s3:
+      bucket: ssafy-bucket
+    region:
+      static: us-east-2
+    stack:
+      auto: false
