@@ -102,14 +102,17 @@ export default {
       this.painting = false
     },
     onMouseMove: function (event) {
-      const x = event.offsetX
-      const y = event.offsetY
-      if (!this.painting) {
-        this.ctx.beginPath()
-        this.ctx.moveTo(x, y)
-      } else {
-        this.ctx.lineTo(x, y)
-        this.ctx.stroke()
+      // filling 모드인 상태에서 클릭말고 드래그 방지
+      if (this.filling === false) {
+        const x = event.offsetX
+        const y = event.offsetY
+        if (!this.painting) {
+          this.ctx.beginPath()
+          this.ctx.moveTo(x, y)
+        } else {
+          this.ctx.lineTo(x, y)
+          this.ctx.stroke()
+        }
       }
     },
     // Color 클릭
@@ -131,12 +134,36 @@ export default {
       this.ctx.lineWidth = size
     },
     handleModeClick: function () {
-      if (this.filling === true) {
-        this.filling = false
-        this.mode.innerText = "Fill"
+      // 만약 erasing이 true인 상태로 들어온다면 erasing을 꺼준다.
+      if (this.erasing) {
+        this.erasing = false
+        this.ctx.globalCompositeOperation='source-over'
       } else {
-        this.filling = true
-        this.mode.innerText = "Paint"
+        if (this.filling === true) {
+          this.filling = false
+          this.mode.innerText = "Fill"
+        } else {
+          this.filling = true
+          this.mode.innerText = "Paint"
+        }
+      }
+    },
+    handleClearClick: function () {
+      this.ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+    },
+    handleEraseClick: function () {
+      // fill은 true인 상태로 들어온다면
+      if (this.filling) {
+        this.filling = false
+      }
+      if (this.erasing === false) {
+        this.erasing = true
+        this.ctx.globalCompositeOperation="destination-out"
+        console.log(this.ctx.globalCompositeOperation)
+      } else {
+        this.erasing = false
+        this.ctx.globalCompositeOperation="source-over"
+        console.log(this.ctx.globalCompositeOperation)
       }
     },
     handleCanvasClick: function () {
@@ -192,20 +219,6 @@ export default {
       // fake click
       link.click()
     },
-    handleClearClick: function () {
-      this.ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
-    },
-    handleEraseClick: function () {
-      if (this.erasing === false) {
-        this.erasing = true
-        this.ctx.globalCompositeOperation="destination-out"
-        console.log(this.ctx.globalCompositeOperation)
-      } else {
-        this.erasing = false
-        this.ctx.globalCompositeOperation="source-over"
-        console.log(this.ctx.globalCompositeOperation)
-      }
-    }
   },
   watch: {
     ctxcolor() {
