@@ -19,7 +19,6 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-
 #https를 위한 path설정
 #server:
 #  servlet:
