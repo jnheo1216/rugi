@@ -1,39 +1,27 @@
 <template>
   <div class="avatarBody">
     <div>
-      <!-- 여기 좌측 화살표 -->
-      <button @click="changeAvatar('left')">left</button>
-      <button @click="changeAvatar('right')">right</button>
-      <button @click="randomAvatar">random</button>
-      <div class="hi">
-        Avatar Setting
-      </div>
-      <Avatar
-        class="avatar"
-        :image="require(`@/assets/avatar/${avatar}.png`)"
-        shape="circle"
-      />
-      <!-- 여기 우측 화살표 -->
-
+      <section class="avatar-select-header">
+        <span>Avatar</span>
+      </section>
+      <section class="avatar-select">
+        <i class="fas fa-chevron-left" @click="changeAvatar('left')"></i>
+        <Avatar class="avatar" :image="require(`@/assets/avatar/${avatar}.png`)" shape="circle" />
+        <i class="fas fa-chevron-right" @click="changeAvatar('right')"></i>
+      </section>
+      <section class="avatar-select">
+        <i class="fas fa-random" @click="randomAvatar"></i>
+      </section>
+      <p>Nickname</p>
       <div class="p-float-label why">
         <InputText
-          id="username1"
+          id="username"
           type="text"
           v-model="nickname"
           @input="setNickName"
+          place-holder="Hello"
         >
         </InputText>
-        <label
-          v-if="nickname.length"
-          for="username"
-        >
-          <!-- 닉네임이 있는 경우 닉네임 -->
-          {{ nickname }}
-        </label>
-        <label v-else>
-          <!-- 없으면 default 값 노출 -->
-          Nickname
-        </label>
       </div>
     </div>
   </div>
@@ -102,5 +90,33 @@ export default {
 .avatar {
   width: 150px !important;
   height: 150px !important;
+}
+
+
+.avatar-select-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-select-header > span {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.avatar-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 5px 0;
+}
+.fa-chevron-left, .fa-chevron-right {
+  margin: 20px;
+  cursor: pointer;
+  font-size: 2rem;
+}
+.fa-random {
+  cursor: pointer;
+  font-size: 1.8rem;
 }
 </style>
