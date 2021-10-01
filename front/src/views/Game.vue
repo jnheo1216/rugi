@@ -9,6 +9,17 @@
     <div>
       <Chat />
     </div>
+    <div v-if="currentView==='Lobby'">
+
+      <Button
+        icon="pi pi-arrow-left"
+        class="p-button-rounded p-button-text"
+        @click="roomUpdate"
+      >
+      Room Setting!
+      </Button>
+
+    </div>
   </div>
 </template>
 
@@ -90,6 +101,24 @@ export default {
           this.connected = false
         }
       )
+    },
+    roomUpdate : function () {
+      axios({
+        method: 'patch',
+        url: '/room',
+        data: {
+          maxRound: this.$store.roomInfo.maxRound,
+          roundTime: this.$store.roomInfo.roundTime,
+        },
+        params: {
+          roomId: this.$store.state.roomId
+        }
+      }).then((res) => {
+        console.log('방 정보 업데이트 성공')
+        console.log(res.data)
+      }).catch((err) => {
+        console.log(err.response)
+      })
     },
     viewChange : function (viewName) {
       this.currentView = viewName

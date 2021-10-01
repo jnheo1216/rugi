@@ -50,7 +50,7 @@
       >
       </Button>
       <Button
-        @click="roomUpdate"
+        @click="roomUpdateData"
       >
         테스트
       </Button>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import axios from'axios'
+// import axios from'axios'
 
 export default {
   name: 'GameSetting',
@@ -93,31 +93,39 @@ export default {
       roomId: this.$store.state.roomId,
     }
   },
+  watch : {
+    rounds_idx : function () {
+      this.roomUpdateData()
+    },
+    timer_idx : function () {
+      this.roomUpdateData()
+    },
+  },
   methods: {
     // 룸 정보 변경하는 클릭 이벤트 발생할때 마다 실행
-    roomUpdate: function() {
+    roomUpdateData: function() {
       // v-model같은걸로 서로...와따가따가능하게
       const roomInfo = {
         maxRound: this.rounds[this.rounds_idx%3],
         roundTime: this.timer[this.timer_idx%3]
       }
       this.$store.dispatch('setMessage', roomInfo)
-      console.log('게임세팅에서 소켓에 보낼 메시지 세팅, state에 저장', roomInfo)
-      axios({
-        method: 'patch',
-        url: '/room',
-        data: {
-          maxRound: roomInfo.maxRound,
-          roundTime: roomInfo.roundTime,
-        },
-        params: {
-          roomId: this.$store.state.roomId
-        }
-      }).then((res) => {
-        console.log(res.data)
-      }).catch((err) => {
-        console.log(err.response)
-      })
+      console.log('게임세팅에서 방 정보들 바뀐거 state에 저장', roomInfo)
+      // axios({
+      //   method: 'patch',
+      //   url: '/room',
+      //   data: {
+      //     maxRound: roomInfo.maxRound,
+      //     roundTime: roomInfo.roundTime,
+      //   },
+      //   params: {
+      //     roomId: this.$store.state.roomId
+      //   }
+      // }).then((res) => {
+      //   console.log(res.data)
+      // }).catch((err) => {
+      //   console.log(err.response)
+      // })
     }
   }
 }
