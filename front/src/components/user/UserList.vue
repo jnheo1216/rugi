@@ -37,12 +37,6 @@ export default {
       return this.$store.state.room.userList
     }
   },
-  watch: {
-    //computed로 store에 있는 room.userList가 변경된것이 감지 된다면 동작
-    userlist: function() {
-      //
-    }
-  }
 }
 </script>
 

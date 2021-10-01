@@ -1,7 +1,7 @@
 <template>
   <div class="lobbyBody">
     <div>
-      <UserList />
+      <UserList v-if="isUserListExist" />
       <div class="lobbyComponents">
         <GameSetting />
         <LobbyButton @viewChange="$emit('viewChange', $event)" />
@@ -24,15 +24,11 @@ export default {
     UserList,
   },
   name: 'Lobby',
-  data() {
-    return {
+  computed: {
+    isUserListExist: function () {
+      return Object.keys(this.$store.state.room).length
     }
-  },
-  methods: {
-  },
-  created() {
-    // console.log('query test', this.$route.query.room)
-  },
+  }
 }
 
 </script>

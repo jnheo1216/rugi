@@ -24,23 +24,17 @@
 </template>
 
 <script>
-import Stomp from 'webstomp-client'
-import SockJS from 'sockjs-client'
-// import axios from 'axios'
-
-
 export default {
-  components: {
-  },
   name: 'Chat',
+  props: {
+    chatList : {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      roomId: this.$route.query.room,
-      nickname: this.$store.state.nickname,
       message: '',
-      chatList: [],
-      roomInfo: {},
-      subscription: {}
     }
   },
   methods: {
@@ -52,58 +46,19 @@ export default {
       }
     },
     send() {
-      //console.log("Send message:" + this.message)
-      if (this.stompClient && this.stompClient.connected) {
-        const msg = {
-          roomId: this.roomId,
-          writer: this.nickname,
+      console.log("Send message:" + this.message)
+      this.$store.state.stompClient.send(
+        '/pub/chat/message',
+        JSON.stringify({
+          roomId: this.$route.query["room"],
+          writer: this.$store.state.nickname,
           message: this.message
-        }
-        JSON.stringify(msg)
-        //console.log(msg)
-        this.stompClient.send('/pub/chat/message', JSON.stringify(msg))
-      }
-    },
-    connect() {
-      // const serverURL = 'https://j5b106.p.ssafy.io:443/stomp/chat'
-      const serverURL = 'http://localhost:8080/stomp/chat'
-
-      let socket = new SockJS(serverURL);
-      this.stompClient = Stomp.over(socket);
-      // this.stompClient = this.$store.state.stompClient
-      //console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
-      this.stompClient.connect(
-        {},
-        frame => {
-          // 소켓 연결 성공
-          this.connected = true
-          console.log('채팅 소켓 연결 성공', frame)
-          // console.log('연결 유알엘', socket._transport.url) 세션아이디 포함되어있음
-          this.subscription = this.stompClient.subscribe('/sub/chat/room/' + this.roomId, chat => {
-            // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
-            let recvData = JSON.parse(chat.body)
-            this.chatList.push(recvData)
-          })
-          if (this.stompClient && this.stompClient.connected) {
-            const greeting = {
-              roomId: this.roomId,
-              writer: this.nickname,
-              message: socket._transport.url
-            }
-            console.log(greeting)
-            this.stompClient.send('/pub/chat/enter', JSON.stringify(greeting))
-          }
-        },
-        error => {
-          // 소켓 연결 실패
-          console.log('소켓 연결 실패', error)
-          this.connected = false
-        }
+        })
       )
-    }
+    },
   },
   created() {
-    this.connect()
+    // this.connect()
   },
   mounted() {
     // window.addEventListener('unload', this.$store.dispatch('unSub'))

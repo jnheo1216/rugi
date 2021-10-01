@@ -28,10 +28,12 @@ export default {
     },
     enterRoom: function () {
       soundEffect('https://soundbible.com/mp3/sms-alert-1-daniel_simon.mp3')
-      if (this.$store.state.invited_roomId) {
-        this.$router.push( {name : 'Game', query: {room: this.$store.state.invited_roomId}})
+      const roomId = this.$route.query["room"];
+      console.log(this.$route.query["room"]);
+      if (roomId) {
+        this.$router.push( {name : 'Game', query: {room: roomId}})
       } else {
-        // roomId가 없어요! Random 방 입장
+        console.log("roomId가 없어요", roomId); // roomId가 없어요! Random 방 입장
       }
     },
   }
