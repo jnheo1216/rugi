@@ -26,33 +26,11 @@ export default {
   },
   methods: {
     createUser: function () {
-<<<<<<< HEAD
       this.$store.dispatch('createUser')
-=======
-      axios({
-        method: 'post',
-        url: '/user',
-        data: {
-          //기본 아바타, 닉네임 설정 할 수 있게 해줘야 한다.
-          'avatar': this.$store.state.avatar,
-          'nickname': this.$store.state.nickname
-        }
-      }).then((res) => {
-        axios.defaults.headers.common['User-Id'] = res.data.data.id
-        // console.log(res.data.data.id)
-        this.$store.dispatch('setUserData', res.data.data)
-      }).catch((err) => {
-        console.log(err.response)
-      })
->>>>>>> feature/avatar
     },
     setRoomId: function () {
       if (this.$route.query.room) {
         this.$store.dispatch('setRoomId', this.$route.query.room)
-<<<<<<< HEAD
-        console.log('RoomId SET')
-=======
->>>>>>> feature/avatar
       }
     }
   },
