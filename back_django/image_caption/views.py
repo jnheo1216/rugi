@@ -9,7 +9,8 @@ import urllib.request
 import requests
 from io import BytesIO
 from PIL import Image
-import tensorflow as tf
+# import tensorflow as tf
+import json
 
 
 # Create your views here.
@@ -84,8 +85,10 @@ def index_kr(request):
     if(rescode==200):
         response_body = response.read()
         caption = response_body.decode('utf-8')
+        captionjson = json.loads(caption)
+        captionjson = captionjson['message']['result']['translatedText']
         data = {
-            'caption': caption
+            'caption': captionjson
         }
         return Response(data, status=status.HTTP_200_OK)
     else:
