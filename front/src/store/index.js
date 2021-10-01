@@ -9,9 +9,8 @@ export default createStore({
     avatar: 1,
     nickname: "nickname",
     // userlist: [],
-    // roomId: "",
-    // 위 userlist와  roomid 모두 room에서 조회 가능
     room: {},
+    invited_roomId: "",
     stompClient: "",
     message: {},
   },
@@ -39,6 +38,10 @@ export default createStore({
     SET_USERLIST: function(state, data) {
       state.room.userList = data
       console.log('여길봐 여기', state.room.userList)
+    },
+    SET_INVITED_ROOMID: function(state, data) {
+      state.invited_roomId = data
+      console.log(state.invited_roomId)
     },
   },
   actions: {
@@ -85,6 +88,9 @@ export default createStore({
     },
     setNickName: function(context, data) {
       context.commit("SET_NICKNAME", data);
+    },
+    setInvitedRoomId: function(context, data) {
+      context.commit("SET_INVITED_ROOMID", data);
     },
     setAvatar: function(context, data) {
       context.commit("SET_AVATAR", data);

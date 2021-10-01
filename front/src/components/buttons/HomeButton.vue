@@ -28,8 +28,8 @@ export default {
     },
     enterRoom: function () {
       soundEffect('https://soundbible.com/mp3/sms-alert-1-daniel_simon.mp3')
-      if (this.$store.state.room.id) {
-        this.$router.push( {name : 'Game', query: {room: this.$store.state.room.id}})
+      if (this.$store.state.invited_roomId) {
+        this.$router.push( {name : 'Game', query: {room: this.$store.state.invited_roomId}})
       } else {
         // roomId가 없어요! Random 방 입장
       }
