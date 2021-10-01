@@ -10,15 +10,13 @@
       <Chat />
     </div>
     <div v-if="currentView==='Lobby'">
-
       <Button
         icon="pi pi-arrow-left"
         class="p-button-rounded p-button-text"
         @click="roomUpdate"
       >
-      Room Setting!
+        Room Setting!
       </Button>
-
     </div>
   </div>
 </template>
@@ -61,10 +59,10 @@ export default {
           'nickname': this.$store.state.nickname,
         },
         params: {
-          roomId: this.$store.state.roomId
+          roomId: this.$store.state.room.id
         }
       }).then((res) => {
-        this.$router.push( {name : 'Game', query: {room: this.$store.state.roomId}})
+        this.$router.push( {name : 'Game', query: {room: this.$store.state.room.id}})
         this.$store.dispatch('setUserList', res.data.data.userList)
         console.log('리스폰스 데이터', res.data)
       }).catch((err) => {
