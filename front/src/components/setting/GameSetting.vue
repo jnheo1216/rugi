@@ -86,8 +86,8 @@ export default {
       is_custom_idx: 999,
       stompClient: this.$store.state.stompClient,
       roomId: this.$store.state.roomId,
-      maxRound: rounds[rounds_idx%3],
-      roundTime: timer[timer_idx%3],
+      maxRound: 1,
+      roundTime: 60,
 
     }
   },
