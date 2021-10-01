@@ -107,8 +107,8 @@ export default {
         method: 'patch',
         url: '/room',
         data: {
-          maxRound: this.$store.roomInfo.maxRound,
-          roundTime: this.$store.roomInfo.roundTime,
+          maxRound: this.$store.state.message.maxRound,
+          roundTime: this.$store.state.message.roundTime,
         },
         params: {
           roomId: this.$store.state.roomId
