@@ -98,6 +98,11 @@ export default createStore({
       context.commit("SET_USERLIST", data);
     }
   },
+  getters : {
+    getRoomInfo: state => {
+      return state.message
+    }
+  },
   modules: {},
   plugins: [createPersistedState()]
 });

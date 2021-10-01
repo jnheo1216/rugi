@@ -10,7 +10,7 @@
         @click="rounds_idx -= 1"
       >
       </Button>
-      {{ rounds[rounds_idx%3] }}
+      {{ maxRound }}
       <Button
         icon="pi pi-arrow-right"
         class="p-button-rounded p-button-text"
@@ -42,17 +42,12 @@
         @click="timer_idx -= 1"
       >
       </Button>
-      {{ timer[timer_idx%3] }}
+      {{ roundTime }}
       <Button
         icon="pi pi-arrow-right"
         class="p-button-rounded p-button-text"
         @click="timer_idx += 1"
       >
-      </Button>
-      <Button
-        @click="roomUpdateData"
-      >
-        방정보 변경
       </Button>
     </div>
     <div class="set">
@@ -91,20 +86,17 @@ export default {
       is_custom_idx: 999,
       stompClient: this.$store.state.stompClient,
       roomId: this.$store.state.roomId,
+      maxRound: rounds[rounds_idx%3],
+      roundTime: timer[timer_idx%3],
+
     }
-  },
-  watch : {
-    rounds_idx : function () {
-      this.roomUpdateData()
-    },
-    timer_idx : function () {
-      this.roomUpdateData()
-    },
   },
   methods: {
     // 룸 정보 변경하는 클릭 이벤트 발생할때 마다 실행
     roomUpdateData: function() {
       // v-model같은걸로 서로...와따가따가능하게
+      this.maxRound = this.rounds[this.rounds_idx%3]
+      this.roundTime = this.timer[this.timer_idx%3]
       const roomInfo = {
         maxRound: this.rounds[this.rounds_idx%3],
         roundTime: this.timer[this.timer_idx%3]
@@ -127,7 +119,22 @@ export default {
       //   console.log(err.response)
       // })
     }
-  }
+  },
+  computed : {
+    check_roomInfo() {return this.$store.getters.getRoomInfo}
+  },
+  watch : {
+    rounds_idx : function () {
+      this.roomUpdateData()
+    },
+    timer_idx : function () {
+      this.roomUpdateData()
+    },
+    check_roomInfo : function(val) {
+      this.maxRound = val.maxRound
+      this.roundTime = val.roundTime
+    }
+  },
 }
 </script>
 
