@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import axios from'axios'
+// import axios from'axios'
 
 export default {
   name: 'GameSetting',
@@ -111,21 +111,21 @@ export default {
       }
       this.$store.dispatch('setMessage', roomInfo)
       console.log('게임세팅에서 방 정보들 바뀐거 state에 저장', roomInfo)
-      axios({
-        method: 'patch',
-        url: '/room',
-        data: {
-          maxRound: roomInfo.maxRound,
-          roundTime: roomInfo.roundTime,
-        },
-        params: {
-          roomId: this.$store.state.roomId
-        }
-      }).then((res) => {
-        console.log(res.data)
-      }).catch((err) => {
-        console.log(err.response)
-      })
+      // axios({
+      //   method: 'patch',
+      //   url: '/room',
+      //   data: {
+      //     maxRound: roomInfo.maxRound,
+      //     roundTime: roomInfo.roundTime,
+      //   },
+      //   params: {
+      //     roomId: this.$store.state.roomId
+      //   }
+      // }).then((res) => {
+      //   console.log(res.data)
+      // }).catch((err) => {
+      //   console.log(err.response)
+      // })
     }
   }
 }
