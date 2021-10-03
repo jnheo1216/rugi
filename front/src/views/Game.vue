@@ -1,8 +1,11 @@
 <template>
   <div class="gameBody">
+
     <div>
-      <component :is="currentView" @viewChange="viewChange">
-      </component>
+      <component :is="currentView" @viewChange="viewChange"></component>
+      <div> 라운드 : {{ $store.state.room.maxRound }}</div>
+      <div>라운드 시간 : {{ $store.state.room.roundTime }}</div>
+      <div> 정원 : {{ $store.state.room.personnel }}</div>
       <div>{{ $store.state.room }}</div>
     </div>
     <div>
@@ -82,9 +85,12 @@ export default {
     roomSubscribe: async function () {
       this.roomSubscription = await this.stompClient.subscribe('/sub/room_info/room/' + this.roomId, info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
-        let recvData = JSON.parse(info.body)
+        let response = JSON.parse(info.body).message
+        // 여기서 내가 superuser인지 확인해서 변수 할당해주고 delete 해주기
+        this.$store.dispatch('setSuper', response["superUser"])
+        delete response["superUser"]
         // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
-        this.$store.dispatch('setRoom', recvData.message)
+        this.$store.dispatch('setRoom', response)
       })
     },
     // 소켓 구독 메소드 2

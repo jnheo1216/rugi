@@ -3,7 +3,8 @@
     <div>
       <UserList v-if="isRoomExist" />
       <div class="lobbyComponents">
-        <GameSetting v-if="isRoomExist" />
+        <GameSetting v-if="isRoomExist && $store.state.super" />
+        <!-- 방장이 아닌 사람한테는 다른걸 보여줘도 좋을 듯 -->
         {{ isRoomExist }}
         <LobbyButton @viewChange="$emit('viewChange', $event)" />
       </div>
@@ -28,7 +29,7 @@ export default {
   computed: {
     isRoomExist : function () {
       return this.$store.getters.isRoomExist
-    }
+    },
   }
 }
 

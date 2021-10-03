@@ -8,6 +8,7 @@ export default createStore({
     id: "",
     avatar: 0,
     nickname: "nickname",
+    super: false,
     room: {},
     stompClient: ""
   },
@@ -28,6 +29,9 @@ export default createStore({
     },
     SET_STOMP_CLIENT: function(state, data) {
       state.stompClient = data;
+    },
+    SET_SUPER: function(state, data) {
+      state.super = data;
     }
   },
   actions: {
@@ -95,6 +99,9 @@ export default createStore({
     },
     setRoom: function(context, data) {
       context.commit("SET_ROOM", data);
+    },
+    setSuper: function(context, data) {
+      context.commit("SET_SUPER", data === context.state.id);
     }
   },
   getters: {

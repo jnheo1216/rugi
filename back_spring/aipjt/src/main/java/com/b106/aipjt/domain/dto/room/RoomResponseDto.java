@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 public class RoomResponseDto {
     private String id;
+    private String superUser;
     @Builder.Default
     private boolean isStart = false;
     @Builder.Default
@@ -33,6 +34,7 @@ public class RoomResponseDto {
 
     public static RoomResponseDto toRoom(Room room, List<RoomUserResponseDto> userListDto) {
         return RoomResponseDto.builder().id(room.getId())
+            .superUser(room.getSuperUser().getId())
             .isStart(room.isStart())
             .isPlay(room.isPlay())
             .currentRound(room.getCurrentRound())
