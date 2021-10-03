@@ -37,7 +37,10 @@ export default {
       // 채팅 정보를 받아서 자식인 Chat 컴포넌트에 넘겨주기 위함
       chatList: [],
       roomSubscription: null,
-      chatSubscription: null
+      chatSubscription: null,
+      // 이 값은 변경하지 말 것.
+      // 방장 퇴장시 주소가 먼저 변경되어 제대로 값을 가져오지 못하기 때문에 할당함
+      roomId: this.$route.query["room"]
     }
   },
   methods: {
@@ -53,7 +56,7 @@ export default {
           console.log(frame);
           await this.chatSubscribe() // 메시지 구독 코드
           await this.roomSubscribe() // 방 구독 코드
-          this.sendJoinRequest()
+          await this.sendJoinRequest()
           this.sendJoinMessage() // 입장메시지 코드
           this.addEvent()
         },
@@ -68,7 +71,7 @@ export default {
     },
     // 소켓 구독 메소드 1
     roomSubscribe: async function () {
-      this.roomSubscription = await this.stompClient.subscribe('/sub/room_info/room/' + this.$route.query["room"], info => {
+      this.roomSubscription = await this.stompClient.subscribe('/sub/room_info/room/' + this.roomId, info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         let recvData = JSON.parse(info.body)
         // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
@@ -77,7 +80,7 @@ export default {
     },
     // 소켓 구독 메소드 2
     chatSubscribe: async function () {
-      this.chatSubscription = await this.stompClient.subscribe('/sub/chat/room/' + this.$route.query["room"], chat => {
+      this.chatSubscription = await this.stompClient.subscribe('/sub/chat/room/' + this.roomId, chat => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         console.log("chat : ", JSON.parse(chat.body));
         const {writer, message} = JSON.parse(chat.body)
@@ -85,8 +88,8 @@ export default {
       })
     },
     // 유저 목록 변경을 위한 http 요청
-    sendJoinRequest: function () {
-      axios({
+    sendJoinRequest: async function () {
+      await axios({
         method: 'post',
         url: '/room/user',
         data: {
@@ -94,7 +97,7 @@ export default {
           nickname: this.$store.state.nickname,
         },
         params: {
-          roomId: this.$route.query["room"]
+          roomId: this.roomId
         }
       }).then((res) => {
         console.log('방 입장시 입장 데이터 받아오기', res.data)
@@ -108,7 +111,7 @@ export default {
       this.$store.state.stompClient.send(
         '/pub/chat/message',
         JSON.stringify({
-          roomId: this.$route.query["room"],
+          roomId: this.roomId,
           writer: this.$store.state.nickname,
           message: `${this.$store.state.nickname}님이 입장했습니다.`
         })
@@ -127,10 +130,13 @@ export default {
     leaveRoom: async function () {
       console.log("Send message: bye")
       // 구독을 먼저 끊어주어야 한다.
+      // leaveRequest로 뒤늦게 방정보를 받아와서 비워진 room객체가 재할당 되는 것을 막기 위함
       await this.roomSubscription.unsubscribe();
       await this.chatSubscription.unsubscribe();
-      this.leaveMessage() // 퇴장한다는 소켓메시지
-      this.leaveRequest() // http 요청으로 방을 퇴장하는 요청도 보내주어야 한다.
+      await this.leaveMessage() // 퇴장한다는 소켓메시지
+      console.log(this.roomId);
+      await this.leaveRequest() // http 요청으로 방을 퇴장하는 요청도 보내주어야 한다.
+      this.$store.dispatch("setStompClient", "");
       this.$store.dispatch("setRoom", {})
     },
     // 방을 떠났다는 메시지를 모두에게 보내주는 Socket 메소드
@@ -138,19 +144,20 @@ export default {
       this.$store.state.stompClient.send(
         '/pub/chat/message',
         JSON.stringify({
-          roomId: this.$route.query["room"],
+          roomId: this.roomId,
           writer: this.$store.state.nickname,
           message: `${this.$store.state.nickname}님이 떠났습니다.`
         })
       )
     },
     // 방에서 유저를 제거하고, 갱신된 새로운 데이터를 모든 유저에게 뿌려주는 Http 메소드
-    leaveRequest: function () {
-      axios({
+    leaveRequest: async function () {
+      console.log(this.roomId);
+      await axios({
         method: 'delete',
         url: '/room/user',
         params: {
-          roomId: this.$route.query["room"]
+          roomId: this.roomId
         }
       }).then((res) => {
         console.log('방 퇴장', res.data)
@@ -163,7 +170,7 @@ export default {
   created: function  () {
     this.connect()
   },
-  unmounted: function () {
+  beforeUnmount: function () {
     console.log("unMount")
     this.removeEvent()
     this.leaveRoom()
