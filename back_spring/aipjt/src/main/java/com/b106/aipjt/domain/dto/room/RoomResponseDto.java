@@ -17,22 +17,29 @@ public class RoomResponseDto {
     @Builder.Default
     private boolean isStart = false;
     @Builder.Default
+    private boolean isPlay = false;
+    @Builder.Default
     private int currentRound = 0;
     @Builder.Default
     private int maxRound = 3;
     @Builder.Default
     private int roundTime = 60;
     @Builder.Default
+    private int personnel = 8;
+    @Builder.Default
     private List<RoomUserResponseDto> userList = new ArrayList<>();
 
 
 
-    public static RoomResponseDto toRoom(Room room, List<RoomUserResponseDto> roomUsers) {
+    public static RoomResponseDto toRoom(Room room, List<RoomUserResponseDto> userListDto) {
         return RoomResponseDto.builder().id(room.getId())
+            .isStart(room.isStart())
+            .isPlay(room.isPlay())
             .currentRound(room.getCurrentRound())
             .maxRound(room.getMaxRound())
             .roundTime(room.getRoundTime())
-            .userList(roomUsers)
+            .personnel(room.getPersonnel())
+            .userList(userListDto)
             .build();
     }
 

@@ -38,7 +38,7 @@ public class RoomController {
     public ResponseDto<RoomResponseDto> patchRoom(@RequestHeader(value="User-Id") String userId,
                                                   @RequestParam String roomId,
                                                   @RequestBody RoomSettingRequestDto roomSettingRequestDto){
-        Room room = roomRedisService.configRoom(userId, roomId, roomSettingRequestDto.getMaxRound(), roomSettingRequestDto.getRoundTime());
+        Room room = roomRedisService.configRoom(userId, roomId, roomSettingRequestDto.getMaxRound(), roomSettingRequestDto.getRoundTime(), roomSettingRequestDto.getPersonnel());
 
         List<RoomUserResponseDto> roomUsers = RoomUserResponseDto.of(room);
 

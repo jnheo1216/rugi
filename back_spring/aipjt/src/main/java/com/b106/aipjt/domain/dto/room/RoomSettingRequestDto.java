@@ -12,4 +12,5 @@ import lombok.ToString;
 public class RoomSettingRequestDto {
     private int maxRound;
     private int roundTime;
+    private int personnel;
 }

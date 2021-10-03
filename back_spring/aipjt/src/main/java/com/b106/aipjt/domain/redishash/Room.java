@@ -33,6 +33,11 @@ public class Room {
     private int maxRound = 3;
     // 게임 설정 시간
     private int roundTime = 60;
+    // 초기값 설정
+    private int personnel = 8;
+    // 최대 인원 설정 -> 어떻게 접근을 막을 것인가?? 방 입장 로직에서 처리해주어야 함
+
+
     // 게임에 참여한 유저 목록
     private List<User> userList = new ArrayList<>();
 

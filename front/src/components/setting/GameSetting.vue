@@ -14,6 +14,13 @@
       {{ roundTime }}
       <Button @click="changeRoundTime('right')" icon="pi pi-arrow-right" class="p-button-rounded p-button-text"></Button>
     </div>
+    <div class="set">
+      <span>최대 인원</span>
+
+      <Button @click="changePersonnel('left')" icon="pi pi-arrow-left" style="fontSize: 0.1rem" class="p-button-rounded p-button-text"></Button>
+      {{ personnel }}
+      <Button @click="changePersonnel('right')" icon="pi pi-arrow-right" class="p-button-rounded p-button-text"></Button>
+    </div>
     <section>
       <Button label="Primary" class="p-button-raised p-button-text p-button-plain" @click="roomUpdate">
         방 설정 적용
@@ -31,6 +38,7 @@ export default {
     return {
       maxRound: this.$store.state.room["maxRound"],
       roundTime: this.$store.state.room["roundTime"],
+      personnel: this.$store.state.room["personnel"],
     }
   },
   methods: {
@@ -41,6 +49,10 @@ export default {
     changeRoundTime: function (direction) {
       let newRoundTime = direction==="left" ? this.roundTime-10 : this.roundTime+10
       this.roundTime = (40 <= newRoundTime && newRoundTime <= 120) ? newRoundTime : this.roundTime
+    },
+    changePersonnel: function (direction) {
+      let newPersonnel = direction==="left" ? this.personnel-1 : this.personnel+1
+      this.personnel = (2 <= newPersonnel && newPersonnel <= 8) ? newPersonnel : this.personnel
     },
     roomUpdate : function () {
       if (!this.isSettingChanged) {
@@ -53,6 +65,7 @@ export default {
         data: {
           maxRound: this.maxRound,
           roundTime: this.roundTime,
+          personnel: this.personnel,
         },
         params: {
           roomId: this.$route.query["room"]
@@ -68,7 +81,11 @@ export default {
   },
   computed: {
     isSettingChanged: function () {
-      return this.$store.state.room["maxRound"] !== this.maxRound || this.$store.state.room["roundTime"] !== this.roundTime
+      return (
+        this.$store.state.room["maxRound"] !== this.maxRound
+        || this.$store.state.room["roundTime"] !== this.roundTime
+        || this.$store.state.room["personnel"] !== this.personnel
+      )
     }
   }
 }

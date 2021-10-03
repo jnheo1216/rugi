@@ -32,7 +32,7 @@ public class RoomRedisService {
         return roomRedisRepository.save(room);
     }
     // 방 수정
-    public Room configRoom(String userId, String roomId, int maxRound, int roundTime) {
+    public Room configRoom(String userId, String roomId, int maxRound, int roundTime, int personnel) {
         Optional<Room> roomById = roomRedisRepository.findById(roomId);
         if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다.");
         Room room = roomById.get();
@@ -41,6 +41,7 @@ public class RoomRedisService {
 
         room.setMaxRound(maxRound);
         room.setRoundTime(roundTime);
+        room.setPersonnel(personnel);
         return roomRedisRepository.save(room);
     }
 
