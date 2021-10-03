@@ -33,6 +33,18 @@ public class RoomController {
         return new ResponseDto<>(HttpStatus.CREATED.value(), "방 생성 성공", build);
     }
 
+    // 방 조회
+    @GetMapping("")
+    public ResponseDto<RoomResponseDto> getRoom(@RequestHeader(value="User-Id") String userId,
+                                                  @RequestParam String roomId){
+        Room room = roomRedisService.getRoom(userId, roomId);
+        List<RoomUserResponseDto> roomUsers = RoomUserResponseDto.of(room);
+        RoomResponseDto build = RoomResponseDto.toRoom(room, roomUsers);
+        System.out.println(build.getUserList());
+
+        return new ResponseDto<>(HttpStatus.CREATED.value(), "방 조회 성공", build);
+    }
+
     // 방 수정 : 방정보에 대한 변경 사항을 받아야 한다
     @PatchMapping("")
     public ResponseDto<RoomResponseDto> patchRoom(@RequestHeader(value="User-Id") String userId,

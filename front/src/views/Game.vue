@@ -44,7 +44,16 @@ export default {
     }
   },
   methods: {
-    connect: function() {
+    connect: async function() {
+      // 여기서 방을 먼저 조회할까..?
+      // 방을 조회하고 풀방이면 강퇴해버리기
+      const findResult = await this.sendFindRoom() // 방 조회 코드. 풀방 조회를 위함 (낭비지만 시간이 없음)
+      if (!findResult) {
+        this.$router.push({ name: "Home", query: { room: this.roomId } });
+        return
+      }
+
+
       let socket = new SockJS(process.env.VUE_APP_STOMP_URL);
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect(
@@ -86,6 +95,22 @@ export default {
         const {writer, message} = JSON.parse(chat.body)
         this.chatList.push({writer, message})
       })
+    },
+    sendFindRoom: async function () {
+      return await axios({
+        method: 'get',
+        url: '/room',
+        params: {
+          roomId: this.roomId
+        }
+      }).then((res) => {
+        console.log('방 입장시 입장 데이터 받아오기', res.data)
+        return true
+      }).catch((err) => {
+        console.log(err.response)
+        return false
+      })
+
     },
     // 유저 목록 변경을 위한 http 요청
     sendJoinRequest: async function () {
@@ -171,6 +196,8 @@ export default {
     this.connect()
   },
   beforeUnmount: function () {
+    // 처음부터 튕기는 경우 (방이 가득 찬 경우라던지)
+    // 에러가 발생하지만 이 에러는 구독하지 않은걸 헤제할 수 없다는 에러로 문제는 없음
     console.log("unMount")
     this.removeEvent()
     this.leaveRoom()

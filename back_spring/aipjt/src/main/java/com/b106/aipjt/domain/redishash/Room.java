@@ -51,4 +51,9 @@ public class Room {
         this.setStart(true); // 게임이 시작했으므로
         return this;
     }
+
+    public boolean isFull() {
+        // 유저리스트 >= 제한인원
+        return userList.size()>=personnel;
+    }
 }

@@ -31,6 +31,19 @@ public class RoomRedisService {
         Room room = roomRedisRepository.save(new Room(null, result.get()));
         return roomRedisRepository.save(room);
     }
+    // 방 조회
+    public Room getRoom(String userId, String roomId) {
+        Optional<User> userById = userRedisRepository.findById(userId);
+        Optional<Room> roomById = roomRedisRepository.findById(roomId);
+        // 검증 로직
+        if (userById.isEmpty()) throw new RuntimeException("유저가 존재하지 않습니다");
+        if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
+        User user = userById.get();
+        Room room = roomById.get();
+        if (room.isFull()) throw new RuntimeException("방이 가득 찼습니다.");
+        return room;
+    }
+
     // 방 수정
     public Room configRoom(String userId, String roomId, int maxRound, int roundTime, int personnel) {
         Optional<Room> roomById = roomRedisRepository.findById(roomId);
@@ -53,10 +66,12 @@ public class RoomRedisService {
         // 검증 로직
         if (!userExist) throw new RuntimeException("유저가 존재하지 않습니다");
         if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
-        // 유저 정보 갱신 & 저장
-        User user = userRedisRepository.save(new User(userId, avatar, nickname));
         //Optional 꺼내기
         Room room = roomById.get();
+        if (room.isFull()) throw new RuntimeException("방이 가득 찼습니다");
+
+        // 유저 정보 갱신 & 저장
+        User user = userRedisRepository.save(new User(userId, avatar, nickname));
         // 입장 처리하기
         if (!room.getUserList().contains(user)) {
             room.getUserList().add(user);
@@ -96,5 +111,6 @@ public class RoomRedisService {
         messageDto.setMessage(room);
         template.convertAndSend("/sub/room_info/room/" + messageDto.getRoomId(), messageDto);
     }
+
 
 }
