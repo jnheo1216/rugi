@@ -40,20 +40,29 @@ export default {
     }
   },
   methods: {
-    connect() {
+    connect: function() {
       console.log("connect 시작");
       let socket = new SockJS(process.env.VUE_APP_STOMP_URL);
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect(
         {},
-        frame => { // 소켓 연결 성공시 실행되는 콜백
+        async (frame) => { // 소켓 연결 성공시 실행되는 콜백
         // stomp객체를 어느 곳에서든 쓸 수 있도록 state에 저장한다.
           this.$store.dispatch("setStompClient", this.stompClient);
           this.connected = true
           console.log(frame);
-          this.roomSubscribe() // 방 구독 코드
-          this.chatSubscribe() // 메시지 구독 코드
-          this.sendJoinMessage() // 입장메시지 코드
+          console.log("방 구독 전");
+          await this.roomSubscribe() // 방 구독 코드
+          console.log("방 구독 후");
+          console.log("메시지 구독 전");
+          await this.chatSubscribe() // 메시지 구독 코드
+          console.log("메시지 구독 후");
+          console.log("소켓 방 입장 전");
+          await this.sendJoinMessage() // 입장메시지 코드
+          console.log("소켓 방 입장 후");
+          console.log("Http 방 입장 전");
+          this.sendJoinRequest()
+          console.log("Http 방 입장 후");
           this.addEvent()
         },
         error => {
@@ -67,8 +76,8 @@ export default {
       this.currentView = viewName
     },
     // 소켓 구독 메소드 1
-    roomSubscribe: function () {
-      this.stompClient.subscribe('/sub/room_info/room/' + this.$route.query["room"], info => {
+    roomSubscribe: async function () {
+      await this.stompClient.subscribe('/sub/room_info/room/' + this.$route.query["room"], info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         let recvData = JSON.parse(info.body)
         // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
@@ -77,8 +86,8 @@ export default {
       })
     },
     // 소켓 구독 메소드 2
-    chatSubscribe: function () {
-      this.stompClient.subscribe('/sub/chat/room/' + this.$route.query["room"], chat => {
+    chatSubscribe: async function () {
+      await this.stompClient.subscribe('/sub/chat/room/' + this.$route.query["room"], chat => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         console.log("chat : ", JSON.parse(chat.body));
         const {writer, message} = JSON.parse(chat.body)
@@ -87,6 +96,7 @@ export default {
     },
     // 유저 목록 변경을 위한 http 요청
     sendJoinRequest: function () {
+      console.log("sendJoinRequest 시작");
       axios({
         method: 'post',
         url: '/room/user',
@@ -98,6 +108,7 @@ export default {
           roomId: this.$route.query["room"]
         }
       }).then((res) => {
+        console.log("sendJoinRequest 응답");
         console.log('방 입장시 입장 데이터 받아오기', res.data)
       }).catch((err) => {
         console.log(err.response)
@@ -158,13 +169,8 @@ export default {
     }
   },
   // 시작 시 소켓연결과 유저 입장, 유저입장메시지 등을 수행한다
-  created: async function  () {
-    // 순서가 바뀌면 안된다...?아닌데
-    console.log("소켓 연결 시작 전");
-    await this.connect()
-    console.log("소켓 연결 종료, http 요청 전");
-    this.sendJoinRequest()
-    console.log("http 요청 후");
+  created: function  () {
+    this.connect()
   },
   unmounted: function () {
     this.$store.dispatch("setRoom", {})

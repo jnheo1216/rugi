@@ -4,6 +4,7 @@
       <UserList v-if="isRoomExist" />
       <div class="lobbyComponents">
         <GameSetting v-if="isRoomExist" />
+        {{ isRoomExist }}
         <LobbyButton @viewChange="$emit('viewChange', $event)" />
       </div>
     </div>
