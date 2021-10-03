@@ -4,6 +4,16 @@
   </body>
 </template>
 
+
+<script>
+export default {
+  name: 'App',
+  mounted: function() {
+    this.$store.dispatch('createUser')
+  }
+}
+</script>
+
 <style>
 @import "/reset.css";
 body {

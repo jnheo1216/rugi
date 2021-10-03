@@ -111,8 +111,8 @@ export default createStore({
     }
   },
   getters: {
-    getRoomInfo: state => {
-      return state.message;
+    isRoomExist: function(state) {
+      return Object.keys(state.room).length;
     }
   },
   modules: {},

@@ -24,15 +24,6 @@ export default {
     HomeButton,
     Timer,
   },
-  methods: {
-    createUser: function () {
-      this.$store.dispatch('createUser')
-    },
-  },
-  // mounted: function () 와 동일하게 동작
-  mounted: function() {
-    this.createUser()
-  }
 }
 </script>
 <style>

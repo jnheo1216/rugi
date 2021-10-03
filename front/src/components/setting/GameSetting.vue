@@ -1,140 +1,76 @@
 <template>
   <div class="gameSettingBody">
-    <header>game setting</header>
+    <header>Game Settings</header>
     <div class="set">
-      라운드
-      <Button
-        icon="pi pi-arrow-left"
-        style="fontSize: 0.1rem"
-        class="p-button-rounded p-button-text"
-        @click="rounds_idx -= 1"
-      >
-      </Button>
+      <span>라운드</span>
+      <Button @click="changeRound('left')" icon="pi pi-arrow-left" style="fontSize: 0.1rem" class="p-button-rounded p-button-text"></Button>
       {{ maxRound }}
-      <Button
-        icon="pi pi-arrow-right"
-        class="p-button-rounded p-button-text"
-        @click="rounds_idx += 1"
-      >
-      </Button>
+      <Button @click="changeRound('right')" icon="pi pi-arrow-right" class="p-button-rounded p-button-text"></Button>
     </div>
     <div class="set">
-      인원
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        @click="counts_idx -= 1"
-      >
-      </Button>
-      {{ counts[counts_idx%5] }}
-      <Button
-        icon="pi pi-arrow-right"
-        class="p-button-rounded p-button-text"
-        @click="counts_idx += 1"
-      >
-      </Button>
-    </div>
-    <div class="set">
-      타이머
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        @click="timer_idx -= 1"
-      >
-      </Button>
+      <span>라운드 당 시간</span>
+
+      <Button @click="changeRoundTime('left')" icon="pi pi-arrow-left" style="fontSize: 0.1rem" class="p-button-rounded p-button-text"></Button>
       {{ roundTime }}
-      <Button
-        icon="pi pi-arrow-right"
-        class="p-button-rounded p-button-text"
-        @click="timer_idx += 1"
-      >
-      </Button>
+      <Button @click="changeRoundTime('right')" icon="pi pi-arrow-right" class="p-button-rounded p-button-text"></Button>
     </div>
-    <div class="set">
-      커스텀 사용
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        @click="is_custom_idx -= 1"
-      >
+    <section>
+      <Button label="Primary" class="p-button-raised p-button-text p-button-plain" @click="roomUpdate">
+        방 설정 적용
       </Button>
-      {{ is_custom[is_custom_idx%2] }}
-      <Button
-        icon="pi pi-arrow-right"
-        class="p-button-rounded p-button-text"
-        @click="is_custom_idx += 1"
-      >
-      </Button>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
-// import axios from'axios'
+import axios from'axios'
 
 export default {
   name: 'GameSetting',
   data: function() {
     return {
-      rounds: {0:1, 1:2, 2:3},
-      rounds_idx: 999,
-      counts: {0:4, 1:5, 2:6, 3:7, 4:8},
-      counts_idx: 999,
-      timer: {0:60, 1:80, 2:100},
-      timer_idx: 999,
-      is_custom: {0:true, 1:false},
-      is_custom_idx: 999,
-      stompClient: this.$store.state.stompClient,
-      roomId: this.$store.state.roomId,
-      maxRound: 1,
-      roundTime: 60,
-
+      maxRound: this.$store.state.room["maxRound"],
+      roundTime: this.$store.state.room["roundTime"],
     }
   },
   methods: {
-    // 룸 정보 변경하는 클릭 이벤트 발생할때 마다 실행
-    roomUpdateData: function() {
-      // v-model같은걸로 서로...와따가따가능하게
-      this.maxRound = this.rounds[this.rounds_idx%3]
-      this.roundTime = this.timer[this.timer_idx%3]
-      const roomInfo = {
-        maxRound: this.rounds[this.rounds_idx%3],
-        roundTime: this.timer[this.timer_idx%3]
+    changeRound: function (direction) {
+      let newRound = direction==="left" ? this.maxRound-1 : this.maxRound+1
+      this.maxRound = (1 <= newRound && newRound <= 5) ? newRound : this.maxRound
+    },
+    changeRoundTime: function (direction) {
+      let newRoundTime = direction==="left" ? this.roundTime-10 : this.roundTime+10
+      this.roundTime = (40 <= newRoundTime && newRoundTime <= 120) ? newRoundTime : this.roundTime
+    },
+    roomUpdate : function () {
+      if (!this.isSettingChanged) {
+        alert("변경된 설정이 없습니다.");
+        return
       }
-      this.$store.dispatch('setMessage', roomInfo)
-      console.log('게임세팅에서 방 정보들 바뀐거 state에 저장', roomInfo)
-      // axios({
-      //   method: 'patch',
-      //   url: '/room',
-      //   data: {
-      //     maxRound: roomInfo.maxRound,
-      //     roundTime: roomInfo.roundTime,
-      //   },
-      //   params: {
-      //     roomId: this.$store.state.roomId
-      //   }
-      // }).then((res) => {
-      //   console.log(res.data)
-      // }).catch((err) => {
-      //   console.log(err.response)
-      // })
-    }
-  },
-  computed : {
-    check_roomInfo() {return this.$store.getters.getRoomInfo}
-  },
-  watch : {
-    rounds_idx : function () {
-      this.roomUpdateData()
+      axios({
+        method: 'patch',
+        url: '/room',
+        data: {
+          maxRound: this.maxRound,
+          roundTime: this.roundTime,
+        },
+        params: {
+          roomId: this.$route.query["room"]
+        }
+      }).then((res) => {
+        alert('방 정보 업데이트 성공')
+        console.log(res.data)
+      }).catch((err) => {
+        alert('방 정보 업데이트 실패')
+        console.log(err.response)
+      })
     },
-    timer_idx : function () {
-      this.roomUpdateData()
-    },
-    check_roomInfo : function(val) {
-      this.maxRound = val.maxRound
-      this.roundTime = val.roundTime
-    }
   },
+  computed: {
+    isSettingChanged: function () {
+      return this.$store.state.room["maxRound"] !== this.maxRound || this.$store.state.room["roundTime"] !== this.roundTime
+    }
+  }
 }
 </script>
 

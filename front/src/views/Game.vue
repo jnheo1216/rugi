@@ -3,20 +3,10 @@
     <div>
       <component :is="currentView" @viewChange="viewChange">
       </component>
-      <button @click="roomUpdate">socket test</button>
       <div>{{ roomInfo }}</div>
     </div>
     <div>
-      <Chat :chatList="chatList"/>
-    </div>
-    <div v-if="currentView==='Lobby'">
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        @click="roomUpdate"
-      >
-        Room Setting!
-      </Button>
+      <Chat :chatList="chatList" />
     </div>
   </div>
 </template>
@@ -94,25 +84,6 @@ export default {
         }
       )
     },
-    roomUpdate : function () {
-      console.log(axios.defaults.headers.common["User-Id"]);
-      axios({
-        method: 'patch',
-        url: '/room',
-        data: {
-          maxRound: this.$store.state.message.maxRound,
-          roundTime: this.$store.state.message.roundTime,
-        },
-        params: {
-          roomId: this.$route.query["room"]
-        }
-      }).then((res) => {
-        console.log('방 정보 업데이트 성공')
-        console.log(res.data)
-      }).catch((err) => {
-        console.log(err.response)
-      })
-    },
     viewChange : function (viewName) {
       this.currentView = viewName
     },
@@ -120,10 +91,9 @@ export default {
       this.stompClient.subscribe('/sub/room_info/room/' + this.$route.query["room"], info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         let recvData = JSON.parse(info.body)
-        console.log('이거 뜨면 제대로 받은거임 =======', recvData)
         // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
         this.roomInfo = recvData.message // 수정필요함
-        this.$store.dispatch('setMessage', this.roomInfo)
+        this.$store.dispatch('setRoom', this.roomInfo)
       })
     },
     chatSubscribe: function () {
