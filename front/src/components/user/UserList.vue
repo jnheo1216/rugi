@@ -1,21 +1,21 @@
 <template>
   <div class="userListBody">
+    <span>User</span>
     <AvatarGroup class="p-mb-3">
       <Avatar
         v-for="user in userlist"
         :key="user.nickname"
         :image="require(`@/assets/avatar/${user.avatar}.png`)"
-        size="large"
+        size="xlarge"
         shape="circle"
       />
       <Avatar :label="`${ usernum }`" shape="circle" size="large" style="background-color:#9c27b0; color: #ffffff" />
     </AvatarGroup>
-    <div class="userList" v-for="user in userlist" :key="user.nickname">
+    <!-- <div class="userList" v-for="user in userlist" :key="user.nickname">
       <div>{{ user.nickname }}</div>
       <div>{{ user.avatar }}</div>
       <div>{{ user.super }}</div>
-    </div>
-    <div>{{ userlist }}</div>
+    </div> -->
   </div>
 </template>
 
