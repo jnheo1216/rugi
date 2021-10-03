@@ -1,7 +1,7 @@
 <template>
   <div class="lobbyBody">
     <div>
-      <UserList v-if="isUserListExist" />
+      <UserList v-if="isRoomExist" />
       <div class="lobbyComponents">
         <GameSetting v-if="$store.getters.isRoomExist" />
         <LobbyButton @viewChange="$emit('viewChange', $event)" />
@@ -25,8 +25,8 @@ export default {
   },
   name: 'Lobby',
   computed: {
-    isUserListExist: function () {
-      return Object.keys(this.$store.state.room).length
+    isRoomExist : function () {
+      return this.$store.getters.isRoomExist
     }
   }
 }
