@@ -6,7 +6,7 @@ import createPersistedState from "vuex-persistedstate";
 export default createStore({
   state: {
     id: "",
-    avatar: 1,
+    avatar: undefined,
     nickname: "nickname",
     room: {},
     stompClient: ""

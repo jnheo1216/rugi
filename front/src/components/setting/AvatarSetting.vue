@@ -65,8 +65,14 @@ export default {
   },
   mounted: function () {
     // 접속시 아바타 랜덤 설정
-    this.randomAvatar()
-  }
+    // 최초 접속시 (localstorage가 비어있음)
+    if (this.$store.state.avatar === undefined) {
+      this.randomAvatar()
+    } else {
+      // 새로고침시 (localstorage가에 정보가 저장되어 있음)
+      this.avatar = this.$store.state.avatar
+    }
+  },
 }
 </script>
 
