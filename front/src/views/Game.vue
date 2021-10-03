@@ -40,6 +40,7 @@ export default {
       chatList: [],
       roomSubscription: null,
       chatSubscription: null,
+      quizSubscription: null,
       // 이 값은 변경하지 말 것.
       // 방장 퇴장시 주소가 먼저 변경되어 제대로 값을 가져오지 못하기 때문에 할당함
       roomId: this.$route.query["room"]
@@ -170,6 +171,7 @@ export default {
       // leaveRequest로 뒤늦게 방정보를 받아와서 비워진 room객체가 재할당 되는 것을 막기 위함
       await this.roomSubscription.unsubscribe();
       await this.chatSubscription.unsubscribe();
+      await this.quizSubscription.unsubscribe();
       await this.leaveMessage() // 퇴장한다는 소켓메시지
       console.log(this.roomId);
       await this.leaveRequest() // http 요청으로 방을 퇴장하는 요청도 보내주어야 한다.
