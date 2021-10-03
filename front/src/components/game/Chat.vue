@@ -1,12 +1,7 @@
 <template>
   <div id="app">
-    내용: <input
-      v-model="message"
-      type="text"
-      @keyup="sendMessage"
-    >
     <ScrollPanel
-      style="width: 100%; height: 200px"
+      style="width: 100%; height: 400px"
       class="custom"
     >
       <div
@@ -19,7 +14,13 @@
         <ScrollTop />
       </div>
     </ScrollPanel>
-    <button @click="unSub">언섭 테스트</button>
+    <InputText
+      type="text"
+      v-model="message"
+      @keyup="sendMessage"
+      placeholder="Chattt!"
+    />
+    <!-- <button @click="unSub">언섭 테스트</button> -->
   </div>
 </template>
 

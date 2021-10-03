@@ -23,13 +23,13 @@ class ImageCaptionConfig(AppConfig):
 class DeepConfig(AppConfig):
     def __init__(self):
         pass
-    # with open('image_caption/deep/train_captions30k.pkl', 'rb') as f:
+    # with open('image_caption/deep/train_captions10k_contour.pkl', 'rb') as f:
     #     train_captions = pickle.load(f)
-    # with open('image_caption/deep/img_name_vector30k.pkl', 'rb') as f:
+    # with open('image_caption/deep/img_name_vector10k_contour.pkl', 'rb') as f:
     #     img_name_vector = pickle.load(f)
     # tokenizer, max_length, _, _, _, _ = get_tokenize(train_captions, img_name_vector)
-    # new_encoder = tf.keras.models.load_model('image_caption/deep/encoder_ic_30k')
-    # new_decoder = tf.keras.models.load_model('image_caption/deep/decoder_ic_30k')
+    # new_encoder = tf.keras.models.load_model('image_caption/deep/encoder_ic_10k_contour')
+    # new_decoder = tf.keras.models.load_model('image_caption/deep/decoder_ic_10k_contour')
     
     with open('image_caption/deep/wordtoidx1652.json', 'rb') as fp:
         wordtoidx = pickle.load(fp)
