@@ -3,7 +3,7 @@
     <div>
       <component :is="currentView" @viewChange="viewChange">
       </component>
-      <div>{{ roomInfo }}</div>
+      <div>{{ $store.state.room }}</div>
     </div>
     <div>
       <Chat :chatList="chatList" />
@@ -34,14 +34,14 @@ export default {
     return {
       //currentView의 default값은 lobby로 해야 할 것인가?
       currentView: 'Lobby',
-      roomInfo: {},
       // 채팅 정보를 받아서 자식인 Chat 컴포넌트에 넘겨주기 위함
       chatList: [],
+      roomSubscription: null,
+      chatSubscription: null
     }
   },
   methods: {
     connect: function() {
-      console.log("connect 시작");
       let socket = new SockJS(process.env.VUE_APP_STOMP_URL);
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect(
@@ -51,25 +51,16 @@ export default {
           this.$store.dispatch("setStompClient", this.stompClient);
           this.connected = true
           console.log(frame);
-          console.log("방 구독 전");
-          await this.roomSubscribe() // 방 구독 코드
-          console.log("방 구독 후");
-          console.log("메시지 구독 전");
           await this.chatSubscribe() // 메시지 구독 코드
-          console.log("메시지 구독 후");
-          console.log("소켓 방 입장 전");
-          await this.sendJoinMessage() // 입장메시지 코드
-          console.log("소켓 방 입장 후");
-          console.log("Http 방 입장 전");
+          await this.roomSubscribe() // 방 구독 코드
           this.sendJoinRequest()
-          console.log("Http 방 입장 후");
+          this.sendJoinMessage() // 입장메시지 코드
           this.addEvent()
         },
         error => {
           console.log('소켓 연결 실패', error)
         }
       )
-      console.log("connect 종료");
     },
     // 동적 컴포넌트 관련 메소드
     viewChange : function (viewName) {
@@ -77,17 +68,16 @@ export default {
     },
     // 소켓 구독 메소드 1
     roomSubscribe: async function () {
-      await this.stompClient.subscribe('/sub/room_info/room/' + this.$route.query["room"], info => {
+      this.roomSubscription = await this.stompClient.subscribe('/sub/room_info/room/' + this.$route.query["room"], info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         let recvData = JSON.parse(info.body)
         // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
-        this.roomInfo = recvData.message // 수정필요함
-        this.$store.dispatch('setRoom', this.roomInfo)
+        this.$store.dispatch('setRoom', recvData.message)
       })
     },
     // 소켓 구독 메소드 2
     chatSubscribe: async function () {
-      await this.stompClient.subscribe('/sub/chat/room/' + this.$route.query["room"], chat => {
+      this.chatSubscription = await this.stompClient.subscribe('/sub/chat/room/' + this.$route.query["room"], chat => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         console.log("chat : ", JSON.parse(chat.body));
         const {writer, message} = JSON.parse(chat.body)
@@ -96,7 +86,6 @@ export default {
     },
     // 유저 목록 변경을 위한 http 요청
     sendJoinRequest: function () {
-      console.log("sendJoinRequest 시작");
       axios({
         method: 'post',
         url: '/room/user',
@@ -108,7 +97,6 @@ export default {
           roomId: this.$route.query["room"]
         }
       }).then((res) => {
-        console.log("sendJoinRequest 응답");
         console.log('방 입장시 입장 데이터 받아오기', res.data)
       }).catch((err) => {
         console.log(err.response)
@@ -133,14 +121,17 @@ export default {
     // 브라우저 종료가 아닌 다른 방식으로 나갈 경우 이벤트를 제거해주어야 한다.
     // 미구현 상태
     removeEvent: function () {
-      // window.removeEventListener('beforeunload', this.sendLeave);
+      window.removeEventListener('beforeunload', this.leaveRoom);
     },
     // 방을 떠나는 함수를 실행시켜주는 메소드
-    leaveRoom: function () {
+    leaveRoom: async function () {
       console.log("Send message: bye")
+      // 구독을 먼저 끊어주어야 한다.
+      await this.roomSubscription.unsubscribe();
+      await this.chatSubscription.unsubscribe();
       this.leaveMessage() // 퇴장한다는 소켓메시지
       this.leaveRequest() // http 요청으로 방을 퇴장하는 요청도 보내주어야 한다.
-
+      this.$store.dispatch("setRoom", {})
     },
     // 방을 떠났다는 메시지를 모두에게 보내주는 Socket 메소드
     leaveMessage: function () {
@@ -173,7 +164,9 @@ export default {
     this.connect()
   },
   unmounted: function () {
-    this.$store.dispatch("setRoom", {})
+    console.log("unMount")
+    this.removeEvent()
+    this.leaveRoom()
   }
 }
 </script>
