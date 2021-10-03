@@ -63,8 +63,8 @@ export default {
       })
     },
     connect() {
-      // const serverURL = 'https://j5b106.p.ssafy.io:443/stomp/room'
-      const serverURL = 'http://localhost:8080/stomp/room'
+      const serverURL = process.env.VUE_APP_STOMP_URL
+      console.log(serverURL);
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       //console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
