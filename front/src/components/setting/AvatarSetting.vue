@@ -66,7 +66,7 @@ export default {
   mounted: function () {
     // 접속시 아바타 랜덤 설정
     // 최초 접속시 (localstorage가 비어있음)
-    if (this.$store.state.avatar === undefined) {
+    if (this.$store.state.avatar === 0) {
       this.randomAvatar()
     } else {
       // 새로고침시 (localstorage가에 정보가 저장되어 있음)
