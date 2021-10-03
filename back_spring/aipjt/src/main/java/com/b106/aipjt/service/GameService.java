@@ -1,9 +1,6 @@
 package com.b106.aipjt.service;
 
-import com.b106.aipjt.domain.redishash.Room;
-import com.b106.aipjt.domain.redishash.Round;
-import com.b106.aipjt.domain.redishash.Skip;
-import com.b106.aipjt.domain.redishash.User;
+import com.b106.aipjt.domain.redishash.*;
 import com.b106.aipjt.domain.repository.RoomRedisRepository;
 import com.b106.aipjt.domain.repository.RoundRedisRepository;
 import com.b106.aipjt.domain.repository.SkipRedisRepository;
@@ -47,7 +44,7 @@ public class GameService {
         log.error("========================유저 & 방 검증===========================");
         // 검증한다
         if (!user.getId().equals(room.getSuperUser().getId())) throw new RuntimeException("방장만 게임을 시작할 수 있습니다");
-        if (room.isStart()) throw new RuntimeException("이미 게임이 진행중입니다");
+        if (!room.getStatus().equals(GameStatus.LOBBY.getValue())) throw new RuntimeException("이미 게임이 진행중입니다");
         log.error("========================게임 시작을 위한 방 설정===========================");
         // 게임 시작 적용을 위한 Room의 값 변경 후 save
         roomRedisRepository.save(room.gameStart());
@@ -59,7 +56,7 @@ public class GameService {
     // 여기 정말 세심하게 짜야함
     @Async
     public void roundStart(String userId, String roomId) throws InterruptedException {
-        log.error("========================서비스 호출 : 라운드 시작===========================");
+        log.error("========================서비스 호출 : 라운드 시작 전===========================");
         // 우선 방장인지부터 확인한다.
         Optional<User> userById = userRedisRepository.findById(userId);
         Optional<Room> roomById = roomRedisRepository.findById(roomId);
@@ -74,28 +71,42 @@ public class GameService {
         log.error(room.toString());
         // 검증 2
         if (!user.getId().equals(room.getSuperUser().getId())) throw new RuntimeException("방장만 라운드를 시작할 수 있습니다");
-        if (!room.isStart()) throw new RuntimeException("이미 게임이 종료되었습니다");
+        if (room.getStatus().equals(GameStatus.LOBBY.getValue())) throw new RuntimeException("이미 게임이 종료되었습니다");
         log.error("========================라운드 검증 후===========================");
         log.error("========================라운드 while 시작===========================");
+
+
+
         while (room.getCurrentRound() < room.getMaxRound()) {
-            // 라운드 시작 : 라운드를 0에서 1로 변경해주고, 라운드 시작인 play를 true로 만들어준다
+            // 라운드 시작 : 라운드를 0에서 1로 변경해주고,
             room.setCurrentRound(room.getCurrentRound()+1);
-            room.setPlay(true);
             log.error("========================현재 라운드 : "+room.getCurrentRound()+"===========================");
+            // 실제 라운드 시작 : init으로 변경
+            room.setStatus(GameStatus.INIT.getValue());
+            // 방 전송하기전에 문제 받아와야됨
+            room = roomRedisRepository.save(room);
+            template.convertAndSend("/sub/info/room/" + roomId, room);
+            // 문제, 정답, 스킵객체를 보내주는 경로
+            template.convertAndSend("/sub/quiz/room/" + roomId, "문제입니다");
+            // 문제주고 10초간 자기
+            Thread.sleep(10000);
             // 질문 조회해서 Round에 넣어주기
             // 질문 조회했다고 가정하고, 라운드 객체에 값 세팅 후 저장
             Round round = roundRedisRepository.save(new Round(null, room.getRoundTime(), "문제", 1L));
 
+            // 실제보다 10초가량 더 주고 시작하는게 맞는 것 같다. GameInit은 그냥 거쳐가는걸로?
+            // 또는 메시지를 보내주고, 5~10초 sleep하고 라운드 넣고 시작
+
             // 라운드를 저장하고 room을 저장해야 id가 null이 아니다
             room.getRound().clear();
             room.getRound().add(round);
+            room.setStatus(GameStatus.PLAY.getValue());
             room = roomRedisRepository.save(room);
             log.error(room.toString());
             log.error(round.toString());
             log.error("========================라운드 시작 메시지 전달===========================");
             // 방을 담아서 라운드 시작 메시지를 보낸다
-            String ROOM_PREFIX = "room/";
-            template.convertAndSend(ROOM_PREFIX +room.getId(), "방객체");
+            template.convertAndSend("/sub/info/room/" +roomId, room);
             log.error("========================라운드 시작 : 슬립===========================");
             // 라운드 진행시간동안 잔다
             Thread.sleep(room.getRoundTime()* 1000L);
@@ -105,14 +116,16 @@ public class GameService {
             // 스킵 객체 생성
             Skip skip = skipRedisRepository.save(new Skip());
             // 사이시간이므로 false 세팅 후 room 갱신을 위해 저장
-            room.setPlay(false);
+            room.setStatus(GameStatus.RESULT.getValue());
             room = roomRedisRepository.save(room);
             log.error(room.toString());
             log.error(skip.toString());
             log.error("========================사이시간 & 스킵 객체 메시지 전달===========================");
             // 방객체와 스킵 객체id를 보내준다.
-            // 사실 여기서 위에서 조회한 정답도 같이 보내줘야 한다.
-            template.convertAndSend(ROOM_PREFIX +room.getId(), "방객체와 슬립객체");
+            template.convertAndSend("/sub/info/room/" +roomId, room);
+            // 여기서 정답과 스킵객체를 같이 보내줄 것
+            // 스킵객체와 조회한 정답을 보내주지 않고 있음
+            template.convertAndSend("/sub/quiz/room/" + roomId, "정답과 스킵입니다");
             log.error("========================사이시간 & 스킵 객체 메시지 전달 끝===========================");
             log.error("========================사이시간 슬립===========================");
             // 사이시간동안 잔다
@@ -136,12 +149,21 @@ public class GameService {
         // 여기까지 왔다면 쓰레드 리턴도 아니고 라운드가 다 종료되고 온 것. 따라서 isStart를 false로 만들어주고
         // currentRound도 0으로 만들어줘야 한다
         log.error("========================전체 라운드 종료===========================");
-        room.setStart(false);
+        room.setStatus(GameStatus.END.getValue());
+        // 총 결과를 보여주기
+        // 1. 방 상태 변경해서 저장 후 보내주기
+        // 2. 결과 정보 보내주기
+
+        // 총결과를 보여준 후 게임상태를 변경하고 저장한다. 로비로 보내주는건 프론트가 할 것
+        // 로비로 보내기
+        room.setStatus(GameStatus.LOBBY.getValue());
         room.setCurrentRound(0);
         room.getRound().clear();
         room = roomRedisRepository.save(room);
         log.error(room.toString());
         // 라운드 객체 비워주는게 빠짐 -> 자동삭제 되니까 괜찮은 것 같다.
+        //
+        template.convertAndSend("/sub/info/room/" +roomId, room);
     }
 
     public void skipRound(String skipId) {

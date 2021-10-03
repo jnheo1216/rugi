@@ -17,11 +17,8 @@ public class Room {
     private String id;
     // 방장
     private User superUser;
-    // 게임이 시작한 경우 isStart는 true
-    private boolean isStart = false;
-    // 게임이 시작되었지만 라운드가 진행중이지 않은 사이시간인 경우 isPlay는 false
-    // 라운드가 진행중이면 isPlay는 true
-    private boolean isPlay = false;
+    // 게임 상태를 나타낸다
+    private String status = GameStatus.LOBBY.getValue();
     // 라운드 객체를 넣지 않고 저장할 경우 어떻게 되는지 확인 필요
     // 라운드가 진행중이지 않은 경우 객체가 없는 것을 예상하고 있음
     // Optional이 안먹어서 List로 야매로 해야됨
@@ -48,12 +45,18 @@ public class Room {
     }
 
     public Room gameStart() {
-        this.setStart(true); // 게임이 시작했으므로
+        this.setStatus(GameStatus.INIT.getValue());
         return this;
     }
 
     public boolean isFull() {
         // 유저리스트 >= 제한인원
         return userList.size()>=personnel;
+    }
+    public Room gameSetting(int maxRound, int roundTime, int personnel) {
+        this.setMaxRound(maxRound);
+        this.setRoundTime(roundTime);
+        this.setPersonnel(personnel);
+        return this;
     }
 }

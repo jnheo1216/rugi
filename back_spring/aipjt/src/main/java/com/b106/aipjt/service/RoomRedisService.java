@@ -1,13 +1,11 @@
 package com.b106.aipjt.service;
 
 import com.b106.aipjt.domain.dto.room.RoomResponseDto;
-import com.b106.aipjt.domain.dto.socket.ChatMessageDto;
-import com.b106.aipjt.domain.dto.socket.MessageTypeCode;
 import com.b106.aipjt.domain.dto.socket.RoomInfoMessageDto;
+import com.b106.aipjt.domain.redishash.GameStatus;
 import com.b106.aipjt.domain.redishash.Room;
 import com.b106.aipjt.domain.redishash.User;
 import com.b106.aipjt.domain.repository.RoomRedisRepository;
-import com.b106.aipjt.domain.repository.RoundRedisRepository;
 import com.b106.aipjt.domain.repository.UserRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoomRedisService {
     private final UserRedisRepository userRedisRepository;
-    private final RoundRedisRepository roundRedisRepository;
     private final RoomRedisRepository roomRedisRepository;
     private final SimpMessagingTemplate template; // socket 메시지 주고받기용
     // 방 생성
@@ -50,11 +47,8 @@ public class RoomRedisService {
         if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다.");
         Room room = roomById.get();
         if (!room.getSuperUser().getId().equals(userId)) throw new RuntimeException("방장만 방을 변경할 수 있습니다.");
-        if (room.isStart()) throw new RuntimeException("게임중에는 방 설정을 변경할 수 없습니다.");
-
-        room.setMaxRound(maxRound);
-        room.setRoundTime(roundTime);
-        room.setPersonnel(personnel);
+        if (!room.getStatus().equals(GameStatus.LOBBY.getValue())) throw new RuntimeException("게임중에는 방 설정을 변경할 수 없습니다.");
+        room = room.gameSetting(maxRound, roundTime, personnel);
         return roomRedisRepository.save(room);
     }
 
@@ -109,7 +103,7 @@ public class RoomRedisService {
         RoomInfoMessageDto messageDto = new RoomInfoMessageDto();
         messageDto.setRoomId(room.getId());
         messageDto.setMessage(room);
-        template.convertAndSend("/sub/room_info/room/" + messageDto.getRoomId(), messageDto);
+        template.convertAndSend("/sub/info/room/" + messageDto.getRoomId(), messageDto);
     }
 
 

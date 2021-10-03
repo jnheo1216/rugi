@@ -1,6 +1,5 @@
 <template>
   <div class="gameBody">
-
     <div>
       <component :is="currentView" @viewChange="viewChange"></component>
       <div> 라운드 : {{ $store.state.room.maxRound }}</div>
@@ -68,6 +67,7 @@ export default {
           console.log(frame);
           await this.chatSubscribe() // 메시지 구독 코드
           await this.roomSubscribe() // 방 구독 코드
+          await this.quizSubscribe() // 퀴즈 구독 코드
           await this.sendJoinRequest()
           this.sendJoinMessage() // 입장메시지 코드
           this.addEvent()
@@ -83,7 +83,7 @@ export default {
     },
     // 소켓 구독 메소드 1
     roomSubscribe: async function () {
-      this.roomSubscription = await this.stompClient.subscribe('/sub/room_info/room/' + this.roomId, info => {
+      this.roomSubscription = await this.stompClient.subscribe('/sub/info/room/' + this.roomId, info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         let response = JSON.parse(info.body).message
         // 여기서 내가 superuser인지 확인해서 변수 할당해주고 delete 해주기
@@ -100,6 +100,12 @@ export default {
         console.log("chat : ", JSON.parse(chat.body));
         const {writer, message} = JSON.parse(chat.body)
         this.chatList.push({writer, message})
+      })
+    },
+    quizSubscribe: async function () {
+      this.quizSubscription = await this.stompClient.subscribe('/sub/quiz/room/' + this.roomId, quiz => {
+        // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
+        console.log("quiz : ", JSON.parse(quiz.body));
       })
     },
     sendFindRoom: async function () {
