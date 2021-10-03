@@ -3,7 +3,7 @@
     <div>
       <UserList v-if="isRoomExist" />
       <div class="lobbyComponents">
-        <GameSetting v-if="$store.getters.isRoomExist" />
+        <GameSetting v-if="isRoomExist" />
         <LobbyButton @viewChange="$emit('viewChange', $event)" />
       </div>
     </div>
