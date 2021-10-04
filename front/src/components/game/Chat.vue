@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <div id="chatlist" class="chat-box" @scroll="chat_on_scroll">
+    <div id="chatlist" class="chat-box">
       <ScrollPanel
         style="width: 100%; height: 400px"
         class="custom"
+        @scroll="chat_on_scroll"
       >
         <div
           v-for="(chat, idx) in chatList"
