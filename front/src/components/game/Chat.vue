@@ -119,6 +119,7 @@ export default {
   width: auto;
   max-width: 70%;
   display: inline-block;
+  word-break:break-all;
 }
 
 .message-box-my {
@@ -130,6 +131,7 @@ export default {
   width: auto;
   max-width: 70%;
   display: inline-block;
+  word-break:break-all;
 }
 
 </style>
