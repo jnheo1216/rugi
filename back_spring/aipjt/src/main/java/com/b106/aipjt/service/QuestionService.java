@@ -40,6 +40,7 @@ public class QuestionService {
         return QuestionDto.builder()
             .imgUrl(question.getImgUrl())
             .imgCaption(question.getImgCaption())
+            .audioUrl(question.getAudioUrl())
             .build();
     }
 

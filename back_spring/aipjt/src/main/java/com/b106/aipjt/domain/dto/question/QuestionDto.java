@@ -17,6 +17,7 @@ public class QuestionDto {
         Question build = Question.builder()
             .imgUrl(imgUrl)
             .imgCaption(imgCaption)
+            .audioUrl(audioUrl)
             .build();
 
         return build;
