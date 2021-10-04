@@ -76,8 +76,33 @@ public class GameService {
             RoomResponseDto roomResponseDto = convertRoomToDto(room);
             // dto를 보내야함
             template.convertAndSend("/sub/info/room/" + roomId, roomResponseDto);
+
+
+
+            // 문제를 조회
+            // 문제를 Dto로 변경
+
             // 문제, 정답, 스킵객체를 보내주는 경로
             template.convertAndSend("/sub/quiz/room/" + roomId, "문제입니다");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // 문제주고 10초간 자기
             Thread.sleep(10000);
             // 질문 조회해서 Round에 넣어주기
