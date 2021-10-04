@@ -121,7 +121,7 @@ export default {
         }
         // state에 넣어주면 된다. 메소드 작성하면 됨
         this.$store.dispatch('setQuiz', result.question.imgCaption)
-        console.log(result);
+        console.log('보기쉽게 여기야',result);
       })
     },
     sendFindRoom: async function () {
