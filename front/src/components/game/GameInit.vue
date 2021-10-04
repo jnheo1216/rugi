@@ -14,11 +14,9 @@ export default {
   name: 'GameInit',
   data: function() {
     return {
-
     }
   },
   methods: {
-
   },
   computed: {
     quiz: function () {

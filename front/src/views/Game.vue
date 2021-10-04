@@ -108,7 +108,7 @@ export default {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         const result = JSON.parse(quiz.body)
         // state에 넣어주면 된다. 메소드 작성하면 됨
-        this.$store.dispatch('setQuiz', result)
+        this.$store.dispatch('setQuiz', result.question.imgCaption)
         console.log(result);
       })
     },

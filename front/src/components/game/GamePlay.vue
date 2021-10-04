@@ -7,11 +7,10 @@
 
 <script>
 import Canvas from '@/components/game/Canvas.vue'
-
 export default {
   name: 'GamePlay',
   components: {
-    Canvas
+    Canvas,
   },
 }
 </script>
