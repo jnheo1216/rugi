@@ -120,8 +120,8 @@ export default createStore({
     currentView: state => {
       if (state.room.status) {
         return state.room.status
-      } else {
-        return 'hi'
+        } else {
+        return 'Lobby'
       }
     }
   },

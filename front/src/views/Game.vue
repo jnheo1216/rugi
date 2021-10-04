@@ -215,11 +215,10 @@ export default {
   },
   watch: {
     checkCurrentView(val) {
-      console.log('변화했다변화했어변화했어~~~')
+      console.log('변화했다변화했어변화했어~~~', this.$store.state.room.status)
       this.roomSubscribe()
-      if (this.val !== undefined) {
-        this.currentView = val
-      }
+      console.log('현재 cruuentView를', val, '로 변화')
+      this.currentView = val
     }
   },
   created: async function  () {
