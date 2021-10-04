@@ -173,6 +173,6 @@ public class GameService {
             throw new RuntimeException("방이 존재하지 않습니다");
         }
         Question question = questionById.get();
-        return new QuestionSkipDto(new QuestionDto(question.getImgUrl(), question.getImgCaption()), "");
+        return new QuestionSkipDto(new QuestionDto(question.getImgUrl(), question.getImgCaption(), ""), "");
     }
 }
