@@ -10,6 +10,9 @@ export default {
   name: 'App',
   mounted: function() {
     this.$store.dispatch('createUser')
+    this.$store.dispatch("setRoom", {})
+    this.$store.dispatch("setStompClient", "");
+    this.$store.dispatch("setCurrentRoomId", "");
   }
 }
 </script>
