@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <div class="chat-box">
+    <div class="chat-box" ref="chat_list">
       <ScrollPanel
-        id="chatlist"
         style="width: 100%; height: 400px"
         class="custom"
         @scroll="chat_on_scroll"
@@ -21,7 +20,6 @@
               <div class="message-box-other">{{ chat.message }}</div>
             </div>
           </div>
-          <ScrollTop />
         </div>
       </ScrollPanel>
       <div class="p-inputgroup">
@@ -70,11 +68,10 @@ export default {
           message: this.message
         })
       )
+
+      let chat_list = this.$refs.chat_list;
+      chat_list.scrollTo({ top: chat_list.scrollHeight, behavior: 'smooth' });
     },
-    chat_on_scroll() {
-      var objDiv = document.getElementById("chatlist")
-      objDiv.scrollTop = objDiv.scrollHeight
-    }
   },
   created() {
     // this.connect()
