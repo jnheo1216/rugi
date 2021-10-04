@@ -103,7 +103,8 @@ export default {
   margin: 30px;
   box-shadow: 10px 5px 5px gray;
   border-radius: 10px;
-  max-width: 250px;
+  min-width: 200px;
+  max-width: 400px;
 }
 
 .message-box {
