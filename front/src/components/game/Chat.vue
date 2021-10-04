@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    sendMessage (e) {
+    sendMessage () {
       if(this.userName !== '' && this.message !== ''){
         this.send()
         //console.log('recieve list', this.chatList)
