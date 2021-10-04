@@ -1,12 +1,7 @@
 <template>
   <div id="app">
     <div class="chat-box">
-      <ScrollPanel
-        style="width: 100%; height: 400px"
-        class="custom"
-        @scroll="chat_on_scroll"
-      >
-      <div ref="chat_list">
+      <div style="width: 100%; height: 400px" ref="chat_list">
         <div
           v-for="(chat, idx) in chatList"
           :key="idx"
@@ -23,7 +18,6 @@
           </div>
         </div>
       </div>
-      </ScrollPanel>
       <div class="p-inputgroup">
         <InputText
           type="text"
@@ -54,7 +48,7 @@ export default {
   },
   methods: {
     sendMessage (e) {
-      if(e.keyCode === 13 && this.userName !== '' && this.message !== ''){
+      if(this.userName !== '' && this.message !== ''){
         this.send()
         //console.log('recieve list', this.chatList)
         this.message = ''
