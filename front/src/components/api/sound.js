@@ -1,8 +1,7 @@
-function soundEffect(soundURL) {
-  if (soundURL) {
-    var audio = new Audio(soundURL)
-    audio.play()
-  }
+function soundEffect(soundID) {
+  const enter = document.querySelector(soundID)
+  enter.loop = false
+  enter.play()
 }
 
 export {soundEffect};
