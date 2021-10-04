@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <div id="chatlist" class="chat-box">
+    <div class="chat-box">
       <ScrollPanel
+        id="chatlist"
         style="width: 100%; height: 400px"
         class="custom"
         @scroll="chat_on_scroll"
