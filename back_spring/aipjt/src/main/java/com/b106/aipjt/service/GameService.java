@@ -1,17 +1,21 @@
 package com.b106.aipjt.service;
 
+import com.b106.aipjt.controller.GameController;
+import com.b106.aipjt.domain.dto.question.QuestionDto;
+import com.b106.aipjt.domain.dto.question.QuestionSkipDto;
 import com.b106.aipjt.domain.dto.room.RoomResponseDto;
 import com.b106.aipjt.domain.dto.room.RoomUserResponseDto;
+import com.b106.aipjt.domain.dto.socket.ChatMessageDto;
+import com.b106.aipjt.domain.dto.socket.MessageTypeCode;
+import com.b106.aipjt.domain.jpaentity.Question;
 import com.b106.aipjt.domain.redishash.*;
-import com.b106.aipjt.domain.repository.RoomRedisRepository;
-import com.b106.aipjt.domain.repository.RoundRedisRepository;
-import com.b106.aipjt.domain.repository.SkipRedisRepository;
-import com.b106.aipjt.domain.repository.UserRedisRepository;
+import com.b106.aipjt.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class GameService {
 
     private final SimpMessagingTemplate template;
@@ -27,6 +32,7 @@ public class GameService {
     private final RoundRedisRepository roundRedisRepository;
     private final RoomRedisRepository roomRedisRepository;
     private final SkipRedisRepository skipRedisRepository;
+    private final QuestionRepository questionRepository;
 
 
     // 에러 발생 시 캐치해서 방장한테만 알려주기 위해 동기로 동작하도록 작성
@@ -60,6 +66,8 @@ public class GameService {
         return RoomResponseDto.toRoom(room, roomUsers);
     }
 
+
+
     // 여기는 for 문과 Skip 객체를 사용해서 정해진 만큼의 라운드를 수행한다.
     // Skip 객체가 사라졌을 경우 쓰레드를 종료한다
     // 여기 정말 세심하게 짜야함
@@ -78,27 +86,20 @@ public class GameService {
             template.convertAndSend("/sub/info/room/" + roomId, roomResponseDto);
 
 
-
             // 문제를 조회
             // 문제를 Dto로 변경
-
-            // 문제, 정답, 스킵객체를 보내주는 경로
-            template.convertAndSend("/sub/quiz/room/" + roomId, "문제입니다");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Optional<Question> questionById = questionRepository.randomQuestion();
+            if (questionById.isEmpty()) {
+                ChatMessageDto messageDto = new ChatMessageDto(roomId, MessageTypeCode.ERROR, "master", "문제가 존재하지 않습니다. 게임을 종료합니다");
+                template.convertAndSend("/sub/chat/room/" + messageDto.getRoomId(), messageDto);
+                return;
+            }
+            Question question = questionById.get();
+            log.error(question.toString());
+            // question dto를 먼저 만들기
+            QuestionSkipDto questionSkipDto = new QuestionSkipDto(new QuestionDto(question.getImgUrl(), question.getImgCaption()), "");
+            // 문제, 정답(미정), 스킵객체를 보내주는 경로
+            template.convertAndSend("/sub/quiz/room/" + roomId, questionSkipDto);
 
 
 
@@ -177,12 +178,5 @@ public class GameService {
     public void skipRound(String skipId) {
         skipRedisRepository.deleteById(skipId);
     }
-
-
-
-
-
-
-
 
 }

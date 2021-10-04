@@ -9,7 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access=AccessLevel.PROTECTED)
 @Entity(name="question")
-@Builder
+@Builder @ToString
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

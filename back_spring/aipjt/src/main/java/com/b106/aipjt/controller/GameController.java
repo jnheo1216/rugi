@@ -51,13 +51,4 @@ public class GameController {
         private String skipId;
     }
 
-
-    // 게임 설정이 변경될 경우 여기에서 받아서 처리해야 한다.
-    // 방 설정 정보를 받아와야 한다
-    @PatchMapping("")
-    public void gameSettings(@RequestHeader(value="User-Id") String userId,
-                             @RequestParam String roomId) throws InterruptedException {
-    }
-
-    // 중간에 들어온 유저는 게임 라운드에 대한 정보를 스스로로 요청서 받아와야됨.
 }

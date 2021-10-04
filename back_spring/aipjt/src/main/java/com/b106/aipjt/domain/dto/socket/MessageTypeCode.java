@@ -8,5 +8,6 @@ public enum MessageTypeCode {
     JOIN,
     LEAVE,
     ROOM_INFO,
-    DRAWING;
+    DRAWING,
+    ERROR;
 }

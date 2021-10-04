@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Override
     List<Question> findAll();
 
     @Query(value = "select * from question order by rand() limit 1", nativeQuery = true)
-    List<Question> randomQuestion();
-
+    Optional<Question> randomQuestion();
 }
