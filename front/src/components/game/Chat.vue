@@ -139,6 +139,19 @@ export default {
 #chat_list {
   width: 100%;
   height: 400px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#chat_list::-webkit-scrollbar {
+  width: 10px;
+}
+#chat_list::-webkit-scrollbar-thumb {
+  background-color: #6a82fb;
+  border-radius: 5px;
+}
+#chat_list::-webkit-scrollbar-track {
+  background-color: #fc5c7d;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px white;
 }
 </style>
