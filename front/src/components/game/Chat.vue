@@ -100,6 +100,7 @@ export default {
 
 .chat-box {
   padding: 10px;
+  padding-left: 25px;
   margin: 30px;
   box-shadow: 10px 5px 5px gray;
   border-radius: 10px;
