@@ -10,7 +10,7 @@
           :key="idx"
         >
           <div class="message-box">
-            <div v-if="chat.writer==='하이ㅣ'" align="right">
+            <div v-if="chat.writer===this.nickname" align="right">
               <div>{{ chat.writer }}</div>
               <div class="message-box-my">{{ chat.message }}</div>
             </div>
@@ -103,13 +103,11 @@ export default {
   margin: 30px;
   box-shadow: 10px 5px 5px gray;
   border-radius: 10px;
+  max-width: 250px;
 }
 
 .message-box {
-  padding-right: 10px;
-  padding-left: 0px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px;
 }
 
 .message-box-other {
