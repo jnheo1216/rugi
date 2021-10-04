@@ -215,8 +215,6 @@ export default {
   },
   watch: {
     checkCurrentView(val) {
-      console.log('변화했다변화했어변화했어~~~', this.$store.state.room.status)
-      this.roomSubscribe()
       console.log('현재 cruuentView를', val, '로 변화')
       this.currentView = val
     }

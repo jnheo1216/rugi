@@ -118,11 +118,7 @@ export default createStore({
       return Object.keys(state.room).length;
     },
     currentView: state => {
-      if (state.room.status) {
-        return state.room.status
-        } else {
-        return 'Lobby'
-      }
+      return state.room.status
     }
   },
   modules: {},
