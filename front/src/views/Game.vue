@@ -206,11 +206,21 @@ export default {
   computed: {
     roomId: function () {
       return this.$store.state.currentRoomId
+    },
+    checkCurrentView: function () {
+      return this.$store.getters.currentView
     }
   },
-  // 시작 시 소켓연결과 유저 입장, 유저입장메시지 등을 수행한다
+  watch: {
+    checkCurrentView(val) {
+      console.log('변화한 status', val)
+      this.currentView = val
+    }
+  },
   created: async function  () {
     await this.$store.dispatch("setCurrentRoomId", this.$route.query["room"])
+    console.log('방 처음 생성시 status', this.$store.state.status)
+    console.log(this.$store.getters.currentView)
     this.connect()
   },
   beforeUnmount: function () {

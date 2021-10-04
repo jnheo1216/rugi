@@ -116,6 +116,9 @@ export default createStore({
   getters: {
     isRoomExist: function(state) {
       return Object.keys(state.room).length;
+    },
+    currenView: function(state) {
+      return state.status;
     }
   },
   modules: {},
