@@ -1,7 +1,7 @@
 <template>
   <div class="gameBody">
     <div>
-      <component :is="currentView" @viewChange="viewChange"></component>
+      <component :is="currentView"></component>
       <div> 라운드 : {{ $store.state.room.maxRound }}</div>
       <div>라운드 시간 : {{ $store.state.room.roundTime }}</div>
       <div> 정원 : {{ $store.state.room.personnel }}</div>
@@ -41,9 +41,6 @@ export default {
       roomSubscription: null,
       chatSubscription: null,
       quizSubscription: null,
-      // 이 값은 변경하지 말 것.
-      // 방장 퇴장시 주소가 먼저 변경되어 제대로 값을 가져오지 못하기 때문에 할당함
-      roomId: this.$route.query["room"]
     }
   },
   methods: {
@@ -78,17 +75,16 @@ export default {
         }
       )
     },
-    // 동적 컴포넌트 관련 메소드
-    viewChange : function (viewName) {
-      this.currentView = viewName
-    },
     // 소켓 구독 메소드 1
     roomSubscribe: async function () {
       this.roomSubscription = await this.stompClient.subscribe('/sub/info/room/' + this.roomId, info => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
-        let response = JSON.parse(info.body).message
+        let response = JSON.parse(info.body)
+        console.log(response);
+        let superUser = response["superUser"]
+        console.log(superUser);
         // 여기서 내가 superuser인지 확인해서 변수 할당해주고 delete 해주기
-        this.$store.dispatch('setSuper', response["superUser"])
+        this.$store.dispatch('setSuper', superUser)
         delete response["superUser"]
         // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
         this.$store.dispatch('setRoom', response)
@@ -106,7 +102,8 @@ export default {
     quizSubscribe: async function () {
       this.quizSubscription = await this.stompClient.subscribe('/sub/quiz/room/' + this.roomId, quiz => {
         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
-        console.log("quiz : ", JSON.parse(quiz.body));
+        // console.log("quiz : ", JSON.parse(quiz.body));
+        console.log(quiz);
       })
     },
     sendFindRoom: async function () {
@@ -175,8 +172,9 @@ export default {
       await this.leaveMessage() // 퇴장한다는 소켓메시지
       console.log(this.roomId);
       await this.leaveRequest() // http 요청으로 방을 퇴장하는 요청도 보내주어야 한다.
-      this.$store.dispatch("setStompClient", "");
       this.$store.dispatch("setRoom", {})
+      this.$store.dispatch("setStompClient", "");
+      this.$store.dispatch("setCurrentRoomId", "")
     },
     // 방을 떠났다는 메시지를 모두에게 보내주는 Socket 메소드
     leaveMessage: function () {
@@ -205,8 +203,14 @@ export default {
       })
     }
   },
+  computed: {
+    roomId: function () {
+      return this.$store.state.currentRoomId
+    }
+  },
   // 시작 시 소켓연결과 유저 입장, 유저입장메시지 등을 수행한다
-  created: function  () {
+  created: async function  () {
+    await this.$store.dispatch("setCurrentRoomId", this.$route.query["room"])
     this.connect()
   },
   beforeUnmount: function () {

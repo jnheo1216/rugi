@@ -43,20 +43,39 @@ public class Room {
         this.id = id;
         this.superUser = superUser;
     }
-
-    public Room gameStart() {
-        this.setStatus(GameStatus.INIT.getValue());
-        return this;
-    }
-
-    public boolean isFull() {
-        // 유저리스트 >= 제한인원
-        return userList.size()>=personnel;
-    }
+    // 게임 설정
     public Room gameSetting(int maxRound, int roundTime, int personnel) {
         this.setMaxRound(maxRound);
         this.setRoundTime(roundTime);
         this.setPersonnel(personnel);
         return this;
     }
+    // 라운드 시작 전 설정
+    public Room roundInit() {
+        this.setCurrentRound(currentRound+1);
+        this.setStatus(GameStatus.INIT.getValue());
+        return this;
+    }
+    // 라운드 시작 설정
+    public Room roundStart(Round round) {
+        this.getRound().clear();
+        this.getRound().add(round);
+        this.setStatus(GameStatus.PLAY.getValue());
+        return this;
+    }
+
+    public Room resetGame() {
+        this.setStatus(GameStatus.LOBBY.getValue());
+        this.setCurrentRound(0);
+        this.getRound().clear();
+        return this;
+    }
+
+
+
+    public boolean isFull() {
+        // 유저리스트 >= 제한인원
+        return userList.size()>=personnel;
+    }
+
 }

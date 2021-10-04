@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class RoomRedisService {
     private final UserRedisRepository userRedisRepository;
     private final RoomRedisRepository roomRedisRepository;
-    private final SimpMessagingTemplate template; // socket 메시지 주고받기용
     // 방 생성
     public Room createRoom(String userId) {
         Optional<User> result = userRedisRepository.findById(userId);
@@ -99,12 +98,4 @@ public class RoomRedisService {
         }
         return room;
     }
-    public void makeRoomInfoMessage(RoomResponseDto room) {
-        RoomInfoMessageDto messageDto = new RoomInfoMessageDto();
-        messageDto.setRoomId(room.getId());
-        messageDto.setMessage(room);
-        template.convertAndSend("/sub/info/room/" + messageDto.getRoomId(), messageDto);
-    }
-
-
 }

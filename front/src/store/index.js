@@ -10,7 +10,10 @@ export default createStore({
     nickname: "nickname",
     super: false,
     room: {},
-    stompClient: ""
+    stompClient: "",
+    // 이 값은 변경하지 말 것.
+    // 방장 퇴장시 주소가 먼저 변경되어 제대로 값을 가져오지 못하기 때문에 할당함
+    currentRoomId: ""
   },
   mutations: {
     SET_USERDATA: function(state, data) {
@@ -32,6 +35,9 @@ export default createStore({
     },
     SET_SUPER: function(state, data) {
       state.super = data;
+    },
+    SET_CURRENT_ROOM_ID: function(state, data) {
+      state.currentRoomId = data;
     }
   },
   actions: {
@@ -102,6 +108,9 @@ export default createStore({
     },
     setSuper: function(context, data) {
       context.commit("SET_SUPER", data === context.state.id);
+    },
+    setCurrentRoomId: function(context, data) {
+      context.commit("SET_CURRENT_ROOM_ID", data);
     }
   },
   getters: {
