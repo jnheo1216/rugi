@@ -117,8 +117,12 @@ export default createStore({
     isRoomExist: function(state) {
       return Object.keys(state.room).length;
     },
-    currenView: function(state) {
-      return state.status;
+    currentView: state => {
+      if (state.room.status) {
+        return state.room.status
+      } else {
+        return 'hi'
+      }
     }
   },
   modules: {},

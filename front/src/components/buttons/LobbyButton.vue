@@ -33,7 +33,7 @@ export default {
           roomId: this.$store.state.currentRoomId
         }
       }).then((res) => {
-        console.log('게임 시작 완료', res.data)
+        console.log('게임 시작 완료', res)
       }).catch((err) => {
         console.log(err.response)
       })

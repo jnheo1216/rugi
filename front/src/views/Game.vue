@@ -6,6 +6,7 @@
       <div>라운드 시간 : {{ $store.state.room.roundTime }}</div>
       <div> 정원 : {{ $store.state.room.personnel }}</div>
       <div>{{ $store.state.room }}</div>
+      <div>{{ checkCurrentView }}</div>
     </div>
     <div>
       <Chat :chatList="chatList" />
@@ -214,8 +215,11 @@ export default {
   },
   watch: {
     checkCurrentView(val) {
-      console.log('변화한 status', val)
-      this.currentView = val
+      console.log('변화했다변화했어변화했어~~~')
+      this.roomSubscribe()
+      if (this.val !== undefined) {
+        this.currentView = val
+      }
     }
   },
   created: async function  () {
