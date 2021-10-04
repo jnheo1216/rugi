@@ -5,7 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
-    id: "",
+    id: null,
     avatar: 0,
     nickname: "nickname",
     super: false,
@@ -47,7 +47,7 @@ export default createStore({
         url: "/user",
         //기본 아바타, 닉네임 설정
         data: {
-          id: context.state.id ? context.state.id : null,
+          id: context.state.id,
           avatar: context.state.avatar,
           nickname: context.state.nickname
         }
@@ -118,7 +118,7 @@ export default createStore({
       return Object.keys(state.room).length;
     },
     currentView: state => {
-      return state.room.status
+      return state.room.status;
     }
   },
   modules: {},
