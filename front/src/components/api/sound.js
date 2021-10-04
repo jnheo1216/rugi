@@ -1,7 +1,6 @@
-function soundEffect(soundID) {
-  const enter = document.querySelector(soundID)
-  enter.loop = false
-  enter.play()
+function soundEffect() {
+  var audio = new Audio(require("@/assets/sounds/enter.mp3"))
+  audio.play()
 }
 
 export {soundEffect};

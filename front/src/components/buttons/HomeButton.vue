@@ -6,7 +6,7 @@
       class="p-button-jj p-button-lg p-mb-2"
     >
       <span class="p-mr-1">방만들기</span>
-      <img class="" src="@/assets/sticker/star01.png" alt="" id="stk">  
+      <img class="" src="@/assets/sticker/star01.png" alt="" id="stk">
     </Button>
     <button
       id="enterSession"
@@ -14,9 +14,8 @@
       class="p-button-jj p-button-lg p-mb-2"
     >
       <span class="p-mr-1">입장하기</span>
-      <img class="" src="@/assets/sticker/star01.png" alt="" id="stk">  
+      <img class="" src="@/assets/sticker/star01.png" alt="" id="stk">
     </Button>
-    <audio id="enter"><source id="soundSrc" src="@/assets/sounds/enter.mp3" /></audio>
   </div>
 </template>
 
@@ -26,11 +25,11 @@ export default {
   name: 'MainButton',
   methods: {
     createRoom: function () {
-      soundEffect('#enter')
+      soundEffect()
       this.$store.dispatch("createRoom")
     },
     enterRoom: function () {
-      soundEffect('#enter')
+      soundEffect()
       const roomId = this.$route.query["room"];
       console.log(this.$route.query["room"]);
       if (roomId) {
