@@ -2,20 +2,21 @@
   <div class="userListBody">
     <span>User</span>
     <AvatarGroup class="p-mb-3">
+      <!-- <div class="avatarImg"> -->
       <Avatar
+        class="avatarImg"
         v-for="user in userlist"
         :key="user.nickname"
         :image="require(`@/assets/avatar/${user.avatar}.png`)"
         size="xlarge"
         shape="circle"
       />
+      <!-- </div> -->
       <Avatar :label="`${ usernum }`" shape="circle" size="large" style="background-color:#9c27b0; color: #ffffff" />
     </AvatarGroup>
-    <!-- <div class="userList" v-for="user in userlist" :key="user.nickname">
+    <div class="nickname" v-for="user in userlist" :key="user.nickname">
       <div>{{ user.nickname }}</div>
-      <div>{{ user.avatar }}</div>
-      <div>{{ user.super }}</div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -59,5 +60,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+/* 호버시 텍스트 보이게 */
+.userListBody {
+  cursor: default;
+}
+.nickname{
+  opacity: 0;
+}
+.userListBody:hover .nickname{
+  opacity: 0.7;
 }
 </style>

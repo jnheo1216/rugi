@@ -11,6 +11,7 @@ import lombok.*;
 public class QuestionDto {
     private String imgUrl;
     private String imgCaption;
+    private String audioUrl;
 
     public Question toEntity(){
         Question build = Question.builder()
@@ -21,8 +22,9 @@ public class QuestionDto {
         return build;
     }
 
-    public QuestionDto(String imgUrl, String imgCaption) {
+    public QuestionDto(String imgUrl, String imgCaption, String audioUrl) {
         this.imgUrl = imgUrl;
         this.imgCaption = imgCaption;
+        this.audioUrl = audioUrl;
     }
 }

@@ -9,6 +9,7 @@ import urllib.request
 import requests
 from io import BytesIO
 from PIL import Image
+from tts.views import tts
 # import tensorflow as tf
 import json
 
@@ -45,6 +46,7 @@ def index(request):
     data = {
         'caption': caption
     }
+    tts(caption)
 
     return Response(data, status=status.HTTP_200_OK)
 
@@ -91,6 +93,7 @@ def index_kr(request):
         data = {
             'caption': captionjson
         }
+        tts(caption)
         return Response(data, status=status.HTTP_200_OK)
     else:
         data = {
