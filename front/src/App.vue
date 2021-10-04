@@ -9,10 +9,13 @@
 export default {
   name: 'App',
   mounted: function() {
+    console.log("AppStart");
     this.$store.dispatch('createUser')
     this.$store.dispatch("setRoom", {})
     this.$store.dispatch("setStompClient", "");
     this.$store.dispatch("setCurrentRoomId", "");
+    console.log("AppEnd : ");
+    console.log(this.$store.state);
   }
 }
 </script>

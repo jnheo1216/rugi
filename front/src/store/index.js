@@ -5,8 +5,8 @@ import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
-    id: "",
-    avatar: Math.floor(Math.random()*28),
+    id: null,
+    avatar: Math.floor(Math.random() * 28),
     nickname: "nickname",
     super: false,
     room: {},
@@ -17,9 +17,13 @@ export default createStore({
   },
   mutations: {
     SET_USERDATA: function(state, data) {
+      console.log("SET_USERDATA START");
+      console.log(data);
       state.id = data.id;
       state.avatar = data.avatar;
       state.nickname = data.nickname;
+      console.log("SET_USERDATA END");
+      console.log(data);
     },
     SET_NICKNAME: function(state, data) {
       state.nickname = data;
@@ -42,6 +46,9 @@ export default createStore({
   },
   actions: {
     createUser: function(context) {
+      console.log(
+        "CreateUserStart : " + axios.defaults.headers.common["User-Id"]
+      );
       axios({
         method: "post",
         url: "/user",
@@ -53,12 +60,15 @@ export default createStore({
         }
       })
         .then(res => {
+          console.log(res.data.data);
           axios.defaults.headers.common["User-Id"] = res.data.data.id;
+          console.log(axios.defaults.headers.common["User-Id"]);
           context.commit("SET_USERDATA", res.data.data);
         })
         .catch(err => {
-          console.log(err.response);
+          console.log("CreateUserStart 에러 : " + err.response);
         });
+      console.log(context.state);
     },
     createRoom: function(context) {
       axios({
@@ -117,7 +127,7 @@ export default createStore({
       return Object.keys(state.room).length;
     },
     currentView: state => {
-      return state.room.status
+      return state.room.status;
     }
   },
   modules: {},

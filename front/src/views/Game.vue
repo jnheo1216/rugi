@@ -223,6 +223,7 @@ export default {
     }
   },
   created: async function  () {
+    console.log("Game.vue Created Start: "+this.$store.state);
     await this.$store.dispatch("setCurrentRoomId", this.$route.query["room"])
     console.log('방 처음 생성시 status', this.$store.state.status)
     console.log(this.$store.getters.currentView)
