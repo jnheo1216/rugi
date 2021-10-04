@@ -82,16 +82,24 @@ export default {
     // 소켓 구독 메소드 1
     roomSubscribe: async function () {
       this.roomSubscription = await this.stompClient.subscribe('/sub/info/room/' + this.roomId, info => {
-        // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
         let response = JSON.parse(info.body)
         console.log(response);
-        let superUser = response["superUser"]
-        console.log(superUser);
-        // 여기서 내가 superuser인지 확인해서 변수 할당해주고 delete 해주기
-        this.$store.dispatch('setSuper', superUser)
-        delete response["superUser"]
-        // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
-        this.$store.dispatch('setRoom', response)
+        // 만약에
+        // 1. timestamp가 없다면 그냥 넣고
+        // 2. 있는 경우 비교해서 현재 timestamp가 더 크면 갱신한다
+        // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
+        if (!Object.keys(this.$store.state.room).length || (this.$store.state.room["timestamp"] < response["timestamp"])) {
+          let superUser = response["superUser"]
+          console.log(superUser);
+          // 여기서 내가 superuser인지 확인해서 변수 할당해주고 delete 해주기
+          this.$store.dispatch('setSuper', superUser)
+          delete response["superUser"]
+          // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
+          this.$store.dispatch('setRoom', response)
+        }else{
+          console.log("시간이 앞서지 않아 갱신되지 않았음");
+        }
+
       })
     },
     // 소켓 구독 메소드 2
