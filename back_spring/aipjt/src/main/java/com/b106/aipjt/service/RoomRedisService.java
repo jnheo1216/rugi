@@ -68,6 +68,7 @@ public class RoomRedisService {
         // 입장 처리하기
         if (!room.getUserList().contains(user)) {
             room.getUserList().add(user);
+            room.setTimestamp(System.currentTimeMillis());
             roomRedisRepository.save(room);
         }
         return room;
@@ -94,6 +95,7 @@ public class RoomRedisService {
             if (room.getSuperUser().getId().equals(userId)) {
                 room.setSuperUser(room.getUserList().get(0));
             }
+            room.setTimestamp(System.currentTimeMillis());
             roomRedisRepository.save(room);
         }
         return room;

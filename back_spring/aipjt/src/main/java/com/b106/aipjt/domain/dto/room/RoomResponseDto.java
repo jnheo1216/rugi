@@ -16,6 +16,7 @@ public class RoomResponseDto {
     private String id;
     private String superUser;
     private String status;
+    private Long timestamp;
     @Builder.Default
     private int currentRound = 0;
     @Builder.Default
@@ -38,6 +39,7 @@ public class RoomResponseDto {
             .roundTime(room.getRoundTime())
             .personnel(room.getPersonnel())
             .userList(userListDto)
+            .timestamp(room.getTimestamp())
             .build();
     }
 

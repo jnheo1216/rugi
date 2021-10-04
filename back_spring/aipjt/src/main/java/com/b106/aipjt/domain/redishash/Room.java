@@ -33,7 +33,7 @@ public class Room {
     // 초기값 설정
     private int personnel = 8;
     // 최대 인원 설정 -> 어떻게 접근을 막을 것인가?? 방 입장 로직에서 처리해주어야 함
-
+    private Long timestamp = System.currentTimeMillis();
 
     // 게임에 참여한 유저 목록
     private List<User> userList = new ArrayList<>();
@@ -48,12 +48,14 @@ public class Room {
         this.setMaxRound(maxRound);
         this.setRoundTime(roundTime);
         this.setPersonnel(personnel);
+        this.setTimestamp(System.currentTimeMillis());
         return this;
     }
     // 라운드 시작 전 설정
     public Room roundInit() {
         this.setCurrentRound(currentRound+1);
         this.setStatus(GameStatus.INIT.getValue());
+        this.setTimestamp(System.currentTimeMillis());
         return this;
     }
     // 라운드 시작 설정
@@ -61,6 +63,7 @@ public class Room {
         this.getRound().clear();
         this.getRound().add(round);
         this.setStatus(GameStatus.PLAY.getValue());
+        this.setTimestamp(System.currentTimeMillis());
         return this;
     }
 
@@ -68,6 +71,7 @@ public class Room {
         this.setStatus(GameStatus.LOBBY.getValue());
         this.setCurrentRound(0);
         this.getRound().clear();
+        this.setTimestamp(System.currentTimeMillis());
         return this;
     }
 
