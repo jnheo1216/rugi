@@ -9,10 +9,10 @@
           shape="circle"
         />
         <div>
-          <span class="nickname">{{ user.nickname }}</span>
+          <span id="nickname">{{ user.nickname }}</span>
         </div>
       </div>
-      <Avatar :label="`${ usernum }`" shape="circle" size="large" style="background-color:#9c27b0; color: #ffffff" />
+      <Avatar :label="`${ usernum }`" shape="circle" size="small" style="background-color:#9c27b0; color: #ffffff" />
     </AvatarGroup>
   </div>
 </template>
@@ -62,13 +62,14 @@ export default {
 .avatarImg {
   cursor: default;
 }
-.nickname{
+#nickname{
   display: inline-block;
   text-align: center;
   opacity: 0;
   width:60px;
+  height: 42px;
 }
-.avatarImg:hover .nickname{
+.avatarImg:hover #nickname{
   opacity: 0.7;
 }
 </style>
