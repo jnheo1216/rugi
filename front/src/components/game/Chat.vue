@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="chat-box">
+    <div id="chatlist" class="chat-box" @scroll="chat_on_scroll">
       <ScrollPanel
         style="width: 100%; height: 400px"
         class="custom"
@@ -69,6 +69,10 @@ export default {
         })
       )
     },
+    chat_on_scroll() {
+      var objDiv = document.getElementById("chatlist")
+      objDiv.scrollTop = objDiv.scrollHeight
+    }
   },
   created() {
     // this.connect()
