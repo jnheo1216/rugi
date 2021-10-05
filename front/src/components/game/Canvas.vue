@@ -1,62 +1,68 @@
 <template>
-  <div id="body">
-    <div class="canvas-box">
-      <canvas
-        @mousemove="onMouseMove"
-        @mousedown="startPainting"
-        @mouseup="stopPainting"
-        @mouseleave="stopPainting"
-        @click="handleCanvasClick"
-        @contextmenu="handleCM"
-        id="jsCanvas"
-        class="canvas"
-      ></canvas>
-      <div class="controls_range">
-        <input
-          @input="handleRangeChange"
-          type="range"
-          id="jsRange"
-          min="0.1"
-          max="15.0"
-          value="7.5"
-          step="0.1"
-        />
+  <div id="body container">
+    <div class="row">
+      <div class="col">
+        <div id="jsColors" class="controls_colors">
+          <div class="controls_color jsColor" style="background-color: #2c2c2c;"></div>
+          <div class="controls_color jsColor" style="background-color: white;"></div>
+          <div class="controls_color jsColor" style="background-color: #ff3b30;"></div>
+          <div class="controls_color jsColor" style="background-color: #ff9500;"></div>
+          <div class="controls_color jsColor" style="background-color: #fc0;"></div>
+          <div class="controls_color jsColor" style="background-color: #4cd963;"></div>
+          <div class="controls_color jsColor" style="background-color: #5ac8fa;"></div>
+          <div class="controls_color jsColor" style="background-color: #0579ff;"></div>
+          <div class="controls_color jsColor" style="background-color: #5856d6;"></div>
+          <ColorPicker v-model="ctxcolor" />
+        </div>
       </div>
-    </div>
-    <div class="controls">
-      <div class="controls_btns">
-        <!-- <button
-          @click="handleModeClick"
-          id="jsMode"
-        >
-          Fill
-        </button> -->
-        <button @click="handlePaintClick" :class="{ picked : mode_painting }">
-          Paint
-        </button>
-        <button @click="handleFillClick" :class="{ picked : mode_filling }">
-          Fill
-        </button>
-        <button @click="handleEraseClick" :class="{ picked : mode_erasing }" id="jsEraser">
-          Eraser
-        </button>
-        <button @click="handleClearClick" id="jsClear">
-          Clear
-        </button>
-        <Button @click="handleSaveClick" id="jsSave" icon="pi pi-save" label="Save"></Button>
+      <div class="col">
+        <canvas
+          @mousemove="onMouseMove"
+          @mousedown="startPainting"
+          @mouseup="stopPainting"
+          @mouseleave="stopPainting"
+          @click="handleCanvasClick"
+          @contextmenu="handleCM"
+          id="jsCanvas"
+          class="canvas"
+        ></canvas>
+        <div class="controls_range">
+          <input
+            @input="handleRangeChange"
+            type="range"
+            id="jsRange"
+            min="0.1"
+            max="15.0"
+            value="7.5"
+            step="0.1"
+          />
+        </div>
+        <div>
+          <div class="controls-btn-box">
+            <div class="controls_btns">
+              <!-- <button
+                @click="handleModeClick"
+                id="jsMode"
+              >
+                Fill
+              </button> -->
+              <button @click="handlePaintClick" :class="{ picked : mode_painting }">
+                Paint
+              </button>
+              <button @click="handleFillClick" :class="{ picked : mode_filling }">
+                Fill
+              </button>
+              <button @click="handleEraseClick" :class="{ picked : mode_erasing }" id="jsEraser">
+                Eraser
+              </button>
+              <button @click="handleClearClick" id="jsClear">
+                Clear
+              </button>
+              <Button @click="handleSaveClick" id="jsSave" icon="pi pi-save" label="Save"></Button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="jsColors" class="controls_colors">
-        <div class="controls_color jsColor" style="background-color: #2c2c2c;"></div>
-        <div class="controls_color jsColor" style="background-color: white;"></div>
-        <div class="controls_color jsColor" style="background-color: #ff3b30;"></div>
-        <div class="controls_color jsColor" style="background-color: #ff9500;"></div>
-        <div class="controls_color jsColor" style="background-color: #fc0;"></div>
-        <div class="controls_color jsColor" style="background-color: #4cd963;"></div>
-        <div class="controls_color jsColor" style="background-color: #5ac8fa;"></div>
-        <div class="controls_color jsColor" style="background-color: #0579ff;"></div>
-        <div class="controls_color jsColor" style="background-color: #5856d6;"></div>
-      </div>
-      <ColorPicker v-model="ctxcolor" />
     </div>
   </div>
 </template>
@@ -242,6 +248,7 @@ export default {
 #body {
   /* background-color: #f6f9fc; */
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -251,26 +258,16 @@ export default {
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 5px 10px rgb(50 50 93 / 11%), 0 5px 10px rgb(0 0 0 / 8%);
-  display: flex;
-  flex-direction: row;
 }
 
-.canvas-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.controls {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.controls .controls_btns {
-  margin-bottom: 30px;
+.controls-btn-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.controls_btns {
+  margin-bottom: 5px;
 }
 
 .controls_btns button {
@@ -294,9 +291,12 @@ export default {
   transform: scale(0.98);
 }
 
-.controls .controls_colors {
+.controls_colors {
+  margin: 5px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .controls_colors .controls_color {
@@ -308,8 +308,8 @@ export default {
 }
 
 .controls_range {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;

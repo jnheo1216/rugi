@@ -1,7 +1,7 @@
 <!-- 방법 1: data.timer에서 this.timerStart() 호출 -->
 <!-- 방법 2: mounted에서 this.timerStart() 호출 -->
 <template>
-  <section>
+  <section class="timer-position">
     <div>타이머</div>
     {{ this.time }}
   </section>
@@ -33,3 +33,10 @@ export default {
 }
 </script>
 
+<style>
+.timer-position {
+  position: absolute;
+  top: 5px !important;
+  right: 5px !important;
+}
+</style>
