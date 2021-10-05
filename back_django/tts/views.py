@@ -6,9 +6,9 @@ from gtts import gTTS
 import requests
 from rest_framework import status
 from rest_framework.response import Response
-# import scipy.io.wavfile as swavfile
+
 import boto3
-# from image_caption.views import index_kr
+from datetime import datetime
 
 ACCESS_KEY_ID = os.environ.get("ACCESS_KEY_ID")
 ACCESS_SECRET_KEY = os.environ.get("ACCESS_SECRET_KEY")
@@ -18,19 +18,17 @@ BUCKET_NAME = os.environ.get("BUCKET_NAME")
 def tts(caption):
     # print(index_kr)
     # caption = caption.data['caption']
-    print("@caption: ",caption)
-
     tts = gTTS(
         text=caption,
         lang="ko", slow=False
     )
-    save_path = f'audio/sample.mp3'
-    # tts save OSError: [Errno 22] Invalid argument: 'audio/오늘 뭐먹지?.mp3'
-    tts.save(save_path)
-    handle_upload_mp3(save_path)
-    # response = play(save_path)
+    file_name = f'audio/{get_time()}.mp3'
 
-    return Response(status=status.HTTP_200_OK)
+    tts.save(file_name)
+    handle_upload_mp3(file_name)
+    # response = play(file_name)
+
+    return file_name
 
 # S3 업로드
 def handle_upload_mp3(f):
@@ -39,6 +37,9 @@ def handle_upload_mp3(f):
                             aws_secret_access_key=ACCESS_SECRET_KEY)
     response = s3_client.upload_file(
         f, BUCKET_NAME, f)
+
+def get_time():
+    return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # # 파일 리턴
 # def play(file_name):

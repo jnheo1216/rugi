@@ -1,9 +1,7 @@
 package com.b106.aipjt.service;
 
-import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +31,7 @@ public class S3UploadService {
     }
 
     // s3에서 audioUrl 받기
-    public String getAudioUrl() {
-        return amazonS3Client.getUrl(bucket, "audio/sample.mp3").toString();
+    public String getAudioUrl(String audioName) {
+        return amazonS3Client.getUrl(bucket, audioName).toString();
     }
 }

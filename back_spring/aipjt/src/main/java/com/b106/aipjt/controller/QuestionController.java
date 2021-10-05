@@ -1,5 +1,6 @@
 package com.b106.aipjt.controller;
 
+import com.b106.aipjt.domain.dto.caption.CaptResponse;
 import com.b106.aipjt.domain.dto.question.QuestionDto;
 import com.b106.aipjt.domain.jpaentity.Question;
 import com.b106.aipjt.domain.repository.QuestionRepository;
@@ -7,6 +8,7 @@ import com.b106.aipjt.service.QuestionService;
 import com.b106.aipjt.service.S3UploadService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,15 +42,19 @@ public class QuestionController {
         String imgUrl = s3UploadService.upload(file); // key : file
         questionDto.setImgUrl(imgUrl);
         System.out.println(questionDto);
-        String imgCaption = questionService.imgUrlPost(questionDto);
-        questionDto.setImgCaption(imgCaption);
+//        System.out.println("@ QuestionController : "+questionService.imgUrlPost(questionDto));
 
-        String audioUrl = s3UploadService.getAudioUrl();
+        ResponseEntity<CaptResponse> ai = questionService.imgUrlPost(questionDto);
+        String imgCaption = ai.getBody().getCaption();
+        String audioName = ai.getBody().getAudio();
+        String audioUrl = s3UploadService.getAudioUrl(audioName);
+
+        questionDto.setImgCaption(imgCaption);
         questionDto.setAudioUrl(audioUrl);
 
         System.out.println("@QuestionController questionDto: "+questionDto);
-        // Dto DB에 저장
-        questionService.saveImage(questionDto);
+//        // Dto DB에 저장
+//        questionService.saveImage(questionDto);
 
         return questionDto.toString();
     }

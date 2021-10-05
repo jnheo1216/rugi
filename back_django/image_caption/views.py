@@ -83,16 +83,16 @@ def index_kr(request):
     request_trans.add_header("X-Naver-Client-Secret",client_secret)
     response = urllib.request.urlopen(request_trans, data=data.encode("utf-8"))
     rescode = response.getcode()
-
     if(rescode==200):
         response_body = response.read()
         caption = response_body.decode('utf-8')
         captionjson = json.loads(caption)
         captionjson = captionjson['message']['result']['translatedText']
+        audio=tts(caption)
         data = {
-            'caption': captionjson
+            'caption': captionjson,
+            'audio': audio
         }
-        tts(caption)
         return Response(data, status=status.HTTP_200_OK)
     else:
         data = {
