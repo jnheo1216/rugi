@@ -1,8 +1,5 @@
 package com.b106.aipjt.service;
 
-import com.b106.aipjt.controller.GameController;
-import com.b106.aipjt.domain.dto.question.QuestionDto;
-import com.b106.aipjt.domain.dto.question.QuestionSkipDto;
 import com.b106.aipjt.domain.dto.room.RoomResponseDto;
 import com.b106.aipjt.domain.dto.room.RoomUserResponseDto;
 import com.b106.aipjt.domain.dto.socket.ChatMessageDto;
@@ -17,10 +14,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service

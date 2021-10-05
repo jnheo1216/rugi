@@ -44,10 +44,9 @@ public class QuestionController {
 
     // 이미지 파일 upload
     @PostMapping("")
-    public RoomResponseDto upload(MultipartFile file,
-                       @RequestParam String roomId,
-                       @RequestBody QuestionRequestDto questionRequestDto) throws IOException {
-        String imgUrl = s3UploadService.upload(file); // key : file
+    public RoomResponseDto upload(@RequestParam String roomId,
+                                  @RequestBody QuestionRequestDto questionRequestDto) throws IOException {
+        String imgUrl = s3UploadService.upload(questionRequestDto.getFile()); // key : file
         CaptResponse caption = questionService.imgUrlPost(imgUrl);
         // Dto 변환 부분
         String audioUrl = s3UploadService.getAudioUrl(caption.getAudio());
