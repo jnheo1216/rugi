@@ -6,7 +6,7 @@
       <!-- 현재 라운드에 맞는 정보들을 뿌려줘야 할 것 -->
       <!-- 그렇다면 라운드 정보를 가지고 있어야 한다. -->
       <!-- alt 사진을 못 찾았을때 사진을 하나 그리면 좋을 것 같다. -->
-      <div>
+      <div class="test">
         <p> 현재 문재 캡셔닝 </p>
         {{ this.quizList[currentRound].caption }}
         <div
@@ -73,9 +73,12 @@ export default {
   flex-direction: column !important;
   align-items: center;
 }
-
 .userDrawings {
   height: 250px;
   width: 250px;
+}
+.test {
+  display: flex;
+  flex-direction: row;
 }
 </style>
