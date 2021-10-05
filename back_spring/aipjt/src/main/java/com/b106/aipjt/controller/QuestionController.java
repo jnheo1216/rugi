@@ -44,7 +44,8 @@ public class QuestionController {
 
     // 이미지 파일 upload
     @PostMapping("")
-    public RoomResponseDto upload(@RequestParam String roomId,
+    public RoomResponseDto upload(@RequestHeader(value="User-Id") String userId,
+                                  @RequestParam String roomId,
                                   @RequestBody QuestionRequestDto questionRequestDto) throws IOException {
         String imgUrl = s3UploadService.upload(questionRequestDto.getFile()); // key : file
         CaptResponse caption = questionService.imgUrlPost(imgUrl);
