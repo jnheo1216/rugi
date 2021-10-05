@@ -2,10 +2,8 @@
 <!-- 방법 2: mounted에서 this.timerStart() 호출 -->
 <template>
   <section>
-    <div>타이머 째깍</div>
+    <div>타이머</div>
     {{ this.time }}
-    <!-- <button @click="timerStart">타이머 시작</button> -->
-    <button @click="timerStop">타이머 종료</button>
   </section>
 </template>
 <script>
@@ -28,9 +26,6 @@ export default {
         }
       }, 1000)
     },
-    timerStop: function () {
-      clearInterval(this.timer)
-    }
   },
   mounted: function () {
     // this.timerStart()

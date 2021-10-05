@@ -91,6 +91,7 @@ export default {
           delete response["superUser"]
           // 받아온 룸정보 데이터 가지고 다시 룸 랜더링 해주는 로직 필요 GameSetting, Init, Play각 필요한 시점별로 달라짐
           this.$store.dispatch('setRoom', response)
+          console.log('여기서 방 정보 변경되는게 구독되는것', this.$store.state.room.status)
         }else{
           console.log("시간이 앞서지 않아 갱신되지 않았음");
         }
