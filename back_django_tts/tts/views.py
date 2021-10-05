@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .apps import Synthesizer
-# from .apps import trans_file_name
+from .apps import Synthesizer, plot_graph_and_save_audio
+from .apps import trans_file_name
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -24,15 +24,13 @@ def tts(text):
     text = text.data['text'] # key text
     print("@ text : ", text)
 
-    makedirs('tts/ttskss/logdir-tacotron/generate')
+    makedirs('audio/')
     
     synthesizer = Synthesizer()
     synthesizer.load('tts/ttskss/logdir-tacotron/kss+moon_2021-09-28_10-49-34', 2, None)
-    synthesizer.synthesize(texts=[text],base_path="tts/ttskss/logdir-tacotron/generate",speaker_ids=[0],
+    file_name = synthesizer.synthesize(texts=[text],base_path="audio/",speaker_ids=[0],
                                    attention_trim=True,base_alignment_path=None,isKorean=True)[0]
-    # print("@ 파일패쓰 @!", trans_file_name())
-    # file_name = trans_file_name()
-    # handle_upload_mp3(f'audio/{file_name}')
+    handle_upload_mp3(f'audio/{file_name}.wav')
     return Response(status=status.HTTP_200_OK)
 
 def handle_upload_mp3(f):

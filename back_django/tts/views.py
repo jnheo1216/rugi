@@ -16,8 +16,7 @@ BUCKET_NAME = os.environ.get("BUCKET_NAME")
 
 # @api_view(['POST'])
 def tts(caption):
-    # print(index_kr)
-    # caption = caption.data['caption']
+    print("@ caption : ", caption)
     tts = gTTS(
         text=caption,
         lang="ko", slow=False

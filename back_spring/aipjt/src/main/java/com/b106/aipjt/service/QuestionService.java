@@ -51,8 +51,9 @@ public class QuestionService {
             .path("/api/image_caption/kr/")
             .build()
             .toUri();
-
+        System.out.println("@ uri 확인 : "+uri);
         CaptRequest req = new CaptRequest();
+        System.out.println("@ questionDto : "+questionDto);
         req.setImage_path(questionDto.getImgUrl());
         // 상세정보를 알기 위해서 ResponseEntity 받기
         RestTemplate rt = new RestTemplate();

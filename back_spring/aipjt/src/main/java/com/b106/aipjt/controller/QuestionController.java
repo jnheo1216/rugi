@@ -41,18 +41,18 @@ public class QuestionController {
     public String upload(QuestionDto questionDto, MultipartFile file) throws IOException {
         String imgUrl = s3UploadService.upload(file); // key : file
         questionDto.setImgUrl(imgUrl);
-        System.out.println(questionDto);
-//        System.out.println("@ QuestionController : "+questionService.imgUrlPost(questionDto));
+        System.out.println("@ questionDto : "+questionDto);
 
         ResponseEntity<CaptResponse> ai = questionService.imgUrlPost(questionDto);
+        System.out.println("");
         String imgCaption = ai.getBody().getCaption();
         String audioName = ai.getBody().getAudio();
         String audioUrl = s3UploadService.getAudioUrl(audioName);
 
         questionDto.setImgCaption(imgCaption);
         questionDto.setAudioUrl(audioUrl);
-
         System.out.println("@QuestionController questionDto: "+questionDto);
+
 //        // Dto DB에 저장
 //        questionService.saveImage(questionDto);
 
