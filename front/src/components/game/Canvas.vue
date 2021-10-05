@@ -61,6 +61,7 @@
 
 <script>
 import axios from 'axios'
+import 'primevue/resources/primevue.min.css'
 const INITIAL_COLOR = "#2c2c2c"
 const CANVAS_SIZE = 700
 

@@ -14,7 +14,8 @@ export default {
   data: function () {
     return {
       timer: this.timerStart(),
-      time: 60
+      // roundTime을 가지고 있지 않는 경우가 있을까?
+      time: (this.$store.state.room ? this.$store.state.room.roundTime : 60)
     }
   },
   methods: {
@@ -22,7 +23,7 @@ export default {
     timerStart: function () {
       return setInterval(()=>{
         this.time -= 1
-        if (this.time===50) { // 종료 조건 걸어줄 수 있음
+        if (this.time === 0) { // 종료 조건 걸어줄 수 있음
           this.timerStop()
         }
       }, 1000)
