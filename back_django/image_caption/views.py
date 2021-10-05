@@ -95,13 +95,11 @@ def index_kr(request):
         print("5")
         audio = tts(caption)
         print("6")
-        # audio = "MyAudio"
+        data = {"caption": captionjson, "audio": audio}
         print("7")
-        data = {"caption": captionjson, "audio": str(audio)}
-        print("8")
         return Response(data, status=status.HTTP_200_OK)
     else:
-        print("9")
+        print("8")
         data = {"caption": "do not work"}
-        print("10")
+        print("9")
         return Response(data, status=status.HTTP_200_OK)
