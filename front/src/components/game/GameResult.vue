@@ -16,8 +16,12 @@ export default {
       method: 'post',
       url: '/question',
       data: form,
+      params: {
+        roomId: this.$store.state.currentRoomId,
+        nickname: this.$store.state.nickname
+      },
       header: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       },
     }).then((res) => {
       console.log('이얏호 성공이지롱', res)

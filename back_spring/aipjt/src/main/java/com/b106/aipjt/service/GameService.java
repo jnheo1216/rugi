@@ -106,9 +106,9 @@ public class GameService {
             log.error("========================사이시간 & 스킵 객체 메시지 전달 끝===========================");
             log.error("========================사이시간 슬립===========================");
             // 사이시간동안 잔다
-            Thread.sleep(4000);
+            Thread.sleep(20000);
             log.error("========================사이시간 슬립 끝===========================");
-
+            room = findRoom(roomId); // 그림 그린것 적용을 위해 room 정보 갱신을 위한 것
             // 깨어나면 스킵 객체를 조회해서 스킵했는지 확인
             Optional<Skip> skipById = skipRedisRepository.findById(skip.getId());
             if (skipById.isEmpty()) { // 스킵객체가 비어있으면 새 쓰레드가 생성된 것이므로 쓰레드 종료
@@ -132,7 +132,6 @@ public class GameService {
         // 총결과를 보여준 후 게임상태를 변경하고 저장한다. 로비로 보내주는건 프론트가 할 것
         // 로비로 보내기
         room = roomRedisRepository.save(room.resetGame());
-        log.error(room.toString());
         // 라운드 객체 비워주는게 빠짐 -> 자동삭제 되니까 괜찮은 것 같다.
         template.convertAndSend("/sub/info/room/" +roomId, convertRoomToDto(room));
     }
@@ -148,7 +147,9 @@ public class GameService {
         Optional<Room> optionalRoom = roomRedisRepository.findById(roomId);
         if (optionalRoom.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
         Room room = optionalRoom.get();
-        room.getQuizList().get(room.getQuizList().size()-1).getImageList().add(userImage);
+        System.out.println(room.toString());
+        room.getQuizList().get(room.getCurrentRound()-1).getImageList().add(userImage);
+        room.setTimestamp(System.currentTimeMillis());
         room = roomRedisRepository.save(room);
         RoomResponseDto roomResponseDto = convertRoomToDto(room);
         template.convertAndSend("/sub/info/room/" +roomId, roomResponseDto);

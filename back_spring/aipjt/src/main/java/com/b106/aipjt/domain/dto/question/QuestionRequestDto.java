@@ -9,6 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionRequestDto {
-    private MultipartFile file;
     private String username;
 }

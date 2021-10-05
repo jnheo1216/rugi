@@ -13,6 +13,7 @@ import com.b106.aipjt.service.RoomRedisService;
 import com.b106.aipjt.service.S3UploadService;
 import lombok.AllArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/question")
 @AllArgsConstructor
@@ -45,13 +47,20 @@ public class QuestionController {
     // 이미지 파일 upload
     @PostMapping("")
     public RoomResponseDto upload(@RequestHeader(value="User-Id") String userId,
-                                  @RequestParam String roomId,
-                                  @RequestBody QuestionRequestDto questionRequestDto) throws IOException {
-        String imgUrl = s3UploadService.upload(questionRequestDto.getFile()); // key : file
+                                  @RequestParam("roomId") String roomId,
+                                  @RequestParam("nickname") String nickname,
+                                  @RequestParam("file") MultipartFile file) throws IOException {
+        log.error("=======================1============================");
+        String imgUrl = s3UploadService.upload(file); // key : file
+        log.error("=======================2============================");
         CaptResponse caption = questionService.imgUrlPost(imgUrl);
+        log.error("=======================3============================");
         // Dto 변환 부분
+        log.error("=======================4============================");
         String audioUrl = s3UploadService.getAudioUrl(caption.getAudio());
-        UserImage userImage = new UserImage(questionRequestDto.getUsername(), imgUrl, audioUrl, caption.getCaption());
+        log.error("=======================5============================");
+        UserImage userImage = new UserImage(nickname, imgUrl, audioUrl, caption.getCaption());
+        log.error("=======================6============================");
         return gameService.addImageToRoom(roomId, userImage);
     }
 
