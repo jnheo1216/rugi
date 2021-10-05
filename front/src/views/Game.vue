@@ -1,13 +1,8 @@
 <template>
   <div class="gameBody">
     <div class="game">
-      <UserList />
+      <UserList v-if="Object.keys($store.state.room).length" />
       <component :is="currentView"></component>
-      <div> 라운드 : {{ $store.state.room.maxRound }}</div>
-      <div>라운드 시간 : {{ $store.state.room.roundTime }}</div>
-      <div> 정원 : {{ $store.state.room.personnel }}</div>
-      <div>{{ $store.state.room }}</div>
-      <div>{{ checkCurrentView }}</div>
     </div>
     <div>
       <Chat :chatList="chatList" />

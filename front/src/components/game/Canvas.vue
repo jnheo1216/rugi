@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <div id="body">
     <canvas
       @mousemove="onMouseMove"
       @mousedown="startPainting"
@@ -56,7 +56,7 @@
       </div>
       <ColorPicker v-model="ctxcolor" />
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -234,8 +234,8 @@ export default {
 
 <style>
 /* @import "../../reset.css"; */
-body {
-  background-color: #f6f9fc;
+#body {
+  /* background-color: #f6f9fc; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -250,7 +250,7 @@ body {
 }
 
 .controls {
-  margin-top: 80px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;

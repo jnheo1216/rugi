@@ -45,4 +45,5 @@ export default {
 div {
   box-sizing: border-box;
 }
+
 </style>
