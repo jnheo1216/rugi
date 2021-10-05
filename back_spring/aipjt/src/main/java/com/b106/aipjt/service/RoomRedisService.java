@@ -4,10 +4,13 @@ import com.b106.aipjt.domain.dto.room.RoomResponseDto;
 import com.b106.aipjt.domain.dto.socket.RoomInfoMessageDto;
 import com.b106.aipjt.domain.redishash.GameStatus;
 import com.b106.aipjt.domain.redishash.Room;
+import com.b106.aipjt.domain.redishash.Round;
 import com.b106.aipjt.domain.redishash.User;
 import com.b106.aipjt.domain.repository.RoomRedisRepository;
+import com.b106.aipjt.domain.repository.RoundRedisRepository;
 import com.b106.aipjt.domain.repository.UserRedisRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RoomRedisService {
     private final UserRedisRepository userRedisRepository;
     private final RoomRedisRepository roomRedisRepository;
+    private final RoundRedisRepository roundRedisRepository;
     // 방 생성
     public Room createRoom(String userId) {
         Optional<User> result = userRedisRepository.findById(userId);
@@ -34,9 +39,18 @@ public class RoomRedisService {
         // 검증 로직
         if (userById.isEmpty()) throw new RuntimeException("유저가 존재하지 않습니다");
         if (roomById.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
-        User user = userById.get();
         Room room = roomById.get();
+        log.error(room.toString());
         if (room.isFull()) throw new RuntimeException("방이 가득 찼습니다.");
+        Optional<Round> optionalRound = Optional.ofNullable(room.getRound());
+        if (optionalRound.isPresent()) {
+            Optional<Round> byId = roundRedisRepository.findById(optionalRound.get().getId());
+            if (byId.isPresent()) {
+                room.setRound(byId.get());
+            }
+        }
+
+
         return room;
     }
 
@@ -71,6 +85,16 @@ public class RoomRedisService {
             room.setTimestamp(System.currentTimeMillis());
             roomRedisRepository.save(room);
         }
+
+        Optional<Round> optionalRound = Optional.ofNullable(room.getRound());
+        if (optionalRound.isPresent()) {
+            Optional<Round> byId = roundRedisRepository.findById(optionalRound.get().getId());
+            if (byId.isPresent()) {
+                room.setRound(byId.get());
+            }
+        }
+
+        log.error(room.toString());
         return room;
     }
 

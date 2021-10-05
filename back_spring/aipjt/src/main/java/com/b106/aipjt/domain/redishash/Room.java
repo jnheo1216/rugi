@@ -22,7 +22,7 @@ public class Room {
     // 라운드 객체를 넣지 않고 저장할 경우 어떻게 되는지 확인 필요
     // 라운드가 진행중이지 않은 경우 객체가 없는 것을 예상하고 있음
     // Optional이 안먹어서 List로 야매로 해야됨
-    private List<Round> round = new ArrayList<>();
+    private Round round;
     // 현재 라운드 : 현재 몇 라운드가 진행중인지
     private int currentRound = 0;
 
@@ -60,8 +60,7 @@ public class Room {
     }
     // 라운드 시작 설정
     public Room roundStart(Round round) {
-        this.getRound().clear();
-        this.getRound().add(round);
+        this.setRound(round);
         this.setStatus(GameStatus.PLAY.getValue());
         this.setTimestamp(System.currentTimeMillis());
         return this;
@@ -70,11 +69,10 @@ public class Room {
     public Room resetGame() {
         this.setStatus(GameStatus.LOBBY.getValue());
         this.setCurrentRound(0);
-        this.getRound().clear();
+        this.round = null;
         this.setTimestamp(System.currentTimeMillis());
         return this;
     }
-
 
 
     public boolean isFull() {
