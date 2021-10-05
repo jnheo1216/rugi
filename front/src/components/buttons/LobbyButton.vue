@@ -12,6 +12,7 @@
 
 <script>
 import axios from 'axios'
+import { soundEffectGamestart } from '../api/sound.js'
 export default {
   emits: ['viewChange'],
   name: 'LobbyButton',
@@ -22,9 +23,11 @@ export default {
   },
   methods :{
     generateLink: function () {
+      soundEffectGamestart()
       this.inviteLink = document.location.origin + '/' + document.location.search
     },
     startGame: function () {
+      soundEffectGamestart()
       console.log("게임 시작");
       axios({
         method: 'post',
