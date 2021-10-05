@@ -95,6 +95,6 @@ export default {
     bottom: 40%; */
   }
   .yes-super {
-    margin-top: 10rem;
+    /* margin-top: 10rem; */
   }
 </style>
