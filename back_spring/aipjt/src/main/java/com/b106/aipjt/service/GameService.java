@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,13 +60,16 @@ public class GameService {
         log.error("========================게임 시작===========================");
         while (room.getCurrentRound() < room.getMaxRound()) {
             // 실제 라운드 시작 : 라운드를 0에서 1로 변경해주고, init으로 변경하는 함수 호출 후 리턴값인 방을 저장한다
+            Quiz randomQuiz = findRandomQuiz(roomId);
+            String answer = randomQuiz.removeImgUrl();
+            room.getQuizList().add(randomQuiz);
             room = roomRedisRepository.save(room.roundInit());
             log.error("========================현재 라운드 : "+room.getCurrentRound()+"===========================");
             // dto로 변환해서 메시지 보내기
             template.convertAndSend("/sub/info/room/" + roomId, convertRoomToDto(room));
 
             // 문제를 조회 -> Dto로 변경 -> 문제, 정답(미정), 스킵객체를 Dto 메시지로 전달
-            template.convertAndSend("/sub/quiz/room/" + roomId, findRandomQuestion(roomId));
+            // 여기서 보내기 전에 Quiz 객체를 만들어서 추가해주기
 
             // 문제주고 10초간 자기
             Thread.sleep(10000);
@@ -92,6 +96,9 @@ public class GameService {
             room = findRoom(roomId); // 내부 함수
             room.setStatus(GameStatus.RESULT.getValue());
             room.setTimestamp(System.currentTimeMillis());
+            // 여기서 정답을 넣어줘야함
+            room.getQuizList().get(room.getQuizList().size()-1).addImgUrl(answer);
+            // 정답 넣기 종료
             room = roomRedisRepository.save(room);
             log.error(room.toString());
             log.error(skip.toString());
@@ -166,7 +173,7 @@ public class GameService {
     }
 
     // 랜덤 문제를 찾아주는 내부 함수
-    private QuestionSkipDto findRandomQuestion(String roomId){
+    private Quiz findRandomQuiz(String roomId){
         Optional<Question> questionById = questionRepository.randomQuestion();
         if (questionById.isEmpty()) {
             ChatMessageDto messageDto = new ChatMessageDto(roomId, MessageTypeCode.ERROR, "master", "문제가 존재하지 않습니다. 게임을 종료합니다");
@@ -174,6 +181,6 @@ public class GameService {
             throw new RuntimeException("방이 존재하지 않습니다");
         }
         Question question = questionById.get();
-        return new QuestionSkipDto(new QuestionDto(question.getImgUrl(), question.getImgCaption(), question.getAudioUrl()), "");
+        return Quiz.of(question);
     }
 }

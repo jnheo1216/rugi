@@ -37,6 +37,9 @@ public class Room {
 
     // 게임에 참여한 유저 목록
     private List<User> userList = new ArrayList<>();
+    // 게임에 포함된 퀴즈과, 사람들이 그린 그림
+    private List<Quiz> quizList = new ArrayList<>();
+
 
 
     public Room(String id, User superUser) {
@@ -71,6 +74,7 @@ public class Room {
         this.setCurrentRound(0);
         this.round = null;
         this.setTimestamp(System.currentTimeMillis());
+        this.getQuizList().clear();
         return this;
     }
 

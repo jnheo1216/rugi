@@ -1,5 +1,6 @@
 package com.b106.aipjt.domain.dto.room;
 
+import com.b106.aipjt.domain.redishash.Quiz;
 import com.b106.aipjt.domain.redishash.Room;
 import com.b106.aipjt.domain.redishash.Round;
 import lombok.AccessLevel;
@@ -32,6 +33,8 @@ public class RoomResponseDto {
     private int personnel = 8;
     @Builder.Default
     private List<RoomUserResponseDto> userList = new ArrayList<>();
+    @Builder.Default
+    private List<Quiz> quizList = new ArrayList<>();
 
 
 
@@ -47,6 +50,7 @@ public class RoomResponseDto {
             .personnel(room.getPersonnel())
             .userList(userListDto)
             .timestamp(room.getTimestamp())
+            .quizList(room.getQuizList())
             .build();
 
         Optional<Round> optionalRound = Optional.ofNullable(room.getRound());
