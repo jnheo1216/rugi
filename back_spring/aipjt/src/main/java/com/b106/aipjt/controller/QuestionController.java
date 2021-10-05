@@ -38,7 +38,7 @@ public class QuestionController {
 
     // 이미지 파일 upload
     @PostMapping("")
-    public String upload(QuestionDto questionDto, MultipartFile file) throws IOException {
+    public QuestionDto upload(QuestionDto questionDto, MultipartFile file) throws IOException {
         String imgUrl = s3UploadService.upload(file); // key : file
         questionDto.setImgUrl(imgUrl);
         System.out.println("@ questionDto : "+questionDto);
@@ -56,7 +56,7 @@ public class QuestionController {
 //        // Dto DB에 저장
 //        questionService.saveImage(questionDto);
 
-        return questionDto.toString();
+        return questionDto;
     }
 
     // random 이미지

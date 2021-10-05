@@ -47,7 +47,7 @@ public class QuestionService {
     // imgpath주고, caption 받기
     public ResponseEntity imgUrlPost(QuestionDto questionDto) {
         URI uri = UriComponentsBuilder
-            .fromUriString("http://localhost:8000")
+            .fromUriString("http://j5b106.p.ssafy.io:8081")
             .path("/api/image_caption/kr/")
             .build()
             .toUri();
