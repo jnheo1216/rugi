@@ -34,10 +34,16 @@ def tts(caption):
 
 # S3 업로드
 def handle_upload_mp3(f):
+    print("5 3 1")
+    print("ACCESS_KEY_ID : ", ACCESS_KEY_ID)
+    print("ACCESS_SECRET_KEY : ", ACCESS_SECRET_KEY)
     s3_client = boto3.client(
         "s3", aws_access_key_id=ACCESS_KEY_ID, aws_secret_access_key=ACCESS_SECRET_KEY
     )
+    print("5 3 3")
     response = s3_client.upload_file(f, BUCKET_NAME, f)
+    print("response : ", response)
+    print("5 3 4")
 
 
 def get_time():
