@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import 'primevue/resources/primevue.min.css'
 const INITIAL_COLOR = "#2c2c2c"
 const CANVAS_SIZE = 700
@@ -173,36 +173,6 @@ export default {
       // console.log(this.canvas)
       // console.log(image)
       // console.log(link)
-      let bstr = atob(image.split(",")[1])
-      let n = bstr.length
-      let u8arr = new Uint8Array(n)
-
-      while(n--) {
-        u8arr[n] = bstr.charCodeAt(n)
-      }
-
-      let today = new Date()
-
-      let year = today.getFullYear()
-      let month = today.getMonth() + 1
-      let date = today.getDate()
-      let hours = today.getHours(); // 시
-      let minutes = today.getMinutes();  // 분
-      let seconds = today.getSeconds();  // 초
-
-      let imgname = year + '-' + month + '-' + date + '-' + hours + '-' + minutes + '-' + seconds
-
-      var file = new File([u8arr], imgname, {type:"mine"})
-      console.log(file)
-
-      let form = new FormData()
-      form.append('file', file)
-      console.log(form)
-      axios.post('/question', form, {
-        header: { 'Content-Type': 'multipart/form-data' }
-      })
-        .then((res) => {console.log(res)})
-        .catch((err) => {console.log(err)})
 
       link.download = "kons example"
       // fake click
@@ -231,6 +201,45 @@ export default {
     this.ctx.strokeStyle = INITIAL_COLOR
     this.ctx.fillStyle = INITIAL_COLOR
     this.ctx.lineWidth = 7.5
+  },
+  unmounted: function () {
+    const image = this.canvas.toDataURL('image/png')
+    let bstr = atob(image.split(",")[1])
+    let n = bstr.length
+    let u8arr = new Uint8Array(n)
+
+    while(n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+
+    let today = new Date()
+
+    let year = today.getFullYear()
+    let month = today.getMonth() + 1
+    let date = today.getDate()
+    let hours = today.getHours(); // 시
+    let minutes = today.getMinutes();  // 분
+    let seconds = today.getSeconds();  // 초
+
+    let imgname = year + '-' + month + '-' + date + '-' + hours + '-' + minutes + '-' + seconds
+
+    const file = new File([u8arr], imgname, {type:"mine"})
+    console.log(file)
+    // let form = new FormData()
+    // form.append('file', file)
+
+    this.$store.dispatch('setFile', file)
+    // 현재 컨버스는 좌표를 따고 있지 않습니다.
+    // 완성본만을 따고 있습니다. 그래서 그리는 족족은 불가
+    // 따라서 지금 현재 unmounted 될 때 store에 백으로 보낼수 있는 data의 형태를 갖춰서 저장해 놓고
+    // GameResult가 mounte 될 때 axios로 보내주겠다.
+
+    // console.log(form)
+    // axios.post('/question', form, {
+    //   header: { 'Content-Type': 'multipart/form-data' }
+    // })
+    //   .then((res) => {console.log(res)})
+    //   .catch((err) => {console.log(err)})
   }
 }
 </script>
