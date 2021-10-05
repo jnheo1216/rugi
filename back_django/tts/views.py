@@ -10,9 +10,9 @@ from rest_framework.response import Response
 import boto3
 from datetime import datetime
 
-ACCESS_KEY_ID = os.environ.get("ACCESS_KEY_ID")
-ACCESS_SECRET_KEY = os.environ.get("ACCESS_SECRET_KEY")
-BUCKET_NAME = os.environ.get("BUCKET_NAME")
+ACCESS_KEY_ID = "AKIATD5L7CMI2SALOZHB"
+ACCESS_SECRET_KEY = "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"
+BUCKET_NAME = "ssafy-bucket"
 
 # @api_view(['POST'])
 def tts(caption):
