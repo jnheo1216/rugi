@@ -115,8 +115,6 @@ export default {
           const audio = new Audio(result.question["audioUrl"])
           audio.play()
         }
-        // state에 넣어주면 된다. 메소드 작성하면 됨
-        this.$store.dispatch('setQuiz', result.question.imgCaption)
       })
     },
     sendFindRoom: async function () {

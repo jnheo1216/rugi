@@ -4,7 +4,13 @@
 
 <script>
 export default {
-  name: 'GameResult'
+  name: 'GameResult',
+  data: function () {
+    return
+  },
+  mounted: function () {
+
+  }
 }
 </script>
 

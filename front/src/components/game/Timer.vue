@@ -22,7 +22,7 @@ export default {
       return setInterval(()=>{
         this.time -= 1
         if (this.time === 0) { // 종료 조건 걸어줄 수 있음
-          this.timerStop()
+          // 일단 지금은 필요 없다.
         }
       }, 1000)
     },

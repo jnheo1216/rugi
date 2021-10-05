@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     quiz: function () {
-      return this.$store.state.quiz
+      return this.$store.state.room.quizList[this.$store.state.room.currentRound - 1].caption
     }
   },
   mounted: function () {
