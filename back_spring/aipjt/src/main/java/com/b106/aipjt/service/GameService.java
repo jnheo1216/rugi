@@ -147,6 +147,22 @@ public class GameService {
         skipRedisRepository.deleteById(skipId);
     }
 
+    // 방 수정 : 유저가 그린 이미지를 room -> quizList -> imageList 에 추가하고 메시지를 보낸다
+    public RoomResponseDto addImageToRoom(String roomId, UserImage userImage) {
+        // 조회 & 검증 & Optional 빼내기
+        Optional<Room> optionalRoom = roomRedisRepository.findById(roomId);
+        if (optionalRoom.isEmpty()) throw new RuntimeException("방이 존재하지 않습니다");
+        Room room = optionalRoom.get();
+        room.getQuizList().get(room.getQuizList().size()-1).getImageList().add(userImage);
+        room = roomRedisRepository.save(room);
+        RoomResponseDto roomResponseDto = convertRoomToDto(room);
+        template.convertAndSend("/sub/info/room/" +roomId, roomResponseDto);
+        return roomResponseDto;
+    }
+
+
+
+
     /*
         ==========================외부에서 호출하지 않는 내부에서 쓰는 함수================================
      */

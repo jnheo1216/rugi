@@ -1,10 +1,15 @@
 package com.b106.aipjt.controller;
 
 import com.b106.aipjt.domain.dto.caption.CaptResponse;
-import com.b106.aipjt.domain.dto.question.QuestionDto;
+import com.b106.aipjt.domain.dto.question.QuestionRequestDto;
+import com.b106.aipjt.domain.dto.room.RoomResponseDto;
 import com.b106.aipjt.domain.jpaentity.Question;
+import com.b106.aipjt.domain.redishash.Room;
+import com.b106.aipjt.domain.redishash.UserImage;
 import com.b106.aipjt.domain.repository.QuestionRepository;
+import com.b106.aipjt.service.GameService;
 import com.b106.aipjt.service.QuestionService;
+import com.b106.aipjt.service.RoomRedisService;
 import com.b106.aipjt.service.S3UploadService;
 import lombok.AllArgsConstructor;
 
@@ -25,38 +30,29 @@ public class QuestionController {
 
     private S3UploadService s3UploadService;
     private QuestionService questionService;
+    private GameService gameService;
 //    private CaptService captService;
 
     // QuestionDto 조회
-    @GetMapping("")
-    public String getQuestion(Model model){
-        List<QuestionDto> questionDtoList = questionService.getList();
-        // 목록 가져오기
-        model.addAttribute("questionList", questionDtoList);
-        return questionDtoList.toString();
-    }
+//    @GetMapping("")
+//    public String getQuestion(Model model){
+//        List<QuestionDto> questionDtoList = questionService.getList();
+//        // 목록 가져오기
+//        model.addAttribute("questionList", questionDtoList);
+//        return questionDtoList.toString();
+//    }
 
     // 이미지 파일 upload
     @PostMapping("")
-    public QuestionDto upload(QuestionDto questionDto, MultipartFile file) throws IOException {
+    public RoomResponseDto upload(MultipartFile file,
+                       @RequestParam String roomId,
+                       @RequestBody QuestionRequestDto questionRequestDto) throws IOException {
         String imgUrl = s3UploadService.upload(file); // key : file
-        questionDto.setImgUrl(imgUrl);
-        System.out.println("@ questionDto : "+questionDto);
-
-        ResponseEntity<CaptResponse> ai = questionService.imgUrlPost(questionDto);
-        System.out.println("");
-        String imgCaption = ai.getBody().getCaption();
-        String audioName = ai.getBody().getAudio();
-        String audioUrl = s3UploadService.getAudioUrl(audioName);
-
-        questionDto.setImgCaption(imgCaption);
-        questionDto.setAudioUrl(audioUrl);
-        System.out.println("@QuestionController questionDto: "+questionDto);
-
-//        // Dto DB에 저장
-//        questionService.saveImage(questionDto);
-
-        return questionDto;
+        CaptResponse caption = questionService.imgUrlPost(imgUrl);
+        // Dto 변환 부분
+        String audioUrl = s3UploadService.getAudioUrl(caption.getAudio());
+        UserImage userImage = new UserImage(questionRequestDto.getUsername(), imgUrl, audioUrl, caption.getCaption());
+        return gameService.addImageToRoom(roomId, userImage);
     }
 
     // random 이미지
