@@ -54,8 +54,8 @@ export default {
   },
   methods: {
     sendMessage (e) {
-      soundEffectChat()
       if(e.keyCode === 13 && this.userName !== '' && this.message !== ''){
+        soundEffectChat()
         this.send()
         //console.log('recieve list', this.chatList)
         this.message = ''
