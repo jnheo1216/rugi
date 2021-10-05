@@ -1,16 +1,16 @@
 <template>
   <div id="body">
-    <canvas
-      @mousemove="onMouseMove"
-      @mousedown="startPainting"
-      @mouseup="stopPainting"
-      @mouseleave="stopPainting"
-      @click="handleCanvasClick"
-      @contextmenu="handleCM"
-      id="jsCanvas"
-      class="canvas"
-    ></canvas>
-    <div class="controls">
+    <div class="canvas-box">
+      <canvas
+        @mousemove="onMouseMove"
+        @mousedown="startPainting"
+        @mouseup="stopPainting"
+        @mouseleave="stopPainting"
+        @click="handleCanvasClick"
+        @contextmenu="handleCM"
+        id="jsCanvas"
+        class="canvas"
+      ></canvas>
       <div class="controls_range">
         <input
           @input="handleRangeChange"
@@ -22,6 +22,8 @@
           step="0.1"
         />
       </div>
+    </div>
+    <div class="controls">
       <div class="controls_btns">
         <!-- <button
           @click="handleModeClick"
@@ -238,7 +240,6 @@ export default {
 #body {
   /* background-color: #f6f9fc; */
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
@@ -247,18 +248,27 @@ export default {
   height: 700px;
   background-color: white;
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+  box-shadow: 0 5px 10px rgb(50 50 93 / 11%), 0 5px 10px rgb(0 0 0 / 8%);
+  display: flex;
+  flex-direction: row;
+}
+
+.canvas-box {
+  display: flex;
+  flex-direction: column;
 }
 
 .controls {
-  margin-top: 40px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
 .controls .controls_btns {
   margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .controls_btns button {
@@ -275,6 +285,7 @@ export default {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 12px;
+  margin: 5px;
 }
 
 .controls_btns button:active {
@@ -283,6 +294,7 @@ export default {
 
 .controls .controls_colors {
   display: flex;
+  flex-direction: column;
 }
 
 .controls_colors .controls_color {
@@ -293,8 +305,12 @@ export default {
   box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
-.controls .controls_range {
+.controls_range {
+  margin-top: 30px;
   margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .controls .picked {

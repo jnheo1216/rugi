@@ -1,7 +1,7 @@
 <template>
   <div class="userListBody">
     <span>User</span>
-    <AvatarGroup class="p-mb-3">
+    <AvatarGroup class="p-mb-3" style="max-height: 60px;">
       <div class="avatarImg" v-for="user in userlist" :key="user.nickname">
         <Avatar
           :image="require(`@/assets/avatar/${user.avatar}.png`)"
@@ -50,8 +50,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
-  padding: 50px 10px;
+  padding-top: 20px;
+  padding: 20px 10px;
 }
 .userList {
   display: flex;
