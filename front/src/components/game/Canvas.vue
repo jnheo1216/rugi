@@ -233,13 +233,6 @@ export default {
     // 완성본만을 따고 있습니다. 그래서 그리는 족족은 불가
     // 따라서 지금 현재 unmounted 될 때 store에 백으로 보낼수 있는 data의 형태를 갖춰서 저장해 놓고
     // GameResult가 mounte 될 때 axios로 보내주겠다.
-
-    // console.log(form)
-    // axios.post('/question', form, {
-    //   header: { 'Content-Type': 'multipart/form-data' }
-    // })
-    //   .then((res) => {console.log(res)})
-    //   .catch((err) => {console.log(err)})
   }
 }
 </script>

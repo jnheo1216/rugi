@@ -1,9 +1,10 @@
 <template>
   <div id="chat-component">
     <div class="chat-box p-flex">
-
-      <div id="chat_list"
-        :class="[$store.getters.currentView === 'Lobby' ? 'game-before' : 'game-ing', 'p-col-12']">
+      <div
+        id="chat_list"
+        :class="[$store.getters.currentView === 'Lobby' ? 'game-before' : 'game-ing', 'p-col-12']"
+      >
         <div
           v-for="(chat, idx) in chatList"
           :key="idx"
@@ -31,7 +32,6 @@
         <Button id=chat-btn icon="pi pi-comment" @click="sendMessage" />
       </div>
     </div>
-
   </div>
 </template>
 
