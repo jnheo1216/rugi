@@ -11,7 +11,7 @@
         <HomeButton />
       </div>
     </div>
-    <audio></audio>
+    <audio id="homebgm"><source src="@/assets/sounds/home.wav"></audio>
     <div class="sound-button">
       <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
       <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
@@ -33,19 +33,20 @@ export default {
   data() {
     return {
       mute: true,
-      audio: new Audio(require("@/assets/sounds/home.wav"))
     }
   },
   methods: {
     soundOn() {
       if(this.mute) {
-        this.audio.loop = true
-        this.audio.volume = 1
-        this.audio.play()
+        const audio = document.getElementById('homebgm')
+        audio.loop = true
+        audio.volume = 1
+        audio.play()
         this.mute = false
       }
       else {
-        this.audio.volume = 0
+        const audio = document.getElementById('homebgm')
+        audio.volume = 0
         this.mute = true
       }
     }
