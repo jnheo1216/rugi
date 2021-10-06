@@ -14,8 +14,12 @@
           v-for="image in this.quizList[currentRound].imageList"
           :key="image.usernageme"
         >
-          {{ image.username }}
-          {{ image.caption }}
+          <span>
+            {{ image.username }}
+          </span>
+          <span>
+            {{ image.caption }}
+          </span>
           <img
             class="userDrawings"
             :src="`${ image.imgUrl }`"
@@ -33,10 +37,13 @@ export default {
   name: 'GameResult',
   data: function () {
     return {
-      quizList: {}
+      alert: ""
     }
   },
   computed: {
+    quizList: function () {
+      return this.$store.getters.quizList
+    },
     currentRound: function () {
       return this.$store.state.room.currentRound - 1
     }
@@ -57,10 +64,7 @@ export default {
       },
     }).then((res) => {
       console.log('이얏호 성공이지롱', res)
-      // 성공할 때 마다 quizList가 갱신 -> 1 라운드의 정보를 담고 -> 1, 2 라운드의 정보를 담고
-      this.quizList = res.data.quizList
     }).catch((err) => {
-      // 실패하면 quizList를 비워줘야 할까?
       console.log('ㅠㅠ 실패', err.response)
     })
   }
@@ -72,6 +76,9 @@ export default {
   display: flex;
   flex-direction: column !important;
   align-items: center;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 .userDrawings {
   height: 250px;

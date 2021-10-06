@@ -135,6 +135,9 @@ export default createStore({
     },
     currentView: state => {
       return state.room.status;
+    },
+    quizList: state => {
+      return state.room.quizList;
     }
   },
   modules: {},
