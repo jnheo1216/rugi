@@ -226,8 +226,9 @@ export default {
     let hours = today.getHours(); // 시
     let minutes = today.getMinutes();  // 분
     let seconds = today.getSeconds();  // 초
+    const rand_0_9 = Math.floor(Math.random() * 100)
 
-    let imgname = year + '-' + month + '-' + date + '-' + hours + '-' + minutes + '-' + seconds
+    let imgname = year + '-' + month + '-' + date + '-' + hours + '-' + minutes + '-' + seconds + this.$store.state.nickname + rand_0_9
 
     const file = new File([u8arr], imgname, {type:"mine"})
     console.log(file)
