@@ -37,6 +37,6 @@ export default {
 .timer-position {
   position: absolute;
   top: 5px !important;
-  right: 5px !important;
+  right: 50px !important;
 }
 </style>

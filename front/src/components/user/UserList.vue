@@ -4,7 +4,7 @@
       <div class="avatarImg" v-for="user in userlist" :key="user.nickname">
         <Avatar
           :image="require(`@/assets/avatar/${user.avatar}.png`)"
-          size="xlarge"
+          size="large"
           shape="circle"
         />
         <div>
