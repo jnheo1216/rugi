@@ -47,16 +47,16 @@
                 Fill
               </button> -->
               <button @click="handlePaintClick" :class="{ picked : mode_painting }">
-                Paint
+                <i class="pi pi-pencil"></i>Paint
               </button>
               <button @click="handleFillClick" :class="{ picked : mode_filling }">
-                Fill
+                <i class="pi pi-circle-on"></i>Fill
               </button>
               <button @click="handleEraseClick" :class="{ picked : mode_erasing }" id="jsEraser">
-                Eraser
+                <i class="pi pi-calendar"></i>Eraser
               </button>
               <button @click="handleClearClick" id="jsClear">
-                Clear
+                <i class="pi pi-trash"></i>Clear
               </button>
               <Button @click="handleSaveClick" id="jsSave" icon="pi pi-save" label="Save"></Button>
             </div>
