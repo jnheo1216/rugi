@@ -6,20 +6,10 @@
       <img id="rugi" src="@/assets/RUGI.png" alt="">
     </div>
     <div class="sound-button-init">
-      <Button
-        v-if="mute"
-        class="p-button-help p-button-raised p-button-rounded p-button-outlined"
-        icon="pi pi-volume-off"
-        iconPos="right"
-        @click="soundOn"
-      />
-      <Button
-        v-else
-        class="p-button-help p-button-raised p-button-rounded p-button-outlined"
-        icon="pi pi-volume-up"
-        iconPos="right"
-        @click="soundOn"
-      />
+      <div class="sound-button">
+        <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
+        <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
+      </div>
     </div>
   </div>
 </template>
@@ -54,11 +44,11 @@ export default {
 </script>
 
 <style>
-.init-component {
-  /* display: flex;
+/* .init-component {
+  display: flex;
   flex-direction: column;
-  align-items: center; */
-}
+  align-items: center;
+} */
 
 .initBody p {
   font-size: 35px;
