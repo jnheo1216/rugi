@@ -7,17 +7,17 @@
           <span>라운드</span>
         </div>
         <div class="col">
-          <Button 
-            @click="changeRound('left')" 
-            icon="pi pi-arrow-left" 
-            style="fontSize: 5rem" 
+          <Button
+            @click="changeRound('left')"
+            icon="pi pi-arrow-left"
+            style="fontSize: 5rem"
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
           {{ maxRound }}
-          <Button 
-            @click="changeRound('right')" 
-            icon="pi pi-arrow-right" 
+          <Button
+            @click="changeRound('right')"
+            icon="pi pi-arrow-right"
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
@@ -30,16 +30,17 @@
           <span>라운드 당 시간</span>
         </div>
         <div class="col">
-          <Button 
-            @click="changeRoundTime('left')" 
-            icon="pi pi-arrow-left" style="fontSize: 5rem" 
+          <Button
+            @click="changeRoundTime('left')"
+            icon="pi pi-arrow-left"
+            style="fontSize: 5rem"
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
           {{ roundTime }}
-          <Button 
-            @click="changeRoundTime('right')" 
-            icon="pi pi-arrow-right" 
+          <Button
+            @click="changeRoundTime('right')"
+            icon="pi pi-arrow-right"
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
@@ -52,17 +53,17 @@
           <span>최대 인원</span>
         </div>
         <div class="col">
-          <Button 
-            @click="changePersonnel('left')" 
-            icon="pi pi-arrow-left" 
-            style="fontSize: 5rem" 
+          <Button
+            @click="changePersonnel('left')"
+            icon="pi pi-arrow-left"
+            style="fontSize: 5rem"
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
           {{ personnel }}
-          <Button 
-            @click="changePersonnel('right')" 
-            icon="pi pi-arrow-right" 
+          <Button
+            @click="changePersonnel('right')"
+            icon="pi pi-arrow-right"
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
@@ -70,10 +71,10 @@
       </div>
     </div>
     <!-- <section id="setting-btn">
-      <Button 
+      <Button
         @click="roomUpdate"
-        icon="pi pi-check" 
-        class="p-button-raised p-button-text p-button-plain" 
+        icon="pi pi-check"
+        class="p-button-raised p-button-text p-button-plain"
       >
       </Button>
     </section> -->

@@ -6,7 +6,7 @@
         <GameSetting v-if="isRoomExist" />
         <!-- 방장이 아닌 사람한테는 다른걸 보여줘도 좋을 듯 -->
         <div class="offset-1 col-10">
-        <LobbyButton />
+          <LobbyButton />
         </div>
       </div>
     </div>

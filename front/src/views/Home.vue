@@ -13,8 +13,20 @@
     </div>
     <audio id="homebgm"><source src="@/assets/sounds/home.wav"></audio>
     <div class="sound-button">
-      <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
-      <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
+      <Button
+        v-if="mute"
+        class="p-button-help p-button-raised p-button-rounded p-button-outlined"
+        icon="pi pi-volume-off"
+        iconPos="right"
+        @click="soundOn"
+      />
+      <Button
+        v-else
+        class="p-button-help p-button-raised p-button-rounded p-button-outlined"
+        icon="pi pi-volume-up"
+        iconPos="right"
+        @click="soundOn"
+      />
     </div>
   </div>
 </template>

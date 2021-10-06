@@ -9,9 +9,9 @@
         </Popper>
       </div>
       <div v-if="$store.state.super" class="huge-button shadow-sm col-lg-5 text-center pt-2">
-      <a @click="startGame">
-        <img class="img-fluid" src="@/assets/buttons/startbtn.png" alt="">
-      </a>
+        <a @click="startGame">
+          <img class="img-fluid" src="@/assets/buttons/startbtn.png" alt="">
+        </a>
       </div>
       <!-- 클립보드 복사용 인풋 -->
     </div>

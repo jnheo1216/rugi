@@ -2,21 +2,17 @@
   <div class="avatar-body">
     <div>
       <section class="avatar-select">
-        <a class="" 
-          @click="randomAvatar">
+        <a class="" @click="randomAvatar">
           <img class="img-fluid sf-btn" src="@/assets/buttons/shufflebtn.png" alt="">
         </a>
       </section>
       <section class="avatar-select">
         <i class="fas fa-chevron-left" @click="changeAvatar('left')"></i>
-        <Avatar class="avatar" 
-          :image="require(`@/assets/avatar/${avatar}.png`)" 
-          shape="circle" />
+        <Avatar class="avatar" :image="require(`@/assets/avatar/${avatar}.png`)" shape="circle" />
         <i class="fas fa-chevron-right" @click="changeAvatar('right')"></i>
       </section>
       <div class="p-d-grid">
-        <label class="p-col-8 p-offset-2 mini" 
-          for="nickname">
+        <label class="p-col-8 p-offset-2 mini" for="nickname">
           nickname
         </label>
         <InputText
@@ -78,7 +74,7 @@ export default {
 
 <style>
 .p-button, .p-inputtext {
-  font-family: "Elice Digital Baeum",sans-serif !important; 
+  font-family: "Elice Digital Baeum",sans-serif !important;
   font-size: 0.7rem !important;
 }
 .avatar-body {
