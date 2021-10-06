@@ -317,7 +317,7 @@ export default {
   align-items: center;
 }
 
-.controls .picked {
+.controls_btns .picked {
   all: unset;
   cursor: pointer;
   background-color: #2df7ed;
