@@ -8,7 +8,7 @@
       </p>
     </div>
     <img src="@/assets/RUGI.png" alt="">
-    <div class="sound-button">
+    <div class="sound-button-init">
       <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
       <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
     </div>
@@ -25,10 +25,12 @@ export default {
   },
   methods: {
     soundOn() {
-      var audio = new Audio(this.quizaudio)
-      audio.volume = 1
-      audio.play()
-      this.mute = false
+      if(this.mute) {
+        console.log(this.quizaudio)
+        var audio = new Audio(this.quizaudio)
+        audio.play()
+        this.mute = false
+      }
     }
   },
   computed: {
@@ -64,7 +66,7 @@ export default {
   /* background: url("@/assets/balloon1.png") no-repeat; */
 }
 
-.sound-button {
+.sound-button-init {
   position: absolute;
   top: 2rem;
 }
