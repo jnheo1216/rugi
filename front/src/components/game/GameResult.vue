@@ -1,34 +1,58 @@
 <template>
-  <div>
-    게임 결과 출력
+    <div class="container gameresult">
     <!-- 퀴즈리스트에 무엇인가가 들어 있어야 출력을 해줘야 할 듯 해 -->
     <div v-if="Object.keys(this.quizList).length">
       <!-- 현재 라운드에 맞는 정보들을 뿌려줘야 할 것 -->
       <!-- 그렇다면 라운드 정보를 가지고 있어야 한다. -->
       <!-- alt 사진을 못 찾았을때 사진을 하나 그리면 좋을 것 같다. -->
-      <div class="test">
-        <p> 현재 문재 캡셔닝 </p>
-        <div>
-          {{ this.quizList[currentRound].caption }}
+      <div class="row">
+        <div class="col">
+          <p> 현재 문제 캡셔닝 </p>
+          <div>
+            <p>
+              {{ this.quizList[currentRound].caption }}
+            </p>
+            <p>
+              {{this.quizList[currentRound].audioUrl}}
+            </p>
+          </div>
+          <p> 이게 정답이에요 </p>
+          <div>
+            <img :src="`${this.quizList[currentRound].imgUrl}`" alt="answer">
+          </div>
+          <div class="sound-button-init">
+            <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
+            <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
+          </div>
         </div>
         <!-- 현재 라운드의 퀴즈리스트, 그 안에 있는 imageList의 image들을 반복문 처리 -->
-        <div
-          class="captionResult"
-          v-for="image in this.quizList[currentRound].imageList"
-          :key="image.usernageme"
-        >
-          <span>
-            {{ image.username }}
-          </span>
-          <span>
-            <!-- TTS 할 수 있도록 기능 넣어주면 될 듯 -->
-            {{ image.caption }}
-          </span>
-          <img
-            class="userDrawings"
-            :src="`${ image.imgUrl }`"
-            alt=""
-          >
+        <div class="col">
+          <div class="row row-cols-2">
+            <div
+              class="captionResult"
+              v-for="image in this.quizList[currentRound].imageList"
+              :key="image.usernageme"
+            >
+              <div class="col card">
+                <p>
+                  {{ image.username }} 님의 그림
+                </p>
+                <img
+                  class="userDrawings card"
+                  :src="`${ image.imgUrl }`"
+                  alt=""
+                >
+                <span style="width:200px">
+                  <!-- TTS 할 수 있도록 기능 넣어주면 될 듯 -->
+                  "{{ image.caption }}" !!
+                </span>
+                <div class="sound-button-init">
+                  <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
+                  <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -43,6 +67,8 @@ export default {
     return {
       alert: ""
     }
+  },
+  methods: {
   },
   computed: {
     quizList: function () {
@@ -83,16 +109,15 @@ export default {
   display: flex;
   flex-direction: column !important;
   align-items: center;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  /* border-style: solid;
+  border-color: black; */
+  /* border-width: 1px; */
+}
+.col .card {
+  padding: 10px;
 }
 .userDrawings {
-  height: 250px;
-  width: 250px;
-}
-.test {
-  display: flex;
-  flex-direction: row;
+  height: 200px;
+  width: 200px;
 }
 </style>

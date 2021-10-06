@@ -157,10 +157,10 @@ export default {
 .set {
   font-size: 30px;
   /* columns:12; */
+  font-size: 3rem !important;
 }
 .col {
   text-align: center;
-  font-size: 3rem !important;
 }
 .no-super Button{
   visibility: hidden;
