@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style>
-.lobby-body {
+/* .lobby-body {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,5 +41,5 @@ export default {
 .lobby-components {
   display: flex;
   flex-direction: column;
-}
+} */
 </style>
