@@ -1,5 +1,5 @@
 <template>
-  <div class="game-setting-body">
+  <div class="game-setting-body" :class="[$store.state.super ? 'yes-super':'no-super']">
     <!-- <header>Game Settings</header> -->
     <div class="set container">
       <div class="row">
@@ -37,10 +37,8 @@
         </div>
       </div>
     </div>
-    <section>
-      <Button label="Primary" class="p-button-raised p-button-text p-button-plain" @click="roomUpdate">
-        방 설정 적용
-      </Button>
+    <section id="setting-btn">
+      <Button label="Primary" class="p-button-raised p-button-text p-button-plain" icon="pi pi-check" @click="roomUpdate"></Button>
     </section>
   </div>
 </template>
@@ -120,11 +118,8 @@ export default {
 .game-setting-body {
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-size: 3rem !important;
   margin-top: 6rem;
-  /* border: 2px black solid; */
-  /* width: 50vh !important; */
 }
 .set {
   font-size: 30px;
@@ -133,5 +128,19 @@ export default {
 .col {
   text-align: center;
   font-size: 3rem !important;
+}
+.no-super Button{
+  opacity: 0;
+}
+#setting-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4rem;
+}
+#setting-btn Button{
+  border-radius: 100%;
+  align-items: center;
+  width: 42px;
+  height: 42px;
 }
 </style>
