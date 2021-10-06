@@ -11,11 +11,11 @@
           <span id="nickname">{{ user.nickname }}</span>
         </div>
       </div>
-      <Avatar 
-        :label="`${ usernum }`" 
-        shape="circle" 
-        size="small" 
-        style="background-color:#fc5c7d; color: #ffffff" 
+      <Avatar
+        :label="`${ usernum }`"
+        shape="circle"
+        size="small"
+        style="background-color:#fc5c7d; color: #ffffff"
       />
     </AvatarGroup>
   </div>
@@ -55,6 +55,9 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   padding: 5rem 1rem 1rem 3rem;
+  position: absolute;
+  top: 5%;
+  left: 5%;
 }
 .userList {
   display: flex;
