@@ -1,18 +1,18 @@
 <template>
   <div id="body container">
     <div class="row">
-      <div class="col">
-        <div id="jsColors" class="controls_colors">
-          <div class="controls_color jsColor" style="background-color: #2c2c2c;"></div>
-          <div class="controls_color jsColor" style="background-color: white;"></div>
-          <div class="controls_color jsColor" style="background-color: #ff3b30;"></div>
-          <div class="controls_color jsColor" style="background-color: #ff9500;"></div>
-          <div class="controls_color jsColor" style="background-color: #fc0;"></div>
-          <div class="controls_color jsColor" style="background-color: #4cd963;"></div>
-          <div class="controls_color jsColor" style="background-color: #5ac8fa;"></div>
-          <div class="controls_color jsColor" style="background-color: #0579ff;"></div>
-          <div class="controls_color jsColor" style="background-color: #5856d6;"></div>
-          <ColorPicker v-model="ctxcolor" />
+      <div class="col controls-colors-wrapper">
+        <div id="jsColors" class="controls-colors">
+          <ColorPicker v-model="ctxcolor"/>
+          <div class="jsColor" style="background-color: #2c2c2c;"></div>
+          <div class="jsColor" style="background-color: white;"></div>
+          <div class="jsColor" style="background-color: #ff3b30;"></div>
+          <div class="jsColor" style="background-color: #ff9500;"></div>
+          <div class="jsColor" style="background-color: #fc0;"></div>
+          <div class="jsColor" style="background-color: #4cd963;"></div>
+          <div class="jsColor" style="background-color: #5ac8fa;"></div>
+          <div class="jsColor" style="background-color: #0579ff;"></div>
+          <div class="jsColor" style="background-color: #5856d6;"></div>
         </div>
       </div>
       <div class="col">
@@ -71,7 +71,8 @@
 // import axios from 'axios'
 import 'primevue/resources/primevue.min.css'
 const INITIAL_COLOR = "#2c2c2c"
-const CANVAS_SIZE = 700
+const CANVAS_WIDTH = 1100
+const CANVAS_HEIGHT = 700
 
 
 export default {
@@ -159,11 +160,11 @@ export default {
       this.mode_erasing = true
     },
     handleClearClick: function () {
-      this.ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+      this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
     },
     handleCanvasClick: function () {
       if (this.mode_filling) {
-        this.ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+        this.ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
       }
     },
     // 마우스 우클릭 방지
@@ -199,8 +200,8 @@ export default {
       Array.from(this.colors).forEach(color => color.addEventListener("click", this.handleColorClick))
     }
     // pixel modifier
-    this.canvas.width = CANVAS_SIZE
-    this.canvas.height = CANVAS_SIZE
+    this.canvas.width = CANVAS_WIDTH
+    this.canvas.height = CANVAS_HEIGHT
     // default 설정
     this.ctx.fillStyle = "white"
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -255,12 +256,51 @@ export default {
 }
 
 .canvas {
-  width: 700px;
+  width: 1100px;
   height: 700px;
   background-color: white;
-  border-radius: 15px;
+  border-radius: 0 15px 15px 15px;
   box-shadow: 0 5px 10px rgb(50 50 93 / 11%), 0 5px 10px rgb(0 0 0 / 8%);
 }
+
+/* 래핑 */
+.p-colorpicker, .p-colorpicker-overlay {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 25px !important;
+  margin: 10px;
+  -webkit-box-shadow: 5px 5px 15px 1px #FF8080, -9px 5px 15px 1px #FFE488, -7px -5px 15px 1px #8CFF85, 12px -5px 15px 1px #80C7FF, 2px 2px 2px 2px #E488FF, 5px 5px 18px -4px rgba(34,255,54,0);
+  box-shadow: 5px 5px 15px 1px #FF8080, -9px 5px 15px 1px #FFE488, -7px -5px 15px 1px #8CFF85, 12px -5px 15px 1px #80C7FF, 2px 2px 2px 2px #E488FF, 5px 5px 18px -4px rgba(34,255,54,0);}
+/* 실제 컬러피커 프리뷰 */
+.p-colorpicker-preview {
+  border-radius: 25px !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.col {
+  padding: 0 !important;
+}
+
+.controls-colors {
+  margin: 0px 0px 0px 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px 0 0 10px;
+  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
+}
+
+.controls-colors > .jsColor {
+  margin: 5px;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
+}
+
 
 .controls-btn-box {
   display: flex;
@@ -293,21 +333,6 @@ export default {
   transform: scale(0.98);
 }
 
-.controls_colors {
-  margin: 5px;
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.controls_colors .controls_color {
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
-}
 
 .controls_range {
   margin-top: 10px;
