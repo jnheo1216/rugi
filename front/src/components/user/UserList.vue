@@ -55,9 +55,6 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   padding: 5rem 1rem 1rem 3rem;
-  position: absolute;
-  top: 5%;
-  left: 5%;
 }
 .userList {
   display: flex;
