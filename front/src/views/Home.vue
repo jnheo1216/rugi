@@ -11,9 +11,10 @@
         <HomeButton />
       </div>
     </div>
+    <audio></audio>
     <div class="sound-button">
-      <Button v-if="mute" label="Help" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
-      <Button v-else label="Help" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
+      <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
+      <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
     </div>
   </div>
 </template>
@@ -32,17 +33,19 @@ export default {
   data() {
     return {
       mute: true,
+      audio: new Audio(require("@/assets/sounds/home.wav"))
     }
   },
   methods: {
     soundOn() {
-      var audio = new Audio("@/assets/sounds/home.wav")
       if(this.mute) {
-        audio.play()
+        this.audio.loop = true
+        this.audio.volume = 1
+        this.audio.play()
         this.mute = false
       }
       else {
-        audio.pause()
+        this.audio.volume = 0
         this.mute = true
       }
     }
