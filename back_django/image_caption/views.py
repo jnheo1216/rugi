@@ -36,6 +36,8 @@ def index(request):
     print("Prediction Caption:", " ".join(result))
 
     caption = " ".join(result)
+    caption = caption.replace('<unk>', 'XXXXX')
+    caption = caption.replace('<end>', '.')
 
     # response = requests.get(path)
     # img = Image.open(BytesIO(response.content))
@@ -65,6 +67,8 @@ def index_kr(request):
     print("Prediction Caption:", " ".join(result))
 
     caption = " ".join(result)
+    caption = caption.replace('<unk>', 'XXXXX')
+    caption = caption.replace('<end>', '.')
 
     # response = requests.get(path)
     # img = Image.open(BytesIO(response.content))
