@@ -8,7 +8,10 @@
       <!-- alt 사진을 못 찾았을때 사진을 하나 그리면 좋을 것 같다. -->
       <div class="test">
         <p> 현재 문재 캡셔닝 </p>
-        {{ this.quizList[currentRound].caption }}
+        <div>
+          {{ this.quizList[currentRound].caption }}
+        </div>
+        <!-- 현재 라운드의 퀴즈리스트, 그 안에 있는 imageList의 image들을 반복문 처리 -->
         <div
           class="captionResult"
           v-for="image in this.quizList[currentRound].imageList"
@@ -18,6 +21,7 @@
             {{ image.username }}
           </span>
           <span>
+            <!-- TTS 할 수 있도록 기능 넣어주면 될 듯 -->
             {{ image.caption }}
           </span>
           <img
