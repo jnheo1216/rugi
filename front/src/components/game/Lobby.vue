@@ -3,7 +3,7 @@
     <div>
       <!-- <UserList v-if="isRoomExist" /> -->
       <div class="lobby-components">
-        <GameSetting />
+        <GameSetting v-if="this.$store.state.super" />
         <!-- 방장이 아닌 사람한테는 다른걸 보여줘도 좋을 듯 -->
         <LobbyButton />
       </div>
