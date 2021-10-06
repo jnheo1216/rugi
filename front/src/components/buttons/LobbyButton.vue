@@ -23,7 +23,7 @@
 import axios from 'axios'
 import Popper from "vue3-popper";
 
-import { soundEffectGamestart } from '../api/sound.js'
+import { soundEffectChat } from '../api/sound.js'
 export default {
   emits: ['viewChange'],
   name: 'LobbyButton',
@@ -37,15 +37,15 @@ export default {
   },
   methods :{
     copyLink: function() {
-      soundEffectGamestart()
-      const copyText = document.getElementById("copyText"); 
+      soundEffectChat()
+      const copyText = document.getElementById("copyText");
       copyText.value = this.inviteLink;
       copyText.focus()
       copyText.select()
       document.execCommand('copy')
     },
     startGame: function () {
-      soundEffectGamestart()
+      soundEffectChat()
       console.log("게임 시작");
       axios({
         method: 'post',
