@@ -67,7 +67,7 @@ public class GameService {
             // 여기서 보내기 전에 Quiz 객체를 만들어서 추가해주기
 
             // 문제주고 5초간 자기
-            Thread.sleep(50000000);
+            Thread.sleep(5000);
             // 질문 조회해서 Round에 넣어주기
             // 질문 조회했다고 가정하고, 라운드 객체에 값 세팅 후 저장
             Round round = roundRedisRepository.save(new Round(null, room.getRoundTime(), "문제", 1L));
