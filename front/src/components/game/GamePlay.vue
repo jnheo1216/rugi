@@ -5,8 +5,8 @@
     <Canvas />
     <audio id="playbgm"><source src="@/assets/sounds/home.wav"></audio>
     <div class="sound-button">
-      <button v-if="mute" @click="soundOn"><i class="pi pi-volume-off"></i></button>
-      <button v-else @click="soundOn"><i class="pi pi-volume-up"></i></button>
+      <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
+      <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
     </div>
   </div>
 </template>
@@ -68,7 +68,8 @@ export default {
   left: 2rem;
 }
 .sound-button button {
-  background-color: #fc5c7d;
+  background-color: white;
+  box-shadow: 3px 3px 3px gray, 3px 3px 3px gray;
   border-radius: 50%;
   border: none;
   width: 3rem;
