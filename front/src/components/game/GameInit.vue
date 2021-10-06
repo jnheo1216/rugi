@@ -8,6 +8,10 @@
       </p>
     </div>
     <img src="@/assets/RUGI.png" alt="">
+    <div class="sound-button">
+      <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
+      <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
+    </div>
   </div>
 </template>
 
@@ -16,13 +20,23 @@ export default {
   name: 'GameInit',
   data: function() {
     return {
+      mute: true
     }
   },
   methods: {
+    soundOn() {
+      var audio = new Audio(this.quizaudio)
+      audio.volume = 1
+      audio.play()
+      this.mute = false
+    }
   },
   computed: {
     quiz: function () {
       return this.$store.state.room.quizList[this.$store.state.room.currentRound - 1].caption
+    },
+    quizaudio: function () {
+      return this.$store.state.room.quizList[this.$store.state.room.currentRound - 1].audioUrl
     }
   }
 }
@@ -48,5 +62,10 @@ export default {
   top: 20rem;
   left: 5rem;
   /* background: url("@/assets/balloon1.png") no-repeat; */
+}
+
+.sound-button {
+  position: absolute;
+  top: 2rem;
 }
 </style>
