@@ -1,13 +1,12 @@
 <template>
   <div class="init-component">
-    <div class="init-body"></div>
     <div id=quiz>
-    <img src="@/assets/balloon1.png" alt="">
-      <p>
-      {{ quiz }}
-      </p>
+      <img id="balloon" src="@/assets/balloon1.png" alt="">
+        <p>
+        {{ quiz }}
+        </p>
+      <img id="rugi" src="@/assets/RUGI.png" alt="">
     </div>
-    <img src="@/assets/RUGI.png" alt="">
     <div class="sound-button-init">
       <Button v-if="mute" class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-off" iconPos="right" @click="soundOn" />
       <Button v-else class="p-button-help p-button-raised p-button-rounded p-button-outlined" icon="pi pi-volume-up" iconPos="right" @click="soundOn" />
@@ -46,28 +45,41 @@ export default {
 
 <style>
 .init-component {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
-}
-.init-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 
 .initBody p {
   font-size: 35px;
 }
-#quiz p {
-  position: absolute;
-  top: 20rem;
-  left: 5rem;
-  /* background: url("@/assets/balloon1.png") no-repeat; */
-}
 
 .sound-button-init {
   position: absolute;
-  top: 2rem;
+  top: 20%;
+  left: 5%;
+}
+
+#balloon {
+  position: absolute;
+  top: 0%;
+}
+#quiz {
+  display: flex;
+  flex-direction: column;
+  /* 사진 크기만큼 height 줬음 */
+  height: 306px;
+  position: relative;
+  align-items: center;
+}
+#quiz p {
+  position: absolute;
+  width: 450px;
+  text-align: center;
+  top: 40%;
+}
+#rugi {
+  position: absolute;
+  top: 80%;
 }
 </style>
