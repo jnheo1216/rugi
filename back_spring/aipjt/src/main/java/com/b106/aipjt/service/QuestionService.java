@@ -42,7 +42,7 @@ public class QuestionService {
     public CaptResponse imgUrlPost(String imgUrl) {
         URI uri = UriComponentsBuilder
             .fromUriString("http://j5b106.p.ssafy.io:8081")
-            .path("/api/image_caption/kr/")
+            .path("/api/image_caption/")
             .build()
             .toUri();
         System.out.println("@ uri 확인 : "+uri);
