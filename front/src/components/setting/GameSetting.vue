@@ -61,14 +61,23 @@ export default {
     changeRound: function (direction) {
       let newRound = direction==="left" ? this.maxRound-1 : this.maxRound+1
       this.maxRound = (1 <= newRound && newRound <= 5) ? newRound : this.maxRound
+      console.log('테스트용 ', this.maxRound)
+      console.log('테스트용 ', this.roundTime)
+      console.log('테스트용 ', this.personal)
     },
     changeRoundTime: function (direction) {
       let newRoundTime = direction==="left" ? this.roundTime-10 : this.roundTime+10
       this.roundTime = (40 <= newRoundTime && newRoundTime <= 120) ? newRoundTime : this.roundTime
+      console.log('테스트용 ', this.maxRound)
+      console.log('테스트용 ', this.roundTime)
+      console.log('테스트용 ', this.personal)
     },
     changePersonnel: function (direction) {
       let newPersonnel = direction==="left" ? this.personnel-1 : this.personnel+1
       this.personnel = (2 <= newPersonnel && newPersonnel <= 8) ? newPersonnel : this.personnel
+      console.log('테스트용 ', this.maxRound)
+      console.log('테스트용 ', this.roundTime)
+      console.log('테스트용 ', this.personal)
     },
     roomUpdate : function () {
       if (!this.isSettingChanged) {
