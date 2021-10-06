@@ -40,7 +40,7 @@ def handle_upload_mp3(f):
     s3_client = boto3.client(
         "s3", aws_access_key_id=ACCESS_KEY_ID, aws_secret_access_key=ACCESS_SECRET_KEY
     )
-    print("5 3 3")
+    print("5 3 3 filename : " , f)
     response = s3_client.upload_file(f, BUCKET_NAME, f)
     print("response : ", response)
     print("5 3 4")
