@@ -181,6 +181,10 @@ export default {
   /* margin-top: 1rem !important; */
   color: #6A82FB !important;
 }
+/* game setting 화살표 살짝 내려온거 */
+.col .p-button-icon-only {
+  height: 3.8rem !important;
+}
 .pi-arrow-right {
   font-size:2rem !important;
 }
