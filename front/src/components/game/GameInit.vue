@@ -1,5 +1,6 @@
 <template>
-  <div class="initBody">
+  <div class="init-component">
+    <div class="init-body"></div>
     <p>
       {{ quiz }}
     </p>
@@ -25,7 +26,12 @@ export default {
 </script>
 
 <style>
-.initBody {
+.init-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.init-body {
   display: flex;
   flex-direction: column;
   align-items: center;
