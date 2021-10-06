@@ -93,7 +93,8 @@ def index_kr(request):
         print("4")
         captionjson = captionjson["message"]["result"]["translatedText"]
         print("5")
-        audio = tts(caption)
+        # audio = tts(caption)
+        audio="임시방편 테스트"
         print("6")
         data = {"caption": captionjson, "audio": audio}
         print("7")
