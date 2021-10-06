@@ -71,6 +71,9 @@ export default {
     }).catch((err) => {
       console.log('ㅠㅠ 실패', err.response)
     })
+  },
+  unmounted: function () {
+    console.log('게임리절트가 언마운트 될 때 받아온 정보', this.$store.room.quizList)
   }
 }
 </script>
