@@ -179,6 +179,7 @@ export default {
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
+  align-items: center;
 }
 .arrow-game-setting:hover {
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
