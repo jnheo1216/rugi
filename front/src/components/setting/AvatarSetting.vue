@@ -7,9 +7,17 @@
         </a>
       </section>
       <section class="avatar-select">
-        <i class="fas fa-chevron-left" @click="changeAvatar('left')"></i>
+        <div class="arrow-avatar-setting">
+          <a @click="changeAvatar('left')">
+            <img src="@/assets/buttons/arrowL.png" class="img-fluid">
+          </a>
+        </div>
         <Avatar class="avatar" :image="require(`@/assets/avatar/${avatar}.png`)" shape="circle" />
-        <i class="fas fa-chevron-right" @click="changeAvatar('right')"></i>
+        <div class="arrow-avatar-setting">
+          <a @click="changeAvatar('right')">
+            <img src="@/assets/buttons/arrowR.png" class="img-fluid">
+          </a>
+        </div>
       </section>
       <div class="p-d-grid">
         <label class="p-col-8 p-offset-2 mini" for="nickname">
@@ -119,5 +127,15 @@ export default {
 }
 .sf-btn:hover {
   cursor: pointer;
+}
+
+.arrow-avatar-setting {
+  /* margin-top: 1rem !important; */
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+.arrow-avatar-setting:hover {
+  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
 }
 </style>

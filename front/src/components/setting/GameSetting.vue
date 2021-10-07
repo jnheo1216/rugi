@@ -7,19 +7,17 @@
           <span>라운드</span>
         </div>
         <div class="col">
-          <Button
-            @click="changeRound('left')"
-            icon="pi pi-arrow-left"
-            class="p-button-rounded p-button-text arrow"
-          >
-          </Button>
+          <div class="arrow-game-setting">
+            <a @click="changeRound('left')">
+              <img src="@/assets/buttons/arrowL.png" class="img-fluid">
+            </a>
+          </div>
           {{ $store.state.super ? maxRound : $store.state.room["maxRound"] }}
-          <Button
-            @click="changeRound('right')"
-            icon="pi pi-arrow-right"
-            class="p-button-rounded p-button-text arrow"
-          >
-          </Button>
+          <div class="arrow-game-setting">
+            <a @click="changeRound('right')">
+              <img src="@/assets/buttons/arrowR.png" class="img-fluid">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -29,19 +27,17 @@
           <span>라운드 당 시간</span>
         </div>
         <div class="col">
-          <Button
-            @click="changeRoundTime('left')"
-            icon="pi pi-arrow-left"
-            class="p-button-rounded p-button-text arrow"
-          >
-          </Button>
+          <div class="arrow-game-setting">
+            <a @click="changeRoundTime('left')">
+              <img src="@/assets/buttons/arrowL.png" class="img-fluid">
+            </a>
+          </div>
           {{ $store.state.super ? roundTime : $store.state.room["roundTime"] }}
-          <Button
-            @click="changeRoundTime('right')"
-            icon="pi pi-arrow-right"
-            class="p-button-rounded p-button-text arrow"
-          >
-          </Button>
+          <div class="arrow-game-setting">
+            <a @click="changeRoundTime('right')">
+              <img src="@/assets/buttons/arrowR.png" class="img-fluid">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -51,19 +47,17 @@
           <span>최대 인원</span>
         </div>
         <div class="col">
-          <Button
-            @click="changePersonnel('left')"
-            icon="pi pi-arrow-left"
-            class="p-button-rounded p-button-text arrow"
-          >
-          </Button>
+          <div class="arrow-game-setting">
+            <a @click="changePersonnel('left')">
+              <img src="@/assets/buttons/arrowL.png" class="img-fluid">
+            </a>
+          </div>
           {{ $store.state.super ? personnel : $store.state.room["personnel"] }}
-          <Button
-            @click="changePersonnel('right')"
-            icon="pi pi-arrow-right"
-            class="p-button-rounded p-button-text arrow"
-          >
-          </Button>
+          <div class="arrow-game-setting">
+            <a @click="changePersonnel('right')">
+              <img src="@/assets/buttons/arrowR.png" class="img-fluid">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -168,9 +162,14 @@ export default {
   color: #fc5c7d;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.2)!important;
 }
-.arrow {
+.arrow-game-setting {
   /* margin-top: 1rem !important; */
-  color: #6A82FB !important;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.arrow-game-setting:hover {
+  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
 }
 
 .pi-arrow-right {
