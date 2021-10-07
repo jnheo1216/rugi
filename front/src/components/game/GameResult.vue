@@ -1,5 +1,5 @@
 <template>
-  <div class="container gameresult">
+    <div class="container gameresult">
     <!-- 퀴즈리스트에 무엇인가가 들어 있어야 출력을 해줘야 할 듯 해 -->
     <div v-if="Object.keys(this.quizList).length">
       <!-- 현재 라운드에 맞는 정보들을 뿌려줘야 할 것 -->
@@ -9,29 +9,22 @@
         <div class="col">
           <p> 현재 문제 캡셔닝 </p>
           <div>
-            <p>{{ this.quizList[currentRound].caption }}</p>
-            <p>{{ this.quizList[currentRound].audioUrl }}</p>
+            <p>
+              {{ this.quizList[currentRound].caption }}
+            </p>
+            <p>
+              {{this.quizList[currentRound].audioUrl}}
+            </p>
           </div>
           <p> 이게 정답이에요 </p>
           <div>
             <img :src="`${this.quizList[currentRound].imgUrl}`" alt="answer">
           </div>
-          <div class="sound-button-init">
-            <Button
-              v-if="mute"
-              class="p-button-help p-button-raised p-button-rounded p-button-outlined"
-              icon="pi pi-volume-off"
-              iconPos="right"
-              @click="soundOn"
-            />
-            <Button
-              v-else
-              class="p-button-help p-button-raised p-button-rounded p-button-outlined"
-              icon="pi pi-volume-up"
-              iconPos="right"
-              @click="soundOn"
-            />
-          </div>
+            <div class="sound-button">
+              <audio id="quizsound"><source :src="`${this.quizList[currentRound].audioUrl}`"></audio>
+              <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2rem; height:2rem;" alt=""></button>
+              <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2rem; height:2rem;" alt=""></button>
+            </div>
         </div>
         <!-- 현재 라운드의 퀴즈리스트, 그 안에 있는 imageList의 image들을 반복문 처리 -->
         <div class="col">
@@ -54,21 +47,9 @@
                   <!-- TTS 할 수 있도록 기능 넣어주면 될 듯 -->
                   "{{ image.caption }}" !!
                 </span>
-                <div class="sound-button-init">
-                  <Button
-                    v-if="mute"
-                    class="p-button-help p-button-raised p-button-rounded p-button-outlined"
-                    icon="pi pi-volume-off"
-                    iconPos="right"
-                    @click="soundOn"
-                  />
-                  <Button
-                    v-else
-                    class="p-button-help p-button-raised p-button-rounded p-button-outlined"
-                    icon="pi pi-volume-up"
-                    iconPos="right"
-                    @click="soundOn"
-                  />
+                <div class="sound-button">
+                  <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
+                  <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
                 </div>
               </div>
             </div>
@@ -85,10 +66,25 @@ export default {
   name: 'GameResult',
   data: function () {
     return {
-      alert: ""
+      alert: "",
+      mute: true,
     }
   },
   methods: {
+    soundOn() {
+      if(this.mute) {
+        const audio = document.getElementById('quizsound')
+        audio.loop = true
+        audio.volume = 1
+        audio.play()
+        this.mute = false
+      }
+      else {
+        const audio = document.getElementById('quizsound')
+        audio.volume = 0
+        this.mute = true
+      }
+    }
   },
   computed: {
     quizList: function () {
@@ -139,5 +135,10 @@ export default {
 .userDrawings {
   height: 200px;
   width: 200px;
+}
+.sound-button {
+  border-radius: 50%;
+  width: 2rem !important;
+  height: 2rem !important;
 }
 </style>
