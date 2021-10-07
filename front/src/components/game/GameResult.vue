@@ -30,13 +30,14 @@
         <div class="col">
           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-              <div class="carousel-item active">
+              <!-- <div class="carousel-item active">
                 <img src="https://source.unsplash.com/random" class="d-block w-100" alt="https://source.unsplash.com/random">
-              </div>
+              </div> -->
               <div
-                v-for="image in this.quizList[currentRound].imageList"
-                :key="image.usernageme"
+                v-for="(image, index) in this.quizList[currentRound].imageList"
+                :key="image.username"
                 class="carousel-item"
+                :class="index ? '':'active'"
               >
                 <!-- <div class="carousel-item"> -->
                   <!-- <div class="col card"> -->
