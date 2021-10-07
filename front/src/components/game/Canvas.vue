@@ -26,7 +26,7 @@
           id="jsCanvas"
           class="canvas"
         ></canvas>
-        <div class="controls_range">
+        <div class="controls-range">
           <input
             @input="handleRangeChange"
             type="range"
@@ -39,7 +39,7 @@
         </div>
         <div>
           <div class="controls-btn-box">
-            <div class="controls_btns">
+            <div class="controls-btns">
               <!-- <button
                 @click="handleModeClick"
                 id="jsMode"
@@ -47,16 +47,20 @@
                 Fill
               </button> -->
               <button @click="handlePaintClick" :class="{ picked : mode_painting }">
-                <i class="pi pi-pencil"></i>Paint
+                <i class="pi pi-pencil"></i>
+                <span>Paint</span>
               </button>
               <button @click="handleFillClick" :class="{ picked : mode_filling }">
-                <i class="pi pi-circle-on"></i>Fill
+                <i class="pi pi-circle-on"></i>
+                <span>Fill</span>
               </button>
               <button @click="handleEraseClick" :class="{ picked : mode_erasing }" id="jsEraser">
-                <i class="pi pi-calendar"></i>Eraser
+                <i class="pi pi-calendar"></i>
+                <span>Eraser</span>
               </button>
               <button @click="handleClearClick" id="jsClear">
-                <i class="pi pi-trash"></i>Clear
+                <i class="pi pi-trash"></i>
+                <span>Clear</span>
               </button>
               <Button @click="handleSaveClick" id="jsSave" icon="pi pi-save" label="Save"></Button>
             </div>
@@ -308,11 +312,11 @@ export default {
   align-items: center;
 }
 
-.controls_btns {
+.controls-btns {
   margin-bottom: 5px;
 }
 
-.controls_btns button {
+.controls-btns button {
   all: unset;
   cursor: pointer;
   background-color: white;
@@ -329,12 +333,12 @@ export default {
   margin: 5px;
 }
 
-.controls_btns button:active {
+.controls-btns button:active {
   transform: scale(0.98);
 }
 
 
-.controls_range {
+.controls-range {
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
@@ -342,19 +346,41 @@ export default {
   align-items: center;
 }
 
-.controls_btns .picked {
+.controls-btns .picked {
   all: unset;
   cursor: pointer;
-  background-color: #2df7ed;
+  background-color: #F75E82;
   padding: 5px 0px;
   width: 80px;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+
   border: 2px solid rgba(0, 0, 0, 0.2);
   color: solid rgba(0, 0, 0, 0.8);
   text-transform: uppercase;
   font-weight: 600;
   font-size: 12px;
 }
+
+.p-button:hover {
+  background-color: #F75E82 !important;
+  border-color: #c64b68 !important;
+}
+.controls-btns > button, .p-button {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  justify-content: space-evenly !important;
+  align-items: flex-end !important;
+  padding-right: 3px !important;
+}
+
+.p-button-icon-left {
+  margin: 0 !important;
+}
+.p-button-label {
+  flex: none !important;
+}
+
+
 </style>
