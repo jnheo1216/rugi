@@ -6,44 +6,40 @@
       <!-- 그렇다면 라운드 정보를 가지고 있어야 한다. -->
       <!-- alt 사진을 못 찾았을때 사진을 하나 그리면 좋을 것 같다. -->
       <div class="row">
-        <div class="col">
-          <p>정답 공개</p>
-          <div id="caption-img">
-            <img :src="`${this.quizList[currentRound].imgUrl}`" alt="answer">
-          </div>
-          <p> 현재 문제 캡셔닝 </p>
-          <p>{{ this.quizList[currentRound].caption }}</p>
-          <div class="sound-button">
-            <audio id="quizsound"><source :src="`${this.quizList[currentRound].audioUrl}`"></audio>
-            <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2rem; height:2rem;" alt=""></button>
-            <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2rem; height:2rem;" alt=""></button>
-          </div>
-        </div>
         <!-- 현재 라운드의 퀴즈리스트, 그 안에 있는 imageList의 image들을 반복문 처리 -->
-        <div class="col">
+        <div class="col-8">
           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
+              <div class="carousel-item active">
+                <p>정답</p>
+                <img 
+                  id="question-img"
+                  class="d-block w-100 card"
+                  :src="`${ this.quizList[currentRound].imgUrl }`"
+                  :alt="`${ this.quizList[currentRound].caption }`"
+                >
+                <p>정답은 "{{this.quizList[currentRound].caption}}" 입니다.</p>
+                <div class="sound-button-result">
+                  <audio id="res-sound-btn"><source :src="`${this.quizList[currentRound].audioUrl}`"></audio>
+                  <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2rem; height:2rem;" alt=""></button>
+                  <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2rem; height:2rem;" alt=""></button>
+                </div>
+              </div>
               <div
-                v-for="(image, index) in this.quizList[currentRound].imageList"
+                v-for="(image) in this.quizList[currentRound].imageList"
                 :key="image.username"
                 class="carousel-item"
-                :class="index ? '':'active'"
               >
-                <p>
-                  {{ image.username }} 님의 그림
-                </p>
+                <!-- :class="index ? '':'active'" -->
+                <p>{{ image.username }} 님의 그림</p>
                 <img
                   id="carousel-img"
                   class="d-block w-100 card"
                   :src="`${ image.imgUrl }`"
                   :alt="`${ image.username }`"
                 >
-                <span style="width:200px">
-                  "{{ image.caption }}"
-                </span>
-                <span style="font-size:12px">
-                  . . . 맞나요 ?
-                </span>
+                <span style="width:200px">"{{ image.caption }}"</span>
+                <span style="font-size:12px">. . . 맞나요 ?</span>
                 <div v-if="mute" class="sound-button-result">
                   <a id="res-sound-btn" @click="soundOnElement(image.audioUrl)">
                     <img src="@/assets/buttons/soundon.png" class="img-fluid">
@@ -61,6 +57,19 @@
             </button>
           </div>
         </div>
+        <div class="col-4">
+          <p>정답 공개</p>
+          <img src="@/assets/balloon1.png" alt="">
+          <!-- <div
+            v-for="(image) in this.quizList[currentRound].imageList"
+            :key="image.username"
+            class="carousel-item"
+          > -->
+            <!-- <span style="width:200px">{{ image.caption }}</span> -->
+            <!-- <span style="font-size:12px">. . . 맞나요 ?</span> -->
+          <!-- </div> -->
+            <img src="@/assets/RUGI.png" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -74,6 +83,7 @@ export default {
     return {
       alert: "",
       mute: true,
+      audio: null,
     }
   },
   methods: {
@@ -91,9 +101,12 @@ export default {
       }
     },
     soundOnElement(audioUrl) {
-      const audio = new Audio(audioUrl)
-      audio.loop = false
-      audio.play()
+      if (this.audio) {
+        this.audio.pause()
+      }
+      this.audio = new Audio(audioUrl)
+      this.audio.loop = false
+      this.audio.play()
     }
   },
   computed: {
@@ -132,21 +145,12 @@ export default {
 
 <style>
 .gameResult {
-  display: flex;
   text-align: center;
 }
-
-.captionResult {
-  display: flex;
-  flex-direction: column !important;
-  align-items: center;
-  /* border-style: solid;
-  border-color: black; */
-  /* border-width: 1px; */
-}
-#carousel-img {
-  /* margin: 0px; */
-  /* width: 500px; */
+.carousel-item {
+  /* max-height: 700px; */
+  height: 70vh;
+  /* width: 620px; */
 }
 #carousel-arrow{
   color: #6A82FB;
