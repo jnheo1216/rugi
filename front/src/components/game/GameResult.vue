@@ -48,7 +48,7 @@
                   "{{ image.caption }}" !!
                 </span>
                 <div class="sound-button">
-                  <button @click="soundOnElement"><img src="@/assets/buttons/soundon.png" style="width: 1rem; height:1rem;" alt=""></button>
+                  <button @click="soundOnElement(image.audioUrl)"><img src="@/assets/buttons/soundon.png" style="width: 1rem; height:1rem;" alt=""></button>
                 </div>
               </div>
             </div>
@@ -83,11 +83,10 @@ export default {
         this.mute = true
       }
     },
-    soundOnElement() {
-      console.log(this.quizList)
-      // const audio = new Audio(audioUrl)
-      // audio.loop = false
-      // audio.play()
+    soundOnElement(audioUrl) {
+      const audio = new Audio(audioUrl)
+      audio.loop = false
+      audio.play()
     }
   },
   computed: {
