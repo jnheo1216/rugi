@@ -7,22 +7,26 @@
       <!-- alt 사진을 못 찾았을때 사진을 하나 그리면 좋을 것 같다. -->
       <div class="row">
         <!-- 현재 라운드의 퀴즈리스트, 그 안에 있는 imageList의 image들을 반복문 처리 -->
-        <div class="col-8">
+        <div id="carousel-container" class="col-8">
           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
+              <div class="empty-block"></div>
               <div class="carousel-item active">
-                <p>정답</p>
-                <img
-                  id="question-img"
-                  class="d-block w-100 card"
-                  :src="`${ this.quizList[currentRound].imgUrl }`"
-                  :alt="`${ this.quizList[currentRound].caption }`"
-                >
-                <p>정답은 "{{this.quizList[currentRound].caption}}" 입니다.</p>
-                <div class="sound-button-result">
-                  <audio id="res-sound-btn"><source :src="`${this.quizList[currentRound].audioUrl}`"></audio>
-                  <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2rem; height:2rem;" alt=""></button>
-                  <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2rem; height:2rem;" alt=""></button>
+                <p class="carousel-title">정답</p>
+                  <img
+                    id="question-img"
+                    class="d-block h-95 py-auto"
+                    :src="`${ this.quizList[currentRound].imgUrl }`"
+                    :alt="`${ this.quizList[currentRound].caption }`"
+                  >
+                <p class="mt-3">정답은 "{{this.quizList[currentRound].caption}}" 입니다.</p>
+                <div>
+                  <audio id="quizsound"><source :src="`${this.quizList[currentRound].audioUrl}`"></audio>
+                  <div class="sound-button-result mt-3">
+                  <a id="res-sound-btn" @click="soundOn()">
+                    <img src="@/assets/buttons/soundon.png" class="img-fluid">
+                  </a>
+                </div>
                 </div>
               </div>
               <div
@@ -31,16 +35,21 @@
                 class="carousel-item"
               >
                 <!-- :class="index ? '':'active'" -->
-                <p>{{ image.username }} 님의 그림</p>
-                <img
-                  id="carousel-img"
-                  class="d-block w-100 card"
-                  :src="`${ image.imgUrl }`"
-                  :alt="`${ image.username }`"
-                >
-                <span style="width:200px">"{{ image.caption }}"</span>
-                <span style="font-size:12px">. . . 맞나요 ?</span>
-                <div v-if="mute" class="sound-button-result">
+                <p class="carousel-title">{{ image.username }} 님의 그림</p>
+                <div>
+                  <img
+                    id="carousel-img"
+                    class="d-block w-75 card"
+                    :src="`${ image.imgUrl }`"
+                    :alt="`${ image.username }`"
+                  >
+
+                </div>
+                <div class="mt-3">
+                  <span style="width:200px">"{{ image.caption }}"</span>
+                  <span style="font-size:12px">. . . 맞나요 ?</span>
+                </div>
+                <div v-if="mute" class="sound-button-result mt-3">
                   <a id="res-sound-btn" @click="soundOnElement(image.audioUrl)">
                     <img src="@/assets/buttons/soundon.png" class="img-fluid">
                   </a>
@@ -48,27 +57,26 @@
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-              <i id="carousel-arrow" class="pi pi-angle-left" style="color:blue"></i>
+              <img src="@/assets/buttons/arrowL.png" class="img-fluid">
               <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-              <i id="carousel-arrow" class="pi pi-angle-right"></i>
+              <img src="@/assets/buttons/arrowR.png" class="img-fluid">
               <span class="visually-hidden">Next</span>
             </button>
           </div>
         </div>
         <div class="col-4">
-          <p>정답 공개</p>
-          <img class="balloon" src="@/assets/balloon1.png" alt="">
-          <!-- <div
+          <!-- <img class="" src="@/assets/balloon1.png" alt=""> -->
+          <div
             v-for="(image) in this.quizList[currentRound].imageList"
             :key="image.username"
             class="carousel-item"
-          > -->
-            <!-- <span style="width:200px">{{ image.caption }}</span> -->
-            <!-- <span style="font-size:12px">. . . 맞나요 ?</span> -->
-          <!-- </div> -->
-            <img src="@/assets/RUGI.png" alt="">
+          >
+            <!-- <p id="tmp" style="width:100vw">{{ image.caption }}</p> -->
+            <span style="font-size:12px; z-index: 11;">. . . 맞나요 ?</span>
+          </div>
+            <img id="result-rugi" src="@/assets/RUGI.png" alt="">
         </div>
       </div>
     </div>
@@ -147,31 +155,58 @@ export default {
 .gameResult {
   text-align: center;
 }
-.carousel-item {
-  /* max-height: 700px; */
+.carousel-inner {
   height: 70vh;
-  /* width: 620px; */
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
 }
-#carousel-arrow{
-  color: #6A82FB;
+.carousel-item {
+  /* height: 70vh; */
+}
+#carousel-img {
+  margin: auto;
+}
+#question-img {
+  margin: auto;
+  max-height: 40vh;
+  overflow: hidden;
+}
+.carousel-title {
+  font-size: 1.7rem;
 }
 .sound-button-result {
   width: 2rem !important;
   height: 2rem !important;
   margin: auto;
-  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
+  /* box-shadow: 0.2rem 0.2rem 0.5rem #cacaca; */
   border-radius: 50%;
+  border: none;
+  background-color: transparent;
 }
 .sound-button-result:hover {
+  padding-top: 2px;
   background-color: #6a82fb;
   border-radius: 50%;
   border: none;
 }
 .balloon {
-  position: absolute;
+  /* position: absolute;
   width: 21vw;
   text-align: center;
   top: 40%;
-  left: 20%;
+  left: 20%; */
+}
+#result-rugi {
+  position: absolute;
+  right: 35%;
+  bottom: 0%;
+  width: 20vw;
+  /* height: 10vh; */
+}
+
+
+.empty-block {
+  height: 100px;
 }
 </style>
