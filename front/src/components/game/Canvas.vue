@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col controls-colors-wrapper">
         <div id="jsColors" class="controls-colors">
-          <ColorPicker v-model="ctxcolor"/>
+          <ColorPicker v-model="ctxcolor" />
           <div class="jsColor" style="background-color: #2c2c2c;"></div>
           <div class="jsColor" style="background-color: white;"></div>
           <div class="jsColor" style="background-color: #ff3b30;"></div>

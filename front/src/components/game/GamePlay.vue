@@ -78,7 +78,7 @@ export default {
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
   border-radius: 50%;
   padding: 0.5rem;
-  align-items: end;
+  align-items: flex-end;
 }
 .sound-button:hover {
   background-color: #6a82fb;
