@@ -3,7 +3,7 @@
     <p>{{ quiz }}</p>
     <Timer />
     <Canvas />
-    <audio id="playbgm"><source src="@/assets/sounds/tickling-clock.wav"></audio>
+    <audio id="playbgm"><source src="@/assets/sounds/home.wav"></audio>
     <div v-if="mute" class="sound-button-play">
       <a @click="soundOn">
         <img src="@/assets/buttons/soundon.png" class="img-fluid">
@@ -36,7 +36,7 @@ export default {
       if(this.mute) {
         const audio = document.getElementById('playbgm')
         audio.loop = true
-        audio.volume = 0.5
+        audio.volume = 1
         audio.play()
         this.mute = false
       }
