@@ -181,7 +181,7 @@ export default {
   height: 2rem;
 }
 .arrow-game-setting:hover {
-  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
+  box-shadow: 2rem 2rem 0.5rem #cacaca;
 }
 .arrow-box {
   display: flex;

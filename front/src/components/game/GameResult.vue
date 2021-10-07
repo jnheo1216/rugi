@@ -12,7 +12,7 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <p>정답</p>
-                <img 
+                <img
                   id="question-img"
                   class="d-block w-100 card"
                   :src="`${ this.quizList[currentRound].imgUrl }`"
@@ -59,7 +59,7 @@
         </div>
         <div class="col-4">
           <p>정답 공개</p>
-          <img src="@/assets/balloon1.png" alt="">
+          <img class="balloon" src="@/assets/balloon1.png" alt="">
           <!-- <div
             v-for="(image) in this.quizList[currentRound].imageList"
             :key="image.username"
@@ -166,5 +166,12 @@ export default {
   background-color: #6a82fb;
   border-radius: 50%;
   border: none;
+}
+.balloon {
+  position: absolute;
+  width: 21vw;
+  text-align: center;
+  top: 40%;
+  left: 20%;
 }
 </style>
