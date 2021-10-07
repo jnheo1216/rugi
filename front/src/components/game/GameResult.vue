@@ -49,7 +49,7 @@
                   <span style="width:200px">"{{ image.caption }}"</span>
                   <span style="font-size:12px">. . . 맞나요 ?</span>
                 </div>
-                <div v-if="mute" class="sound-button-result mt-3">
+                <div class="sound-button-result mt-3">
                   <a id="res-sound-btn" @click="soundOnElement(image.audioUrl)">
                     <img src="@/assets/buttons/soundon.png" class="img-fluid">
                   </a>
