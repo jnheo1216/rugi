@@ -1,5 +1,5 @@
 <template>
-  <div class="game-setting-body offset-2 col-8" :class="[$store.state.super ? 'yes-super':'no-super']">
+  <div class="game-setting-body offset-2 col-8" :class="[$store.state.super ? '':'hidden']">
     <!-- <header>Game Settings</header> -->
     <div class="set container">
       <div class="row">
@@ -13,7 +13,7 @@
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
-          {{ maxRound }}
+          {{ $store.state.super ? maxRound : $store.state.room["maxRound"] }}
           <Button
             @click="changeRound('right')"
             icon="pi pi-arrow-right"
@@ -35,7 +35,7 @@
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
-          {{ roundTime }}
+          {{ $store.state.super ? roundTime : $store.state.room["roundTime"] }}
           <Button
             @click="changeRoundTime('right')"
             icon="pi pi-arrow-right"
@@ -57,7 +57,7 @@
             class="p-button-rounded p-button-text arrow"
           >
           </Button>
-          {{ personnel }}
+          {{ $store.state.super ? personnel : $store.state.room["personnel"] }}
           <Button
             @click="changePersonnel('right')"
             icon="pi pi-arrow-right"
@@ -148,7 +148,7 @@ export default {
   text-align: center;
   font-size: 2rem;
 }
-.no-super Button{
+.hidden Button {
   visibility: hidden;
 }
 #setting-btn {
