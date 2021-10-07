@@ -96,6 +96,10 @@ export default {
     },
     changePersonnel: function (direction) {
       let newPersonnel = direction==="left" ? this.personnel-1 : this.personnel+1
+      if (this.$store.state.room['userList'].length > newPersonnel) {
+        alert("현재 인원보다 작을 수 없습니다.")
+        return
+      }
       this.personnel = (2 <= newPersonnel && newPersonnel <= 8) ? newPersonnel : this.personnel
       this.roomUpdate()
     },
