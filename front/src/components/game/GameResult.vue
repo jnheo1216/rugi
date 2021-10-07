@@ -48,8 +48,7 @@
                   "{{ image.caption }}" !!
                 </span>
                 <div class="sound-button">
-                  <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
-                  <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
+                  <button @click="soundOnElement"><img src="@/assets/buttons/soundon.png" style="width: 1rem; height:1rem;" alt=""></button>
                 </div>
               </div>
             </div>
@@ -74,7 +73,6 @@ export default {
     soundOn() {
       if(this.mute) {
         const audio = document.getElementById('quizsound')
-        audio.loop = true
         audio.volume = 1
         audio.play()
         this.mute = false
@@ -84,6 +82,12 @@ export default {
         audio.volume = 0
         this.mute = true
       }
+    },
+    soundOnElement() {
+      console.log(this.quizList)
+      // const audio = new Audio(audioUrl)
+      // audio.loop = false
+      // audio.play()
     }
   },
   computed: {
