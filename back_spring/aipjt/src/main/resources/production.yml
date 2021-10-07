@@ -6,6 +6,8 @@ spring:
     url: jdbc:mysql://mysql:3306/ssafydb
     username: root
     password: ssafy
+    hikari:
+      max-lifetime: 58
   jpa:
     hibernate:
       ddl-auto: update
