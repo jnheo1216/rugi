@@ -5,11 +5,15 @@
       <p> {{ quiz }} </p>
       <img id="rugi" src="@/assets/RUGI.png" alt="">
     </div>
-    <div class="sound-button-init">
-      <div class="sound-button">
-        <button v-if="mute" @click="soundOn"><img src="@/assets/buttons/soundon.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
-        <button v-else @click="soundOn"><img src="@/assets/buttons/soundoff.png" style="width: 2.5rem; height:2.5rem;" alt=""></button>
-      </div>
+    <div v-if="mute" class="sound-button">
+      <a @click="soundOn">
+        <img src="@/assets/buttons/soundon.png" class="img-fluid">
+      </a>
+    </div>
+    <div v-else class="sound-button">
+      <a @click="soundOn">
+        <img src="@/assets/buttons/soundoff.png" class="img-fluid">
+      </a>
     </div>
   </div>
 </template>
@@ -57,18 +61,23 @@ export default {
   font-size: 35px;
 }
 
-.sound-button-init {
+
+.sound-button {
+  display: flex;
   position: absolute;
+  width: 3rem !important;
+  height: 3rem !important;
   top: 20%;
   left: 5%;
-}
-
-.sound-button-init * {
-  color: #6A82FB;
-  border: 0 !important;
-}
-.sound-button {
+  box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
   border-radius: 50%;
+  padding: 0.5rem;
+  align-items: end;
+}
+.sound-button:hover {
+  background-color: #6a82fb;
+  border-radius: 50%;
+  border: none;
 }
 
 #balloon {
