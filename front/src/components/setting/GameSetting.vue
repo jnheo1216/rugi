@@ -96,7 +96,7 @@ export default {
     },
     changeRoundTime: function (direction) {
       let newRoundTime = direction==="left" ? this.roundTime-10 : this.roundTime+10
-      this.roundTime = (40 <= newRoundTime && newRoundTime <= 120) ? newRoundTime : this.roundTime
+      this.roundTime = (10 <= newRoundTime && newRoundTime <= 120) ? newRoundTime : this.roundTime
       this.roomUpdate()
 
     },

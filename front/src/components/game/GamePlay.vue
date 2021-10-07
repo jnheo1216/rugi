@@ -53,7 +53,7 @@ export default {
     }
   },
   mounted: function () {
-    console.log('게임플레이 마운티드!', this.$store.state.room.roundTime)
+    console.log('GamePlay', this.$store.state.room.id)
   }
 }
 </script>

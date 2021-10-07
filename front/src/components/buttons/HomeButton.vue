@@ -7,12 +7,12 @@
     >
       <a>
         <span class="p-mr-1">방만들기</span>
-        <img 
+        <img
           id="stk"
-          src="@/assets/sticker/star01.png" 
-          alt="star" 
-        > 
-      </a> 
+          src="@/assets/sticker/star01.png"
+          alt="star"
+        >
+      </a>
     </div>
     <div
       id="underline-button"
@@ -21,19 +21,18 @@
     >
       <a>
         <span class="p-mr-1">입장하기</span>
-        <img 
+        <img
           id="stk"
-          src="@/assets/sticker/star01.png" 
-          alt="star" 
-        >  
+          src="@/assets/sticker/star01.png"
+          alt="star"
+        >
       </a>
     </div>
   </div>
 </template>
 
 <script>
-import { soundEffect } from '../api/sound.js'
-
+import {soundEffect} from '../api/sound.js'
 export default {
   name: 'MainButton',
   methods: {

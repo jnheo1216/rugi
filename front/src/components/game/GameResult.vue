@@ -126,6 +126,7 @@ export default {
     }
   },
   mounted: function () {
+    console.log("GameResult", this.$store.state.room.id);
     let form = new FormData()
     form.append('file', this.$store.state.file)
     axios({
@@ -133,7 +134,7 @@ export default {
       url: '/question',
       data: form,
       params: {
-        roomId: this.$store.state.currentRoomId,
+        roomId: this.$store.state.room.id,
         nickname: this.$store.state.nickname
       },
       header: {

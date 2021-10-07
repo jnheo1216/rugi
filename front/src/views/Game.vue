@@ -46,6 +46,7 @@ export default {
       roomSubscription: null,
       chatSubscription: null,
       quizSubscription: null,
+      roomId : this.$route.query["room"]
     }
   },
   methods: {
@@ -59,18 +60,17 @@ export default {
       }
 
 
+
       let socket = new SockJS(process.env.VUE_APP_STOMP_URL);
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect(
         {},
-        async (frame) => { // 소켓 연결 성공시 실행되는 콜백
+        async () => { // 소켓 연결 성공시 실행되는 콜백
         // stomp객체를 어느 곳에서든 쓸 수 있도록 state에 저장한다.
           this.$store.dispatch("setStompClient", this.stompClient);
           this.connected = true
-          console.log(frame);
           await this.chatSubscribe() // 메시지 구독 코드
           await this.roomSubscribe() // 방 구독 코드
-          await this.quizSubscribe() // 퀴즈 구독 코드
           await this.sendJoinRequest()
           this.sendJoinMessage() // 입장메시지 코드
           this.addEvent()
@@ -85,13 +85,10 @@ export default {
       this.roomSubscription = await this.stompClient.subscribe('/sub/info/room/' + this.roomId, info => {
         let response = JSON.parse(info.body)
         console.log(response);
-        // 만약에
-        // 1. timestamp가 없다면 그냥 넣고
-        // 2. 있는 경우 비교해서 현재 timestamp가 더 크면 갱신한다
-        // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
+
         if (!Object.keys(this.$store.state.room).length || (this.$store.state.room["timestamp"] < response["timestamp"])) {
           let superUser = response["superUser"]
-          console.log(superUser);
+          console.log(this.$store.state.room.id);
           // 여기서 내가 superuser인지 확인해서 변수 할당해주고 delete 해주기
           this.$store.dispatch('setSuper', superUser)
           delete response["superUser"]
@@ -101,7 +98,7 @@ export default {
         }else{
           console.log("시간이 앞서지 않아 갱신되지 않았음");
         }
-
+        console.log("roomSubscribe End", this.$store.state.room.id);
       })
     },
     // 소켓 구독 메소드 2
@@ -111,16 +108,6 @@ export default {
         console.log("chat : ", JSON.parse(chat.body));
         const {writer, message} = JSON.parse(chat.body)
         this.chatList.push({writer, message})
-      })
-    },
-    quizSubscribe: async function () {
-      this.quizSubscription = await this.stompClient.subscribe('/sub/quiz/room/' + this.roomId, quiz => {
-        // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
-        const result = JSON.parse(quiz.body)
-        if (result.question["audioUrl"]) {
-          const audio = new Audio(result.question["audioUrl"])
-          audio.play()
-        }
       })
     },
     sendFindRoom: async function () {
@@ -137,7 +124,6 @@ export default {
         console.log(err.response)
         return false
       })
-
     },
     // 유저 목록 변경을 위한 http 요청
     sendJoinRequest: async function () {
@@ -175,9 +161,6 @@ export default {
     },
     // 브라우저 종료가 아닌 다른 방식으로 나갈 경우 이벤트를 제거해주어야 한다.
     // 미구현 상태
-    removeEvent: function () {
-      window.removeEventListener('beforeunload', this.leaveRoom);
-    },
     // 방을 떠나는 함수를 실행시켜주는 메소드
     leaveRoom: async function () {
       console.log("Send message: bye")
@@ -191,7 +174,6 @@ export default {
       await this.leaveRequest() // http 요청으로 방을 퇴장하는 요청도 보내주어야 한다.
       this.$store.dispatch("setRoom", {})
       this.$store.dispatch("setStompClient", "");
-      this.$store.dispatch("setCurrentRoomId", "")
     },
     // 방을 떠났다는 메시지를 모두에게 보내주는 Socket 메소드
     leaveMessage: function () {
@@ -221,9 +203,6 @@ export default {
     },
   },
   computed: {
-    roomId: function () {
-      return this.$store.state.currentRoomId
-    },
     checkCurrentView: function () {
       return this.$store.getters.currentView
     }
@@ -235,17 +214,12 @@ export default {
     }
   },
   created: async function  () {
-    console.log("Game.vue Created Start: "+this.$store.state);
-    await this.$store.dispatch("setCurrentRoomId", this.$route.query["room"])
-    console.log('방 처음 생성시 status', this.$store.state.status)
-    console.log(this.$store.getters.currentView)
+    console.log("1", this.$route.query["room"]);
+    console.log("Game.vue Created Start: "+this.$store.state.room);
     this.connect()
   },
   beforeUnmount: function () {
-    // 처음부터 튕기는 경우 (방이 가득 찬 경우라던지)
-    // 에러가 발생하지만 이 에러는 구독하지 않은걸 헤제할 수 없다는 에러로 문제는 없음
     console.log("unMount")
-    this.removeEvent()
     this.leaveRoom()
   }
 }

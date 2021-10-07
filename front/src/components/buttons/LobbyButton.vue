@@ -51,7 +51,7 @@ export default {
         method: 'post',
         url: '/game',
         params: {
-          roomId: this.$store.state.currentRoomId
+          roomId: this.$store.state.room.id
         }
       }).then((res) => {
         console.log('게임 시작 완료', res)

@@ -47,6 +47,7 @@ export default {
     }
   },
   mounted() {
+    console.log("GameInit", this.$store.state.room.id);
     this.soundOn()
   }
 }

@@ -63,6 +63,7 @@ export default {
     },
   },
   mounted() {
+    console.log("Lobby", this.$store.state.room.id);
     this.soundOn()
   }
 }
