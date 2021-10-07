@@ -184,7 +184,8 @@ export default {
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
 }
 .arrow-box {
-  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .pi-arrow-right {
