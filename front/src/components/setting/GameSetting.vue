@@ -180,6 +180,9 @@ export default {
   width: 2rem;
   height: 2rem;
 }
+.arrow-game-setting:hover {
+  cursor: pointer;
+}
 .arrow-box {
   display: flex;
   justify-content: center;
