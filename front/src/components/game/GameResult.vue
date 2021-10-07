@@ -52,7 +52,7 @@
                     <span style="width:200px">
                       "{{ image.caption }}" !!
                     </span>
-                    <div v-if="mute" class="sound-button">
+                    <div v-if="mute" class="sound-button-result">
                       <a @click="soundOnElement(image.audioUrl)">
                         <img src="@/assets/buttons/soundon.png" class="img-fluid">
                       </a>
@@ -156,14 +156,14 @@ export default {
   height: 200px;
   width: 200px;
 }
-.sound-button {
+.sound-button-result {
   width: 2rem !important;
   height: 2rem !important;
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
   border-radius: 50%;
   align-items: end;
 }
-.sound-button:hover {
+.sound-button-result:hover {
   background-color: #6a82fb;
   border-radius: 50%;
   border: none;
