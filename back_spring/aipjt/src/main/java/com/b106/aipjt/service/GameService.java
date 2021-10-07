@@ -66,7 +66,7 @@ public class GameService {
                 // 여기서 보내기 전에 Quiz 객체를 만들어서 추가해주기
 
                 // 문제주고 5초간 자기
-                Thread.sleep(5000);
+                Thread.sleep(8000);
                 // 질문 조회해서 Round에 넣어주기
                 // 질문 조회했다고 가정하고, 라운드 객체에 값 세팅 후 저장
                 Round round = roundRedisRepository.save(new Round(null, room.getRoundTime(), "문제", 1L));
@@ -80,7 +80,7 @@ public class GameService {
                 template.convertAndSend("/sub/info/room/" +roomId, convertRoomToDto(room));
                 log.error("========================라운드 시작 : 슬립===========================");
                 // 라운드 진행시간동안 잔다
-                Thread.sleep(room.getRoundTime()* 100L);
+                Thread.sleep(room.getRoundTime()* 1000L);
 
                 log.error("========================라운드 시작 : 슬립 종료===========================");
                 // 라운드 종료 -> 이제부터 사이시간
@@ -105,7 +105,7 @@ public class GameService {
                 log.error("========================사이시간 & 스킵 객체 메시지 전달 끝===========================");
                 log.error("========================사이시간 슬립===========================");
                 // 사이시간동안 잔다
-                Thread.sleep(20000);
+                Thread.sleep(30000);
                 log.error("========================사이시간 슬립 끝===========================");
                 room = findRoom(roomId); // 그림 그린것 적용을 위해 room 정보 갱신을 위한 것
                 // 깨어나면 스킵 객체를 조회해서 스킵했는지 확인
