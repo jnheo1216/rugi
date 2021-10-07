@@ -4,12 +4,12 @@
     <Timer />
     <Canvas />
     <audio id="playbgm"><source src="@/assets/sounds/home.wav"></audio>
-    <div v-if="mute" class="sound-button">
+    <div v-if="mute" class="sound-button-play">
       <a @click="soundOn">
         <img src="@/assets/buttons/soundon.png" class="img-fluid">
       </a>
     </div>
-    <div v-else class="sound-button">
+    <div v-else class="sound-button-play">
       <a @click="soundOn">
         <img src="@/assets/buttons/soundoff.png" class="img-fluid">
       </a>
@@ -68,7 +68,7 @@ export default {
 .playBody p {
   font-size: 20px;
 }
-.sound-button {
+.sound-button-play {
   display: flex;
   position: absolute;
   width: 3rem !important;
@@ -80,7 +80,7 @@ export default {
   padding: 0.5rem;
   align-items: flex-end;
 }
-.sound-button:hover {
+.sound-button-play:hover {
   background-color: #6a82fb;
   border-radius: 50%;
   border: none;
