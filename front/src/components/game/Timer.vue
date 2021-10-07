@@ -51,8 +51,8 @@ export default {
 }
 #sec {
   position: absolute;
-  top: 6.3rem !important;
-  right: 3.3rem !important;
+  top: 93px !important;
+  right: 48px !important;
   font-size: 2em;
   width: 10rem
 }
