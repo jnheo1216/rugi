@@ -12,6 +12,7 @@ import AvatarGroup from 'primevue/avatargroup'
 import ScrollTop from 'primevue/scrolltop'
 import ScrollPanel from 'primevue/scrollpanel'
 import ColorPicker from 'primevue/colorpicker'
+import Carousel from 'primevue/carousel';
 
 import 'primevue/resources/themes/saga-blue/theme.css'       //theme
 // import 'primevue/resources/primevue.min.css'       //core css
@@ -29,6 +30,7 @@ app.component('AvatarGroup', AvatarGroup)
 app.component('ScrollTop', ScrollTop)
 app.component('ScrollPanel', ScrollPanel)
 app.component('ColorPicker', ColorPicker)
+app.component('Carousel', Carousel)
 
 app.mount('#app')
 

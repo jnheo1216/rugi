@@ -12,9 +12,9 @@
             <p>
               {{ this.quizList[currentRound].caption }}
             </p>
-            <p>
+            <!-- <p>
               {{this.quizList[currentRound].audioUrl}}
-            </p>
+            </p> -->
           </div>
           <p> 이게 정답이에요 </p>
           <div>
@@ -28,30 +28,44 @@
         </div>
         <!-- 현재 라운드의 퀴즈리스트, 그 안에 있는 imageList의 image들을 반복문 처리 -->
         <div class="col">
-          <div class="row row-cols-2">
-            <div
-              class="captionResult"
-              v-for="image in this.quizList[currentRound].imageList"
-              :key="image.usernageme"
-            >
-              <div class="col card">
-                <p>
-                  {{ image.username }} 님의 그림
-                </p>
-                <img
-                  class="userDrawings card"
-                  :src="`${ image.imgUrl }`"
-                  alt=""
-                >
-                <span style="width:200px">
-                  <!-- TTS 할 수 있도록 기능 넣어주면 될 듯 -->
-                  "{{ image.caption }}" !!
-                </span>
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="https://source.unsplash.com/random" class="d-block w-100" alt="https://source.unsplash.com/random">
+              </div>
+              <div
+                v-for="image in this.quizList[currentRound].imageList"
+                :key="image.usernageme"
+                class="carousel-item"
+              >
+                <!-- <div class="carousel-item"> -->
+                  <!-- <div class="col card"> -->
+                    <p>
+                      {{ image.username }} 님의 그림
+                    </p>
+                    <img
+                      class="d-block w-100"
+                      :src="`${ image.imgUrl }`"
+                      alt=""
+                    >
+                    <span style="width:200px">
+                      "{{ image.caption }}" !!
+                    </span>
                 <div class="sound-button">
                   <button @click="soundOnElement(image.audioUrl)"><img src="@/assets/buttons/soundon.png" style="width: 1rem; height:1rem;" alt=""></button>
                 </div>
+                  <!-- </div> -->
+                <!-- </div> -->
               </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
         </div>
       </div>
