@@ -3,7 +3,7 @@
     <p>{{ quiz }}</p>
     <Timer />
     <Canvas />
-    <audio id="playbgm"><source src="@/assets/sounds/home.wav"></audio>
+    <audio id="playbgm"><source src="@/assets/sounds/ticking-clock.wav"></audio>
     <div v-if="mute" class="sound-button-play">
       <a @click="soundOn">
         <img src="@/assets/buttons/soundon.png" class="img-fluid">
