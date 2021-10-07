@@ -158,7 +158,7 @@ export default {
   text-align: center;
   font-size: 2rem;
 }
-.hidden Button {
+.hidden .arrow-game-setting {
   visibility: hidden;
 }
 #setting-btn {
