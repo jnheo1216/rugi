@@ -12,7 +12,11 @@
               <img src="@/assets/buttons/arrowL.png" class="img-fluid">
             </a>
           </div>
+        </div>
+        <div class="col">
           {{ $store.state.super ? maxRound : $store.state.room["maxRound"] }}
+        </div>
+        <div class="col">
           <div class="arrow-game-setting">
             <a @click="changeRound('right')">
               <img src="@/assets/buttons/arrowR.png" class="img-fluid">
@@ -32,7 +36,11 @@
               <img src="@/assets/buttons/arrowL.png" class="img-fluid">
             </a>
           </div>
+        </div>
+        <div class="col">
           {{ $store.state.super ? roundTime : $store.state.room["roundTime"] }}
+        </div>
+        <div class="col">
           <div class="arrow-game-setting">
             <a @click="changeRoundTime('right')">
               <img src="@/assets/buttons/arrowR.png" class="img-fluid">
@@ -52,7 +60,11 @@
               <img src="@/assets/buttons/arrowL.png" class="img-fluid">
             </a>
           </div>
+        </div>
+        <div class="col">
           {{ $store.state.super ? personnel : $store.state.room["personnel"] }}
+        </div>
+        <div class="col">
           <div class="arrow-game-setting">
             <a @click="changePersonnel('right')">
               <img src="@/assets/buttons/arrowR.png" class="img-fluid">
