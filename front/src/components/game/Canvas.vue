@@ -76,7 +76,7 @@
 import 'primevue/resources/primevue.min.css'
 const INITIAL_COLOR = "#2c2c2c"
 const CANVAS_WIDTH = 1100
-const CANVAS_HEIGHT = 700
+const CANVAS_HEIGHT = 500
 
 
 export default {
@@ -261,7 +261,7 @@ export default {
 
 .canvas {
   width: 1100px;
-  height: 700px;
+  height: 500px;
   background-color: white;
   border-radius: 0 15px 15px 15px;
   box-shadow: 0 5px 10px rgb(50 50 93 / 11%), 0 5px 10px rgb(0 0 0 / 8%);
@@ -269,8 +269,8 @@ export default {
 
 /* 래핑 */
 .p-colorpicker, .p-colorpicker-overlay {
-  width: 50px !important;
-  height: 50px !important;
+  width: 30px !important;
+  height: 30px !important;
   border-radius: 25px !important;
   margin: 10px;
   -webkit-box-shadow: 5px 5px 15px 1px #FF8080, -9px 5px 15px 1px #FFE488, -7px -5px 15px 1px #8CFF85, 12px -5px 15px 1px #80C7FF, 2px 2px 2px 2px #E488FF, 5px 5px 18px -4px rgba(34,255,54,0);
@@ -278,8 +278,8 @@ export default {
 /* 실제 컬러피커 프리뷰 */
 .p-colorpicker-preview {
   border-radius: 25px !important;
-  width: 50px !important;
-  height: 50px !important;
+  width: 30px !important;
+  height: 30px !important;
 }
 
 .col {
@@ -298,8 +298,8 @@ export default {
 
 .controls-colors > .jsColor {
   margin: 5px;
-  width: 50px !important;
-  height: 50px !important;
+  width: 30px !important;
+  height: 30px !important;
   border-radius: 25px;
   cursor: pointer;
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
