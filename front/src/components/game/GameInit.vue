@@ -24,12 +24,12 @@ export default {
   },
   methods: {
     soundOn() {
-      if(this.mute) {
-        console.log(this.quizaudio)
-        var audio = new Audio(this.quizaudio)
-        audio.play()
-        this.mute = false
-      }
+      // if(this.mute) {
+      console.log(this.quizaudio)
+      var audio = new Audio(this.quizaudio)
+      audio.play()
+      this.mute = false
+      // }
     }
   },
   computed: {
@@ -39,6 +39,9 @@ export default {
     quizaudio: function () {
       return this.$store.state.room.quizList[this.$store.state.room.currentRound - 1].audioUrl
     }
+  },
+  mounted() {
+    this.soundOn()
   }
 }
 </script>
@@ -63,6 +66,9 @@ export default {
 .sound-button-init * {
   color: #6A82FB;
   border: 0 !important;
+}
+.sound-button {
+  border-radius: 50%;
 }
 
 #balloon {
