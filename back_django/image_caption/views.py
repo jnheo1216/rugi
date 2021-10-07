@@ -104,7 +104,7 @@ def index_kr(request):
         print("4")
         captionjson = captionjson["message"]["result"]["translatedText"]
         print("5")
-        audio = tts(caption)
+        audio = tts(captionjson)
         # audio="audio/sample.mp3"
         print("6")
         data = {"caption": captionjson, "audio": audio}
