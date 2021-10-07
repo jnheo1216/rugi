@@ -21,7 +21,6 @@ public class GameController {
     @PostMapping("")
     public ResponseDto<String> gameStart(@RequestHeader(value="User-Id") String userId,
                                          @RequestParam String roomId) throws InterruptedException {
-        gameService.gameInit(userId, roomId); // 방장에게 문제 발생시 에러 리턴을 위한 함수 호출
         gameService.gameStart(userId, roomId); // 비동기 요청 여기서 요청하는게 맞아보임
         // 문제가 없다면 여기서 끝까지 돌아간다. 비동기이므로 응답은 먼저 보내짐
         return new ResponseDto<>(HttpStatus.OK.value(), "요청 수신 성공", "");

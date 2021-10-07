@@ -46,4 +46,11 @@ public class ExceptionController {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(ErrorCode.NO_USER_HEADER.getCode(), ErrorCode.NO_USER_HEADER.getDescription());
         return new ResponseEntity(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
+
+    // 헤더 정보가 없을 때
+    @ExceptionHandler(InterruptedException.class)
+    public void threadInturrupted(InterruptedException e) {
+        log.error("쓰레드 종료됨");
+        e.printStackTrace();
+    }
 }
