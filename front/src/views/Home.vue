@@ -56,20 +56,11 @@ export default {
         this.mute = true
       }
     }
+  },
+  mounted() {
+    this.soundOn()
   }
-  // methods: {
-  //   soundsplay() {
-  //     var promise = document.getElementById('audio')
-  //     promise.loop = true
-  //     promise.play()
-  //   }
-  // },
-  // created() {
-  //   var audi = new Audio('@/assets/sounds/home.wav')
-  //   audi.loop = true
-  //   console.log('오디오')
-  //   audi.play()
-  // }
+
 }
 </script>
 <style>
@@ -100,7 +91,7 @@ export default {
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
   border-radius: 50%;
   padding: 0.5rem;
-  align-items: flex-end;
+  align-items: end;
 }
 .sound-button:hover {
   background-color: #6a82fb;

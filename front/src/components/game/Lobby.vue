@@ -61,6 +61,9 @@ export default {
     isRoomExist : function () {
       return this.$store.getters.isRoomExist
     },
+  },
+  mounted() {
+    this.soundOn()
   }
 }
 

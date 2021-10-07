@@ -24,12 +24,12 @@ export default {
   },
   methods: {
     soundOn() {
-      // if(this.mute) {
-      console.log(this.quizaudio)
-      var audio = new Audio(this.quizaudio)
-      audio.play()
-      this.mute = false
-      // }
+      if(this.mute) {
+        console.log(this.quizaudio)
+        var audio = new Audio(this.quizaudio)
+        audio.play()
+        this.mute = false
+      }
     }
   },
   computed: {
