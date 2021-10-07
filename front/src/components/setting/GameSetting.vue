@@ -165,8 +165,8 @@ export default {
 .arrow-game-setting {
   /* margin-top: 1rem !important; */
   border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
 }
 .arrow-game-setting:hover {
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
