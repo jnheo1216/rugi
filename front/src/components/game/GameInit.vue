@@ -45,6 +45,9 @@ export default {
     quizaudio: function () {
       return this.$store.state.room.quizList[this.$store.state.room.currentRound - 1].audioUrl
     }
+  },
+  mounted() {
+    this.soundOn()
   }
 }
 </script>
