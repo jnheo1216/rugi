@@ -6,7 +6,7 @@
         <div class="col">
           <span>라운드</span>
         </div>
-        <div class="col">
+        <div class="col arrow-box">
           <div class="arrow-game-setting">
             <a @click="changeRound('left')">
               <img src="@/assets/buttons/arrowL.png" class="img-fluid">
@@ -16,7 +16,7 @@
         <div class="col">
           {{ $store.state.super ? maxRound : $store.state.room["maxRound"] }}
         </div>
-        <div class="col">
+        <div class="col arrow-box">
           <div class="arrow-game-setting">
             <a @click="changeRound('right')">
               <img src="@/assets/buttons/arrowR.png" class="img-fluid">
@@ -30,7 +30,7 @@
         <div class="col">
           <span>라운드 당 시간</span>
         </div>
-        <div class="col">
+        <div class="col arrow-box">
           <div class="arrow-game-setting">
             <a @click="changeRoundTime('left')">
               <img src="@/assets/buttons/arrowL.png" class="img-fluid">
@@ -40,7 +40,7 @@
         <div class="col">
           {{ $store.state.super ? roundTime : $store.state.room["roundTime"] }}
         </div>
-        <div class="col">
+        <div class="col arrow-box">
           <div class="arrow-game-setting">
             <a @click="changeRoundTime('right')">
               <img src="@/assets/buttons/arrowR.png" class="img-fluid">
@@ -54,7 +54,7 @@
         <div class="col">
           <span>최대 인원</span>
         </div>
-        <div class="col">
+        <div class="col arrow-box">
           <div class="arrow-game-setting">
             <a @click="changePersonnel('left')">
               <img src="@/assets/buttons/arrowL.png" class="img-fluid">
@@ -64,7 +64,7 @@
         <div class="col">
           {{ $store.state.super ? personnel : $store.state.room["personnel"] }}
         </div>
-        <div class="col">
+        <div class="col arrow-box">
           <div class="arrow-game-setting">
             <a @click="changePersonnel('right')">
               <img src="@/assets/buttons/arrowR.png" class="img-fluid">
@@ -179,10 +179,12 @@ export default {
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
-  align-items: center;
 }
 .arrow-game-setting:hover {
   box-shadow: 0.2rem 0.2rem 0.5rem #cacaca;
+}
+.arrow-box {
+  align-items: center;
 }
 
 .pi-arrow-right {
