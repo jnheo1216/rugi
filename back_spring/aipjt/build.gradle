@@ -1,0 +1,65 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.b106'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// MySQL
+	implementation 'mysql:mysql-connector-java'
+	// Jpa Hibernate
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Dev Tools
+	developmentOnly('org.springframework.boot:spring-boot-devtools')
+	// Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.integration:spring-integration-stomp'
+	// Cloud starter aws
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	// Test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Kubernetes
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.5.4'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.5.4'
+	// Docker image
+	implementation 'org.springframework.boot:spring-boot-gradle-plugin:2.5.0'
+
+}
+bootJar {
+	layered()
+}
+
+bootJar {
+}
+
+test {
+	useJUnitPlatform()
+}

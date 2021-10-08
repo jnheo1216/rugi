@@ -1,0 +1,19 @@
+spring:
+  redis:
+    host: redis
+    port: 6379
+  datasource:
+    url: jdbc:mysql://mysql:3306/ssafydb
+    username: root
+    password: ssafy
+    hikari:
+      max-lifetime: 58
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug

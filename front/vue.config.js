@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   devServer: {
-    port: 80
+    port: 8082
   },
   configureWebpack: {
     resolve: {

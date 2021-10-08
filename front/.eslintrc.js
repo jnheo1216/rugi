@@ -34,6 +34,7 @@ module.exports = {
     "vue/html-indent": ["warn", 2],
     "vue/singleline-html-element-content-newline": ["off"],
     "vue/html-quotes": ["off"],
-    "vue/html-self-closing": ["off"]
+    "vue/html-self-closing": ["off"],
+    "vue/attribute-hyphenation": ["off"]
   }
 };

@@ -1,0 +1,16 @@
+button {
+  text-decoration: none;
+  font-family: "Elice Digital Baeum",sans-serif !important;
+  background: transparent !important;
+}
+
+
+.p-button-jj:hover {
+    text-decoration: none;
+    padding-bottom: 3px;
+    color: #CC9900;
+}
+
+.p-button-jj:active {
+    text-decoration: none;
+}
