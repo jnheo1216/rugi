@@ -13,12 +13,12 @@
     <audio id="lobbybgm"><source src="@/assets/sounds/home.wav"></audio>
     <div v-if="mute" class="sound-button">
       <a @click="soundOn">
-        <img src="@/assets/buttons/soundon.png" class="img-fluid">
+        <img src="@/assets/buttons/soundoff.png" class="img-fluid">
       </a>
     </div>
     <div v-else class="sound-button">
       <a @click="soundOn">
-        <img src="@/assets/buttons/soundoff.png" class="img-fluid">
+        <img src="@/assets/buttons/soundon.png" class="img-fluid">
       </a>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
       if(this.mute) {
         const audio = document.getElementById('lobbybgm')
         audio.loop = true
-        audio.volume = 0.5
+        audio.volume = 0.3
         audio.play()
         this.mute = false
       }
@@ -64,7 +64,6 @@ export default {
   },
   mounted() {
     console.log("Lobby", this.$store.state.room.id);
-    this.soundOn()
   }
 }
 

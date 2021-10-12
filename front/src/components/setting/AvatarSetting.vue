@@ -123,7 +123,8 @@ export default {
   font-size: 0.2rem;
 }
 .sf-btn {
-  height: 3vh;
+  height: 3vh !important;
+  margin-bottom: 0.5rem;
 }
 .sf-btn:hover {
   cursor: pointer;

@@ -14,11 +14,12 @@ import ScrollPanel from 'primevue/scrollpanel'
 import ColorPicker from 'primevue/colorpicker'
 import Carousel from 'primevue/carousel';
 
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import 'primevue/resources/themes/saga-blue/theme.css'       //theme
 // import 'primevue/resources/primevue.min.css'       //core css
 import 'primeicons/primeicons.css'       //icons
 import 'primeflex/primeflex.css'
-
 const app = createApp(App)
 app.use(router).use(store).use(PrimeVue)
 
